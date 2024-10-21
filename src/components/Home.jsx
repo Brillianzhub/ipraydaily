@@ -36,6 +36,22 @@ const Home = () => {
         fetchBibleBooks();
     }, []);
 
+
+    // useEffect(() => {
+    //     const versionData = async () => {
+    //         try {
+    //             const response = await fetch('https://www.brillianzhub.com/ipray/promises/');
+    //             const data = await response.json();
+    //             setVersion(data);
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     versionData()
+    // }, [])
+
+    // console.log(JSON.stringify(version))
+
     return (
         <div className="home-container">
             <Navbar />
