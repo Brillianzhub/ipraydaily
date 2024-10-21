@@ -1,0 +1,159 @@
+.message-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.message-detail h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: left;
+}
+
+.message-det-date {
+    font-style: italic;
+    color: #324162;
+}
+
+.message-detail p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.body {
+    margin: 20px 0;
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #333;
+}
+
+.downloads {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.downloads button {
+    background-color: #324162;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 1em;
+}
+
+.downloads button:hover {
+    background-color: #0056b3;
+}
+
+.youtube-preview {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.youtube-preview iframe {
+    width: 100%;
+    height: auto;
+    max-width: 560px;
+    max-height: 315px;
+    margin: 20px 0;
+}
+
+.youtube-preview h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.youtube-preview a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.youtube-preview a:hover {
+    text-decoration: underline;
+}
+
+.authors-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.authors-photo img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.authors-profile h3 {
+    font-size: 15px;
+    margin: 0;
+    color: #0C4B6E;
+    ;
+}
+
+.authors-profile p {
+    font-size: 15px;
+    color: #777;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* Responsive Styles */
+@media (min-width: 600px) {
+    .message-detail h1 {
+        font-size: 2.5em;
+        color: #324162;
+    }
+
+    .downloads button {
+        padding: 12px 24px;
+        font-size: 1.1em;
+    }
+
+    .authors-info {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .authors-photo img {
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .message-detail {
+        padding: 20px;
+    }
+
+    .message-detail h1 {
+        font-size: 2.2em;
+        color: #324162;
+    }
+
+    .body {
+        font-size: 1.2em;
+    }
+
+    .downloads button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+    }
+
+    .authors-photo img {
+        width: 70px;
+        height: 70px;
+    }
+}

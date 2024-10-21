@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&display=swap');
+
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cabin', sans-serif;
+}
+
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.banner-section {
+    width: 100%;
+    max-width: 1200px;
+    height: 250px;
+    background-image: url('../assets/images/banner.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.banner-section::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 250px;
+    max-width: 1200px;
+    background: #0C4B6E63;
+    z-index: 1;
+}
+
+.banner-section h1 {
+    font-family: 'Cabin', sans-serif;
+    font-size: 35px;
+    margin: 0;
+}
+
+.banner-section h1 span {
+    font-size: 20px;
+    color: #FF9C01;
+    font-style: italic;
+}
+
+.banner-section p {
+    font-size: 20px;
+    margin: 10px 0 0;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.main-section {
+    flex: 3;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-section h2 {
+    margin-top: 0;
+}
+
+.sidebar-section {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+}
+
+.sidebar-section h2 {
+    margin-top: 0;
+}
+
+.sidebar-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-section ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+
+    .sidebar-section {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .banner-section h1 {
+        font-size: 32px;
+    }
+
+    .banner-section p {
+        font-size: 16px;
+    }
+}

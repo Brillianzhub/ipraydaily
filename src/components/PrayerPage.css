@@ -1,0 +1,104 @@
+.prayer-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 120px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.prayer-container {
+    width: 100%;
+    /* max-width: 800px; */
+    margin: 0 auto;
+    /* padding: 20px; */
+    text-align: center;
+}
+
+.category-dropdown {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    /* max-width: 400px; */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="gray"><path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1500;
+}
+
+.prayer-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.prayer-item {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.prayer-item h3 {
+    font-size: 20px;
+    color: #0C4B6E;
+    margin-bottom: 10px;
+}
+
+.prayer-item p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+    margin: 5px 0;
+    font-style: italic;
+}
+
+.prayer-item p span {
+    font-weight: bold;
+    color: #F7910B;
+}
+
+@media (max-width: 768px) {
+    .prayer-container {
+        padding: 10px;
+    }
+
+    .category-dropdown {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .prayer-container {
+        padding: 15px;
+        margin: 80px auto;
+    }
+}
+
+/* For mobile screens (max-width: 768px) */
+@media (max-width: 768px) {
+    .prayer-container {
+        padding: 10px;
+        margin: 60px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .prayer-container {
+        padding: 5px;
+        margin: 40px auto;
+    }
+}

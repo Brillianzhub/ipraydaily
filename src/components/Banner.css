@@ -1,0 +1,89 @@
+/* Banner.css */
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.banner {
+    position: relative;
+    height: 400px;
+    /* Default height for banner on larger screens */
+    background-image: url('../assets/images/banner.png');
+    /* Ensure correct image path */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Dark overlay to improve text contrast */
+    z-index: 1;
+}
+
+.quote {
+    position: relative;
+    z-index: 2;
+    /* Ensure the quote is above the overlay */
+    font-size: 2rem;
+    padding: 1rem;
+    max-width: 800px;
+}
+
+.quote span {
+    font-weight: bold;
+    font-style: italic;
+    color: #f0e68c;
+    /* Highlight the Bible verse reference */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .banner {
+        height: 350px;
+        /* Adjust banner height on medium screens */
+    }
+
+    .quote {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        height: 300px;
+        /* Further adjust banner height on tablets */
+    }
+
+    .quote {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner {
+        height: 250px;
+        /* Adjust banner height on small mobile screens */
+    }
+
+    .quote {
+        font-size: 1.2rem;
+        /* Smaller font size for mobile screens */
+        padding: 0.5rem;
+    }
+
+    .quote span {
+        color: #ffeb3b;
+        /* Brighter color for small screens */
+    }
+}

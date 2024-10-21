@@ -1,0 +1,69 @@
+/* About.css */
+
+.about-container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-container h2 {
+    text-align: left;
+    font-size: 1.5rem;
+    color: #0C4B6E;
+    margin-bottom: 20px;
+}
+
+/* Flexbox layout for text and image */
+.about-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.about-text {
+    flex: 1;
+    /* padding: 20px; */
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #0C4B6E;
+}
+
+.about-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.about-image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Reverse flex direction for alternating sections */
+.reverse {
+    flex-direction: row-reverse;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .about-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .reverse {
+        flex-direction: column;
+    }
+
+    .about-image {
+        max-width: 300px;
+    }
+
+    .about-text {
+        padding: 10px 0;
+    }
+}
