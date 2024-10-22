@@ -2,6 +2,7 @@ import React from "react";
 import MessageDetail from "./MessageDetail";
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Sidebar from "./Sidebar";
 
 const KoinoniaMessageDetail = () => {
     return (
@@ -17,14 +18,7 @@ const KoinoniaMessageDetail = () => {
                 <div className="main-section">
                     <MessageDetail />
                 </div>
-                <div className="sidebar-section">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
             <Footer />
         </div>

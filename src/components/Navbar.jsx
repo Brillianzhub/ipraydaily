@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import logo from '../assets/images/logo.png';
+import menu from '../assets/images/menu.png'; // The menu icon image
 
 const Navbar = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -10,9 +12,11 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="content-container navbar">
+        <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">Logo</Link>
+                <Link to="/">
+                    <img src={logo} alt="Logo" />
+                </Link>
             </div>
             <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
                 <ul>
@@ -31,7 +35,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-toggle" onClick={toggleMenu}>
-                <span className="hamburger"></span>
+                <img src={menu} alt="Menu" />
             </div>
         </nav>
     );

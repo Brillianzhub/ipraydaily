@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './VerseOfTheDay.css';
+import play from "../assets/images/audio.png";
+import share from "../assets/images/share.png";
+
 
 const VerseOfTheDay = ({
     bibleBooks,
@@ -166,10 +169,10 @@ const VerseOfTheDay = ({
                     <div className="action-container">
                         <div className="icon-container">
                             <button className="icon-button" aria-label="Share" onClick={handleShare}>
-                                <img src="src/assets/images/share.png" alt="Share" />
+                                <img src={share} alt="Share" />
                             </button>
                             <button className="icon-button" aria-label="Play" onClick={handlePlayAudio}>
-                                <img src="src/assets/images/audio.png" alt="Play" />
+                                <img src={play} alt="Play" />
                             </button>
                         </div>
                     </div>

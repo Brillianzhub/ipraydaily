@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Footer from './Footer'
 
 import './Home.css';
+import Sidebar from './Sidebar';
 
 
 
@@ -47,14 +48,7 @@ const Prayer = () => {
                 <div className="main-section">
                     <PrayerPage />
                 </div>
-                <div className="sidebar-section">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
             <Footer />
         </div>

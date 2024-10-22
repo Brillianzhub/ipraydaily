@@ -5,10 +5,11 @@ import SearchSection from './SearchSection';
 import VerseOfTheDay from './VerseOfTheDay';
 import MobileAppSection from './MobileAppSection';
 import Navbar from './Navbar';
-import Footer from './Footer'
+import Footer from './Footer';
+import FeaturedPosts from './FeaturedPosts';
+import Sidebar from './Sidebar';
 
 import './Home.css';
-
 
 
 const Home = () => {
@@ -37,21 +38,6 @@ const Home = () => {
     }, []);
 
 
-    // useEffect(() => {
-    //     const versionData = async () => {
-    //         try {
-    //             const response = await fetch('https://www.brillianzhub.com/ipray/promises/');
-    //             const data = await response.json();
-    //             setVersion(data);
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     versionData()
-    // }, [])
-
-    // console.log(JSON.stringify(version))
-
     return (
         <div className="home-container">
             <Navbar />
@@ -78,16 +64,10 @@ const Home = () => {
                         randomVerse={randomVerse}
                         setRandomVerse={setRandomVerse}
                     />
+                    <FeaturedPosts />
                     <MobileAppSection />
                 </div>
-                <div className="sidebar-section">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
             <Footer />
         </div>

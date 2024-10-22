@@ -1,11 +1,9 @@
 /* Navbar Styles */
-
 .container {
     width: 80%;
     margin: 0 auto;
 }
 
-/* Navbar container */
 .navbar {
     background-color: #0C4B6E;
     color: #fff;
@@ -14,24 +12,19 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    z-index: 100;
+    width: 100%;
+    max-width: 1200px;
 }
 
-/* Navbar logo */
-.navbar-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
+.navbar-logo img {
+    max-height: 40px;
 }
 
-.navbar-logo a {
-    text-decoration: none;
-    color: white;
-}
-
-/* Links (hidden by default on small screens) */
 .navbar-links {
     display: flex;
     align-items: center;
+    z-index: 99;
 }
 
 .navbar-links ul {
@@ -47,25 +40,33 @@
 
 .navbar-links ul li a {
     text-decoration: none;
-    color: white;
+    color: #F7910B;
     font-size: 1.1rem;
+    transition: color 0.3s ease;
 }
 
-/* Hide the links when screen width is less than 768px */
+.navbar-links ul li a:hover {
+    color: white;
+}
+
 @media (max-width: 768px) {
+
+    .navbar {
+        justify-content: space-between;
+        width: 100%;
+    }
+
     .navbar-links {
         position: absolute;
         top: 100%;
         right: 0;
-        background-color: #0C4B6E;
         width: 100%;
-        height: 100vh;
-        /* Full screen height */
+        background-color: #0C4B6E;
+        display: none;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        display: none;
-        /* Hidden by default */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 99;
     }
 
     .navbar-links.active {
@@ -74,6 +75,7 @@
 
     .navbar-links ul {
         flex-direction: column;
+        width: 100%;
     }
 
     .navbar-links ul li {
@@ -81,29 +83,37 @@
     }
 
     .navbar-links ul li a {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
     }
-}
 
-/* Hamburger menu icon */
-.navbar-toggle {
-    display: none;
-    cursor: pointer;
-}
-
-.navbar-toggle .hamburger {
-    width: 30px;
-    height: 3px;
-    background-color: white;
-    margin: 5px;
-}
-
-@media (max-width: 768px) {
     .navbar-toggle {
-        display: block;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        z-index: 101;
+    }
+
+    .navbar-toggle img {
+        height: 30px;
+        width: 30px;
     }
 
     .navbar-links {
+        transition: max-height 0.3s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .navbar-links.active {
+        max-height: 300px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-toggle {
         display: none;
     }
 }

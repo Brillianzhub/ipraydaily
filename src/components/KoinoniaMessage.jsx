@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import blogPostImage from '../assets/images/blog-post.png';
 import { Link } from 'react-router-dom';
-import './BlogPosts.css'
+import './BlogPosts.css';
 
 const KoinoniaMessage = () => {
     const [posts, setPosts] = useState([]);
@@ -10,11 +10,10 @@ const KoinoniaMessage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch blog posts from the API
         const fetchPosts = async () => {
             try {
                 const response = await axios.get('https://www.brillianzhub.com/blog/');
-                setPosts(response.data); // Assuming the API response is an array of posts
+                setPosts(response.data);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to fetch blog posts');
@@ -25,7 +24,6 @@ const KoinoniaMessage = () => {
         fetchPosts();
     }, []);
 
-    console.log(posts)
     const truncateText = (text, limit) => {
         if (text.length > limit) {
             return text.slice(0, limit) + '...';
@@ -57,7 +55,6 @@ const KoinoniaMessage = () => {
                             <Link to={`/koinonia-messages/${post.slug}`}>
                                 <h3>View Message</h3>
                             </Link>
-
                         </div>
                     </div>
                 ))}

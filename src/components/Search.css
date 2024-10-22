@@ -1,154 +1,174 @@
+/* General container styling */
 .search-container {
-    /* width: 80%; */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
+    width: 100%;
+    padding: 20px;
 }
 
 .search-dropdowns {
-    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     gap: 10px;
-    padding: 0 0 20px 0;
-    box-sizing: border-box;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    /* Ensure the dropdowns wrap on smaller screens */
 }
-
 
 .search-dropdowns .dropdown {
     padding: 10px;
-    font-size: 16px;
-    border-radius: 8px;
+    font-size: 1rem;
     border: 1px solid #ccc;
-    width: 200px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="gray"><path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-    margin: 0 10px;
-    box-sizing: border-box;
+    border-radius: 4px;
+    flex: 1 1 auto;
+    min-width: 150px;
 }
 
+/* Search Row Styling */
 .search-row {
-    width: 100%;
-    margin-bottom: 20px;
     display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #0C4B6E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background-color: #083d56;
+}
+
+/* Header Row Styling */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 
-
-.dropdown:disabled {
-    background-color: #f2f2f2;
-    color: #999;
-    cursor: not-allowed;
+.header-title h2 {
+    font-family: Abel, sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 45.88px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin: 0;
 }
 
+.nav-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
 
-.bible-content {
-    position: relative;
-    width: 100%;
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
-    font-family: 'Georgia', serif;
-    color: #333;
-    text-align: left;
-    line-height: 1.8;
-    letter-spacing: 0.5px;
-    margin-bottom: 20px;
+.nav-button img {
+    width: 30px;
+    height: 30px;
+}
 
+.version-selector {
+    margin-left: auto;
+}
+
+.version-selector select {
+    font-size: 1rem;
+    padding: 5px;
 }
 
 .bible-content p {
     margin-bottom: 20px;
 }
 
-.search-container select {
-    cursor: pointer;
-}
-
-
-.nav-button {
-    position: absolute;
-    top: 30%;
-    transform: translateY(-50%);
-    padding: 10px;
-    font-size: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.nav-button.left {
-    left: -25px;
-}
-
-.nav-button.right {
-    right: -25px;
-}
-
-.nav-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-.header-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-/* For larger screens, display the title and version selector in a row */
-@media screen and (max-width: 768px) {
-    .search-container {
-        padding: 15px;
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    .header-row {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .header-title {
+        margin-bottom: 10px;
+    }
+
+    .header-title h2 {
+        font-size: 28px;
+    }
+
+    .nav-button img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .version-selector {
+        margin: 0;
+    }
+
+    .version-selector select {
+        font-size: 0.9rem;
+    }
+
+    .search-dropdowns {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+
+    .search-bar {
         width: 100%;
     }
 
-    .header-row {
-        flex-direction: row;
+    .search-btn {
+        width: 100%;
     }
+}
 
+@media (max-width: 480px) {
     .header-row h2 {
-        margin-right: 20px;
-        /* Adds space between title and version selector */
+        font-size: 1.2rem;
+        /* Further reduce the font size for very small screens */
     }
 
-    .nav-button {
-        position: static;
-        margin: 10px auto;
-        display: block;
-        transform: none;
-        /* Reset the transform for mobile screens */
-    }
-
-    .nav-button.left,
-    .nav-button.right {
-        margin-left: auto;
-        margin-right: auto;
+    .version-selector .dropdown {
+        width: 100%;
+        padding: 8px;
     }
 
     .search-dropdowns .dropdown {
-        width: 100%;
-        /* Full width on mobile */
-        font-size: 14px;
-        background-position: right 15px center;
-        /* Adjust icon position for mobile */
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .search-bar {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .search-btn {
+        padding: 10px;
+        font-size: 0.9rem;
     }
 }

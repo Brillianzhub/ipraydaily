@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import goback from '../assets/images/go-back.png';
+import goforward from '../assets/images/go-forward.png';
+
 import './Search.css';
 
 const Search = () => {
@@ -145,12 +148,9 @@ const Search = () => {
         if (currentVerse && currentVerse.previous_verse) {
             setSelectedVerseId(currentVerse.previous_verse.id);
 
-            console.log(currentVerse)
             const a = verses[0].id
             const b = currentVerse.previous_verse.id;
 
-            console.log(a)
-            console.log(b)
             if (b < a) {
                 setSelectedChapter(selectedChapter - 1);
                 setSelectedVerseId(b);
@@ -222,7 +222,6 @@ const Search = () => {
         setShowFullChapter(false);
     };
 
-    // Get book name and chapter number for the title
     const bookName = selectedBook && books.length > 0
         ? books.find(book => book.id === parseInt(selectedBook))?.name || 'Book'
         : 'Book';
@@ -232,7 +231,6 @@ const Search = () => {
         : '0';
     const verseNumber = currentVerse?.verse || '0';
 
-    // Dynamic title logic
     const pageTitle = showFullChapter
         ? `${bookName} ${chapterNumber}`
         : `${bookName} ${chapterNumber} : ${verseNumber}`;
@@ -290,7 +288,39 @@ const Search = () => {
 
             <div className="bible-content">
                 <div className="header-row">
-                    <h2>{pageTitle}</h2>
+                    <div className='header-title'>
+                        {showFullChapter ? (
+                            <button
+                                className="nav-button left"
+                                onClick={handlePreviousChapter}
+                            >
+                                <img src={goback} alt='Go Back' />
+                            </button>
+                        ) : (
+                            <button
+                                className="nav-button left"
+                                onClick={handlePreviousVerse}
+                            >
+                                <img src={goback} alt='Go Back' />
+                            </button>
+                        )}
+                        <h2>{pageTitle}</h2>
+                        {showFullChapter ? (
+                            <button
+                                className="nav-button left"
+                                onClick={handleNextChapter}
+                            >
+                                <img src={goforward} alt='Go Back' />
+                            </button>
+                        ) : (
+                            <button
+                                className="nav-button left"
+                                onClick={handleNextVerse}
+                            >
+                                <img src={goforward} alt='Go Back' />
+                            </button>
+                        )}
+                    </div>
                     <div className="version-selector">
                         <select
                             className="dropdown"
@@ -310,18 +340,6 @@ const Search = () => {
                             <p key={verse.id}><strong>{verse.verse}</strong> {verse.text}</p>
                         ))}
                         <button onClick={handleHideFullChapter}>Hide Full Chapter</button>
-                        <button
-                            className="nav-button left"
-                            onClick={handlePreviousChapter}
-                        >
-                            &#8592;
-                        </button>
-                        <button
-                            className="nav-button right"
-                            onClick={handleNextChapter}
-                        >
-                            &#8594;
-                        </button>
                     </div>
                 ) : (
                     currentVerse && (
@@ -329,20 +347,6 @@ const Search = () => {
                             <p><strong>{currentVerse.verse}</strong> {currentVerse.text}</p>
 
                             <button onClick={handleShowFullChapter}>Full Chapter</button>
-                            <button
-                                className="nav-button left"
-                                onClick={handlePreviousVerse}
-                                disabled={!currentVerse.previous_verse}
-                            >
-                                &#8592;
-                            </button>
-                            <button
-                                className="nav-button right"
-                                onClick={handleNextVerse}
-                                disabled={!currentVerse.next_verse}
-                            >
-                                &#8594;
-                            </button>
                         </div>
                     )
                 )}

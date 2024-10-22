@@ -7,6 +7,7 @@ import './WordStudy.css';
 import './Home.css';
 
 import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 
 
 const WordStudy = () => {
@@ -22,25 +23,12 @@ const WordStudy = () => {
             <div className="content-container">
                 <div className="main-section">
                     <Search />
-                    {/* <MobileAppSection /> */}
                 </div>
-                <div className="sidebar-section">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
             <Footer />
         </div>
     );
-    // return (
-    //     <div className="word-study-container">
-    //         <Search />
-    //     </div>
-    // );
 };
 
 export default WordStudy;

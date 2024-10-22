@@ -15,9 +15,9 @@ const Footer = () => {
                         <div className="footer-column">
                             <h4>Resources</h4>
                             <ul>
-                                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-                                <li><Link to="/about">About</Link></li>
                                 <li><Link to="/koinonia-messages">Koinonia Messages</Link></li>
+                                <li><Link to="/about">About</Link></li>
+                                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
                             </ul>
                         </div>
                         <div className="footer-column">

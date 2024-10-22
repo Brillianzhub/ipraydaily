@@ -1,15 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SearchSection from './SearchSection';
-import VerseOfTheDay from './VerseOfTheDay';
-import MobileAppSection from './MobileAppSection';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import About from './About';
+import Sidebar from './Sidebar';
 
 import './Home.css';
-
 
 
 const AboutPage = () => {
@@ -50,14 +47,7 @@ const AboutPage = () => {
                 <div className="main-section">
                     <About />
                 </div>
-                <div className="sidebar-section">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
             <Footer />
         </div>

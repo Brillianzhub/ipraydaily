@@ -13,7 +13,7 @@
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
 .footer-logo {
@@ -32,7 +32,6 @@
     flex-direction: row;
     gap: 2rem;
     justify-content: center;
-    /* Center the columns horizontally */
 }
 
 .footer-column {
@@ -70,7 +69,6 @@
     .footer-container {
         flex-direction: column;
         align-items: center;
-        /* Center align the content */
     }
 
     .footer-links {

@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import KoinoniaMessage from './KoinoniaMessage';
 import './Home.css';
+import Sidebar from './Sidebar';
 
 
 const Koinonia = () => {
@@ -43,14 +44,7 @@ const Koinonia = () => {
                 <div className="main-section">
                     <KoinoniaMessage />
                 </div>
-                <div className="sidebar-section">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
             <Footer />
         </div>
