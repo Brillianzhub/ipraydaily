@@ -1,6 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import SearchSection from './SearchSection';
 import VerseOfTheDay from './VerseOfTheDay';
 import MobileAppSection from './MobileAppSection';
@@ -8,34 +7,28 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import FeaturedPosts from './FeaturedPosts';
 import Sidebar from './Sidebar';
+import useBibleData from '../hooks/useBibleData.js';
 
 import './Home.css';
 
 
 const Home = () => {
-    const [bibleBooks, setBibleBooks] = useState([]);
     const [verses, setVerses] = useState([]);
-    const [selectedVerse, setSelectedVerse] = useState([]);
-    const [selectedBookName, setSelectedBookName] = useState("");
-    const [selectedChapterNumber, setSelectedChapterNumber] = useState(null);
     const [currentVerse, setCurrentVerse] = useState(null);
     const [randomVerse, setRandomVerse] = useState(null);
 
+    const {
+        bibleBooks,
+        selectedBookName,
+        setSelectedBookName,
+        selectedChapterNumber,
+        setSelectedChapterNumber,
+        selectedVerse,
+        setSelectedVerse
+    } = useBibleData();
+
 
     const categories = ['Salvation', 'Courage', 'Deliverance', 'Blessing', 'Advancement', 'Dominion'];
-
-    const fetchBibleBooks = async () => {
-        try {
-            const response = await axios.get('https://www.brillianzhub.com/ipray/bible_books/');
-            setBibleBooks(response.data);
-        } catch (error) {
-            console.error("Error fetching Bible books:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchBibleBooks();
-    }, []);
 
 
     return (

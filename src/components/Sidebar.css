@@ -1,0 +1,69 @@
+.sidebar-section {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.social-media-links h3 {
+    font-family: Abel, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.social-media-icons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.social-media-icons img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.social-media-links input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Abel', sans-serif;
+    margin-top: 20px;
+}
+
+.social-media-links button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0c4b6e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Abel', sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+button:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+}
+
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.terms-checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.terms-checkbox label {
+    cursor: pointer;
+}

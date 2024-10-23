@@ -63,9 +63,6 @@ const SearchSection = ({
         }
     }, [selectedVerseId, verses, randomVerse, selectedVerse]);
 
-    const oldTestamentBooks = bibleBooks.filter(book => book.category.title === "Old Testament");
-    const newTestamentBooks = bibleBooks.filter(book => book.category.title === "New Testament");
-
 
     const handleSearch = () => {
         if (searchTerm) {

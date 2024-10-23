@@ -6,12 +6,9 @@ import WordStudy from '../src/components/WordStudy';
 import Home from '../src/components/Home';
 import Koinonia from '../src/components/Koinonia';
 import KoinoniaMessageDetail from '../src/components/KoinoniaMessageDetail';
-
-// import BlogPosts from '../src/components/BlogPosts';
-
-
 import './Home.css';
 import BlogPosts from './components/BlogPosts';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 
 const App = () => {
@@ -23,6 +20,7 @@ const App = () => {
   const [currentVerse, setCurrentVerse] = useState(null);
   const [randomVerse, setRandomVerse] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -47,6 +45,7 @@ const App = () => {
           />}
         />
         <Route path="/prayers" element={<Prayer />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/koinonia-messages" element={<Koinonia />} />
         <Route path="/koinonia-messages/:slug" element={<KoinoniaMessageDetail />} />
       </Routes>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import goback from '../assets/images/go-back.png';
 import goforward from '../assets/images/go-forward.png';
+import useBibleData from '../hooks/useBibleData';
 
 import './Search.css';
 
@@ -16,11 +17,18 @@ const Search = () => {
     const [selectedVersion, setSelectedVersion] = useState('KJV');
 
     const [chapter, setChapter] = useState([]);
-
-
     const [bibleText, setBibleText] = useState('');
-
     const [currentVerse, setCurrentVerse] = useState(null);
+
+    const {
+        bibleBooks,
+        selectedBookName,
+        setSelectedBookName,
+        selectedChapterNumber,
+        setSelectedChapterNumber,
+        // selectedVerse,
+        setSelectedVerse
+    } = useBibleData();
 
 
     useEffect(() => {
@@ -102,7 +110,6 @@ const Search = () => {
     useEffect(() => {
         if (selectedVerse) {
             setCurrentVerse(selectedVerse);
-            // setShowFullChapter(false);
         }
     }, [selectedVerse]);
 
@@ -122,6 +129,7 @@ const Search = () => {
         }
     }
 
+    console.log(JSON.stringify(verses))
 
     const handlePreviousChapter = () => {
         if (chapters) {
@@ -130,7 +138,6 @@ const Search = () => {
             }
         }
     }
-
 
     const handleNextVerse = () => {
         if (currentVerse && currentVerse.next_verse) {
