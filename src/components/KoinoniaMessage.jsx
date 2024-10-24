@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import blogPostImage from '../assets/images/blog-post.png';
 import { Link } from 'react-router-dom';
 import './BlogPosts.css';
 

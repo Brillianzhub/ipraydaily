@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import goback from '../assets/images/go-back.png';
 import goforward from '../assets/images/go-forward.png';
-import useBibleData from '../hooks/useBibleData';
-
 import './Search.css';
 
-const Search = () => {
+const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selectedVerseNumber }) => {
     const [books, setBooks] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [verses, setVerses] = useState([]);
@@ -15,28 +13,48 @@ const Search = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showFullChapter, setShowFullChapter] = useState(false);
     const [selectedVersion, setSelectedVersion] = useState('KJV');
+    const [selectedVerse, setSelectedVerse] = useState('');
 
     const [chapter, setChapter] = useState([]);
     const [bibleText, setBibleText] = useState('');
     const [currentVerse, setCurrentVerse] = useState(null);
 
-    const {
-        bibleBooks,
-        selectedBookName,
-        setSelectedBookName,
-        selectedChapterNumber,
-        setSelectedChapterNumber,
-        // selectedVerse,
-        setSelectedVerse
-    } = useBibleData();
-
+    useEffect(() => {
+        if (searchVerses && searchVerses.length > 0) {
+            setVerses(searchVerses);
+        }
+    }, [searchVerses]);
 
     useEffect(() => {
         if (books.length > 0) {
             const initialBook = books[0].id;
-            setSelectedBook(initialBook)
+
+            if (selectedBookName) {
+                const book = books.find(book => book.name.toLowerCase() === selectedBookName.toLowerCase())
+                setSelectedBook(book.id)
+            } else {
+                setSelectedBook(initialBook)
+            }
+
         }
-    }, [books])
+    }, [books, selectedBookName]);
+
+
+    useEffect(() => {
+        if (selectedChapterNumber !== null && chapters && chapters.length > 0) {
+            const chapter = chapters.find(chapter => chapter.number === parseInt(selectedChapterNumber))
+            setSelectedChapter(chapter.id);
+        }
+    }, [chapters, selectedChapterNumber]);
+
+
+    useEffect(() => {
+        if (verses && verses.length > 0 || selectedVerseNumber) {
+            setSelectedVerse(verses.find(verse => verse.id === parseInt(selectedVerseId)));
+        }
+
+    }, [verses, selectedVerseNumber])
+
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -105,7 +123,6 @@ const Search = () => {
         }
     }, [selectedChapter, selectedVersion, selectedVerseId]);
 
-    const selectedVerse = verses.find(verse => verse.id === parseInt(selectedVerseId));
 
     useEffect(() => {
         if (selectedVerse) {
@@ -128,8 +145,6 @@ const Search = () => {
             }
         }
     }
-
-    console.log(JSON.stringify(verses))
 
     const handlePreviousChapter = () => {
         if (chapters) {
@@ -161,62 +176,6 @@ const Search = () => {
             if (b < a) {
                 setSelectedChapter(selectedChapter - 1);
                 setSelectedVerseId(b);
-            }
-        }
-    };
-
-
-    const handleSearch = () => {
-        if (searchTerm) {
-            const [bookName, chapterAndVerses] = searchTerm.split(" ");
-            const [chapterNumber, verseRange] = chapterAndVerses.split(":");
-
-            let startVerse, endVerse;
-            if (verseRange.includes("-")) {
-                const [start, end] = verseRange.split("-");
-                startVerse = parseInt(start);
-                endVerse = parseInt(end);
-            } else {
-                startVerse = parseInt(verseRange);
-                endVerse = startVerse;
-            }
-
-            const foundBook = bibleBooks.find(book => book.name.toLowerCase() === bookName.toLowerCase());
-
-
-            if (foundBook) {
-                setSelectedBookName(foundBook.name)
-
-                fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${foundBook.id}`)
-                    .then(response => response.json())
-                    .then(chapterData => {
-                        const foundChapter = chapterData.find(chapter => chapter.number === parseInt(chapterNumber));
-
-
-                        if (foundChapter) {
-                            setSelectedChapterNumber(foundChapter.number)
-                            fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${foundChapter.id}`)
-                                .then(response => response.json())
-                                .then(verseData => {
-                                    const foundVerses = verseData.filter(verse =>
-                                        verse.verse >= startVerse && verse.verse <= endVerse
-                                    );
-
-                                    if (foundVerses.length > 0) {
-                                        setVerses(foundVerses);
-                                        setSelectedVerse(foundVerses);
-                                    } else {
-                                        console.error("Verses not found");
-                                    }
-                                })
-                                .catch(error => console.error("Error fetching verses:", error));
-                        } else {
-                            console.error("Chapter not found");
-                        }
-                    })
-                    .catch(error => console.error("Error fetching chapters:", error));
-            } else {
-                console.error("Book not found");
             }
         }
     };
@@ -290,7 +249,7 @@ const Search = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button className="search-btn" onClick={handleSearch}>Search</button>
+                <button className="search-btn">Search</button>
             </div>
 
             <div className="bible-content">
@@ -352,7 +311,6 @@ const Search = () => {
                     currentVerse && (
                         <div className="current-verse">
                             <p><strong>{currentVerse.verse}</strong> {currentVerse.text}</p>
-
                             <button onClick={handleShowFullChapter}>Full Chapter</button>
                         </div>
                     )

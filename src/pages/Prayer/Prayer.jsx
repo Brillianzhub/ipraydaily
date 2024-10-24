@@ -1,11 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PrayerPage from '../components/PrayerPage';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
+import PrayerPage from './PrayerPage';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
+
+
 import './Home.css';
+
+
 
 const Prayer = () => {
     const [bibleBooks, setBibleBooks] = useState([]);

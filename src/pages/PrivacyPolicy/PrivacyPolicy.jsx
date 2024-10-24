@@ -1,13 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PrayerPage from '../components/PrayerPage';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
-import './Home.css';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import Policy from '../../components/Policy';
+import Sidebar from '../../components/Sidebar';
+import '../HomePage/Home.css';
 
-const Prayer = () => {
+
+const PrivacyPolicy = () => {
     const [bibleBooks, setBibleBooks] = useState([]);
     const [verses, setVerses] = useState([]);
     const [selectedVerse, setSelectedVerse] = useState([]);
@@ -43,7 +44,7 @@ const Prayer = () => {
             </div>
             <div className="content-container">
                 <div className="main-section">
-                    <PrayerPage />
+                    <Policy />
                 </div>
                 <Sidebar />
             </div>
@@ -52,4 +53,4 @@ const Prayer = () => {
     );
 };
 
-export default Prayer;
+export default PrivacyPolicy;

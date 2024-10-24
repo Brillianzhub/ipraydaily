@@ -1,16 +1,17 @@
 
 import React, { useEffect, useState } from 'react';
-import SearchSection from './SearchSection';
-import VerseOfTheDay from './VerseOfTheDay';
-import MobileAppSection from './MobileAppSection';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import FeaturedPosts from './FeaturedPosts';
-import Sidebar from './Sidebar';
-import useBibleData from '../hooks/useBibleData.jsx';
+import SearchSection from '../../components/SearchSection.jsx';
+import VerseOfTheDay from '../../components/VerseOfTheDay';
+import MobileAppSection from '../../components/MobileAppSection';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import FeaturedPosts from '../../components/FeaturedPosts';
+import Sidebar from '../../components/Sidebar';
+import useBibleData from '../../hooks/useBibleData.jsx';
 import { useNavigate } from 'react-router-dom';
 
-import './Home.css';
+import '../HomePage/Home.css';
+
 
 
 const Home = () => {
@@ -33,12 +34,14 @@ const Home = () => {
 
     useEffect(() => {
         if (verses && verses.length) {
-            navigate('/bible', { state: { 
-                verses: verses, 
-                selectedBookName: selectedBookName, 
-                selectedChapterNumber: selectedChapterNumber,
-                selectedVerseNumber: selectedVerse 
-            } });
+            navigate('/bible', {
+                state: {
+                    verses: verses,
+                    selectedBookName: selectedBookName,
+                    selectedChapterNumber: selectedChapterNumber,
+                    selectedVerseNumber: selectedVerse
+                }
+            });
         }
     }, [verses, navigate])
 

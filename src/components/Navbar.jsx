@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/images/logo.png';
-import menu from '../assets/images/menu.png'; // The menu icon image
+import menu from '../assets/images/menu.png'; 
 
 const Navbar = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);

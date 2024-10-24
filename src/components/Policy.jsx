@@ -1,5 +1,5 @@
 import React from 'react';
-import './PrivacyPolicy.css';
+import '../pages/PrivacyPolicy/PrivacyPolicy.css';
 import contact from '../assets/images/contact.png';
 
 

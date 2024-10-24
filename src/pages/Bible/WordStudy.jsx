@@ -1,12 +1,12 @@
 import React from 'react';
-import Search from './Search';
-import Footer from './Footer'
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Search from '../../components/Search';
+import Footer from '../../components/Footer'
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
 import { useLocation } from 'react-router-dom';
 
-import './WordStudy.css';
-import './Home.css';
+import '../Bible/WordStudy.css';
+import '../HomePage/Home.css';
 
 
 const WordStudy = () => {

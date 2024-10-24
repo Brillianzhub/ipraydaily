@@ -7,6 +7,7 @@ const useBibleData = () => {
     const [selectedBookName, setSelectedBookName] = useState("");
     const [selectedChapterNumber, setSelectedChapterNumber] = useState(null);
     const [selectedVerse, setSelectedVerse] = useState([]);
+    const [verses, setVerses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -33,8 +34,10 @@ const useBibleData = () => {
         setSelectedBookName,
         selectedChapterNumber,
         setSelectedChapterNumber,
-        selectedVerse, 
-        setSelectedVerse
+        selectedVerse,
+        setSelectedVerse,
+        verses,
+        setVerses
     };
 };
 

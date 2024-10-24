@@ -7,9 +7,7 @@
 .banner {
     position: relative;
     height: 400px;
-    /* Default height for banner on larger screens */
     background-image: url('../assets/images/banner.png');
-    /* Ensure correct image path */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -27,14 +25,12 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Dark overlay to improve text contrast */
     z-index: 1;
 }
 
 .quote {
     position: relative;
     z-index: 2;
-    /* Ensure the quote is above the overlay */
     font-size: 2rem;
     padding: 1rem;
     max-width: 800px;
@@ -44,10 +40,8 @@
     font-weight: bold;
     font-style: italic;
     color: #f0e68c;
-    /* Highlight the Bible verse reference */
 }
 
-/* Responsive adjustments */
 @media (max-width: 1200px) {
     .banner {
         height: 350px;
