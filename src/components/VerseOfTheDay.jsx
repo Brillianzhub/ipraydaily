@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './VerseOfTheDay.css';
 import play from "../assets/images/audio.png";
 import share from "../assets/images/share.png";
+import { Link } from 'react-router-dom';
+
 
 
 const VerseOfTheDay = ({
@@ -40,9 +42,7 @@ const VerseOfTheDay = ({
             const intervalId = setInterval(() => {
                 const randomPromise = promises[Math.floor(Math.random() * promises.length)];
                 setCurrentPromise(randomPromise);
-            }, 120000); // 120,000 milliseconds = 2 minutes
-
-            // Cleanup interval when the component unmounts
+            }, 86400000);
             return () => clearInterval(intervalId);
         }
     }, [promises]);
@@ -112,7 +112,7 @@ const VerseOfTheDay = ({
 
         const intervalId = setInterval(() => {
             fetchRandomVerse();
-        }, 120000);
+        }, 86400000);
 
         return () => clearInterval(intervalId);
     }, [bibleBooks]);
@@ -151,7 +151,6 @@ const VerseOfTheDay = ({
         }
     };
 
-    console.log(currentPromise)
     return (
         <>
             <div className="verse-section">
@@ -176,10 +175,13 @@ const VerseOfTheDay = ({
                             </button>
                         </div>
                     </div>
+
                     <div className='continue-button'>
-                        <button className="continue-reading-button">
-                            Continue Reading
-                        </button>
+                        <Link to="/bible">
+                            <button className="continue-reading-button">
+                                Continue Reading
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
