@@ -15,7 +15,7 @@ function transformGoogleDriveLink(googleDriveLink) {
 
 
 // Example usage:
-const googleDriveLink = "https://docs.google.com/document/d/1ycigJbCr8kLZu9OeJ5STF5TNUlO4Qo_7/edit?usp=sharing&ouid=101690223152098020505&rtpof=true&sd=true";
+const googleDriveLink = "https://docs.google.com/document/d/1RfKwYl27c_0SmkN7I6MaddfZESEQmpmB/edit?usp=drive_link&ouid=101690223152098020505&rtpof=true&sd=true";
 const directDownloadLink = transformGoogleDriveLink(googleDriveLink);
 
 if (directDownloadLink) {
