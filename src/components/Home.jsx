@@ -69,12 +69,10 @@ const Home = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setShowVerse(prev => !prev);
-        }, 60000);
+        }, 120000);
 
         return () => clearInterval(intervalId);
     }, []);
-
-    console.log(currentPrayer)
 
     return (
         <div className="home-container">

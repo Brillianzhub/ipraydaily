@@ -12,8 +12,12 @@
 }
 
 .main-bar h3 {
-    color: #0C4B6ECC;
+    color: #F7910B;
     margin-bottom: 20px;
+    font-style: italic;
+}
+
+.main-bar span {
     font-style: italic;
 }
 

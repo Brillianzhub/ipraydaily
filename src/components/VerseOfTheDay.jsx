@@ -156,10 +156,10 @@ const VerseOfTheDay = ({
             <div className="verse-section">
                 <div className="main-bar">
                     <h2 className="verse-caption">VERSE OF THE DAY</h2>
-                    <h3>{bookReference} (King James Version)</h3>
+                    <h3>{bookReference} - <span>(King James Version)</span></h3>
                     {randomVerse ? (
                         <p className="verse-content">
-                            <span>{randomVerse.verse}</span> {randomVerse.text}
+                            {randomVerse.text}
                         </p>
                     ) : (
                         <p className="verse-content">No verses selected.</p>

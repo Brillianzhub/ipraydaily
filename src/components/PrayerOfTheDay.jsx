@@ -60,7 +60,7 @@ const PrayerOfTheDay = ({ prayer, currentPrayer, setCurrentPrayer }) => {
             <div className="verse-section">
                 <div className="main-bar">
                     <h2 className="verse-caption">PRAYER OF THE DAY</h2>
-                    <h3>{currentPrayer.category.title} {currentPrayer.bible_quotation}</h3>
+                    <h3>{currentPrayer.category.title} - <span>{currentPrayer.bible_quotation}</span></h3>
                     <p className="verse-content">
                         {currentPrayer.text}
                     </p>
