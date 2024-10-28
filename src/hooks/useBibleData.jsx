@@ -1,4 +1,3 @@
-// src/hooks/useBibleBooks.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -6,6 +5,7 @@ const useBibleData = () => {
     const [bibleBooks, setBibleBooks] = useState([]);
     const [selectedBookName, setSelectedBookName] = useState("");
     const [selectedChapterNumber, setSelectedChapterNumber] = useState(null);
+    const [selectedChapterId, setSelectedChapterId] = useState('');
     const [selectedVerse, setSelectedVerse] = useState([]);
     const [verses, setVerses] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const useBibleData = () => {
         selectedVerse,
         setSelectedVerse,
         verses,
-        setVerses
+        setVerses,
     };
 };
 

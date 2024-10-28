@@ -1,22 +1,15 @@
 import React from 'react';
-import Search from './Search';
+import SearchSection from './SearchSection';
 import Footer from './Footer'
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import { useLocation } from 'react-router-dom';
+import SearchResults from './SearchResults';
 
 import './WordStudy.css';
 import './Home.css';
 
 
 const WordStudy = () => {
-    const location = useLocation();
-    const {
-        verses = [],
-        selectedBookName = '',
-        selectedChapterNumber = null,
-        selectedVerseNumber = null,
-    } = location.state || {};
 
     return (
         <div className="home-container">
@@ -29,12 +22,8 @@ const WordStudy = () => {
             </div>
             <div className="content-container">
                 <div className="main-section">
-                    <Search
-                        searchVerses={verses}
-                        selectedBookName={selectedBookName}
-                        selectedChapterNumber={selectedChapterNumber}
-                        selectedVerseNumber={selectedVerseNumber}
-                    />
+                    <SearchSection />
+                    <SearchResults />
                 </div>
                 <Sidebar />
             </div>

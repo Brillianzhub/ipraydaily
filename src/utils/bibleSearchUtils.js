@@ -1,13 +1,9 @@
-// src/utils/bibleSearchUtils.js
-
-// Helper function to check if a character is a number
 export function isNumber(char) {
     return !isNaN(parseInt(char));
 }
 
-// Function to parse Bible reference (e.g., "John 3:16" or "1 Kings 3:6")
 export function parseReference(reference) {
-    const parts = reference.split(':');
+    const parts = reference.trim().split(':');
     const bookAndChapter = parts[0].split(' ');
 
     let bookName = bookAndChapter.slice(0, -1).join(' ');
@@ -42,15 +38,15 @@ export function parseReference(reference) {
     };
 }
 
-// Handle search function
-// bibleSearchUtils.js
 export function handleSearch({
     searchTerm = "",
     bibleBooks = [],
+    setCurrentChapter = () => { },
     setSelectedBookName = () => { },
     setSelectedChapterNumber = () => { },
     setVerses = () => { },
-    setSelectedVerse = () => { }
+    setSelectedVerse = () => { },
+    selectedVersion = "",
 } = {}) {
     if (searchTerm) {
         const searchRef = parseReference(searchTerm);
@@ -67,14 +63,27 @@ export function handleSearch({
 
                     if (foundChapter) {
                         setSelectedChapterNumber(foundChapter.number);
+                        setCurrentChapter(foundChapter)
 
-                        fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${foundChapter.id}`)
+                        let apiUrl = '';
+                        if (selectedVersion === 'KJV') {
+                            apiUrl = `https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${foundChapter.id}`;
+                        } else if (selectedVersion === 'AMP') {
+                            apiUrl = `https://www.brillianzhub.com/ipray/bible_verses_amp/?chapter_id=${foundChapter.id}`;
+                        } else if (selectedVersion === 'NIV') {
+                            apiUrl = `https://www.brillianzhub.com/ipray/bible_verses_niv/?chapter_id=${foundChapter.id}`;
+                        } else if (selectedVersion === 'ASV') {
+                            apiUrl = `https://www.brillianzhub.com/ipray/bible_verses_asv/?chapter_id=${foundChapter.id}`;
+                        }
+
+                        fetch(apiUrl)
                             .then(response => response.json())
                             .then(verseData => {
                                 if (!searchRef.verse) {
                                     searchRef.startVerse = 1;
                                     searchRef.endVerse = verseData.length;
                                 }
+                                setSelectedVerse(verseData);
 
                                 const foundVerses = verseData.filter(verse =>
                                     verse.verse >= searchRef.startVerse && verse.verse <= searchRef.endVerse
@@ -82,7 +91,6 @@ export function handleSearch({
 
                                 if (foundVerses.length > 0) {
                                     setVerses(foundVerses);
-                                    setSelectedVerse(foundVerses);
                                 } else {
                                     console.error("Verses not found");
                                 }

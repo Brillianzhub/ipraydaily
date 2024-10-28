@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import SearchSection from './SearchSection';
 import VerseOfTheDay from './VerseOfTheDay';
@@ -9,7 +8,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import FeaturedPosts from './FeaturedPosts';
 import Sidebar from './Sidebar';
-import useBibleData from '../hooks/useBibleData.jsx';
+import { useBibleData } from '../context/BibleDataContext';
 import { useNavigate } from 'react-router-dom';
 
 import './Home.css';
@@ -24,14 +23,12 @@ const Home = () => {
 
     const {
         bibleBooks,
-        selectedBookName,
         setSelectedBookName,
-        selectedChapterNumber,
         setSelectedChapterNumber,
-        selectedVerse,
         setSelectedVerse,
-        verses,
-        setVerses
+        setVerses,
+        loading,
+        error
     } = useBibleData();
 
     const navigate = useNavigate();
@@ -51,18 +48,6 @@ const Home = () => {
         fetchPrayer();
     }, [])
 
-    useEffect(() => {
-        if (verses && verses.length) {
-            navigate('/bible', {
-                state: {
-                    verses: verses,
-                    selectedBookName: selectedBookName,
-                    selectedChapterNumber: selectedChapterNumber,
-                    selectedVerseNumber: selectedVerse
-                }
-            });
-        }
-    }, [verses, navigate])
 
     const categories = ['Salvation', 'Courage', 'Deliverance', 'Blessing', 'Advancement', 'Dominion'];
 
@@ -73,6 +58,10 @@ const Home = () => {
 
         return () => clearInterval(intervalId);
     }, []);
+
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="home-container">
@@ -86,13 +75,7 @@ const Home = () => {
             <div className="content-container">
                 <div className="content-container">
                     <div className="main-section">
-                        <SearchSection
-                            bibleBooks={bibleBooks}
-                            setSelectedBookName={setSelectedBookName}
-                            setSelectedChapterNumber={setSelectedChapterNumber}
-                            setSelectedVerse={setSelectedVerse}
-                            setVerses={setVerses}
-                        />
+                        <SearchSection />
                         <div className="animated-section">
                             {showVerse ? (
                                 <VerseOfTheDay

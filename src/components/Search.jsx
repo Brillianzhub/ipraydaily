@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import goback from '../assets/images/go-back.png';
 import goforward from '../assets/images/go-forward.png';
+import { handleSearch } from '../utils/bibleSearchUtils';
+
 import './Search.css';
 
-const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selectedVerseNumber }) => {
+const Search = ({
+    searchVerses,
+    selectedBookName,
+    selectedChapterNumber,
+    selectedNameOfName,
+    selectedVerseNumber,
+    setSelectedBookName,
+    setSelectedChapterNumber
+}) => {
     const [books, setBooks] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [verses, setVerses] = useState([]);
@@ -14,10 +24,28 @@ const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selecte
     const [showFullChapter, setShowFullChapter] = useState(false);
     const [selectedVersion, setSelectedVersion] = useState('KJV');
     const [selectedVerse, setSelectedVerse] = useState('');
-
     const [chapter, setChapter] = useState([]);
     const [bibleText, setBibleText] = useState('');
     const [currentVerse, setCurrentVerse] = useState(null);
+
+    const bibleBooks = books;
+
+    const handleSearchClick = () => {
+        handleSearch({
+            searchTerm,
+            bibleBooks,
+            setSelectedBookName,
+            setSelectedChapterNumber,
+            setVerses,
+            setSelectedVerse
+        });
+    };
+
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            handleSearchClick();
+        }
+    }
 
     useEffect(() => {
         if (searchVerses && searchVerses.length > 0) {
@@ -25,35 +53,33 @@ const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selecte
         }
     }, [searchVerses]);
 
-    useEffect(() => {
-        if (books.length > 0) {
-            const initialBook = books[0].id;
-
-            if (selectedBookName) {
-                const book = books.find(book => book.name.toLowerCase() === selectedBookName.toLowerCase())
-                setSelectedBook(book.id)
-            } else {
-                setSelectedBook(initialBook)
-            }
-
-        }
-    }, [books, selectedBookName]);
+    // useEffect(() => {
+    //     if (books.length > 0) {
+    //         const initialBook = books[0].id;
+    //         if (selectedBookName) {
+    //             const book = books.find(book => book.name.toLowerCase() === selectedBookName.toLowerCase())
+    //             setSelectedBook(book.id)
+    //         } else {
+    //             setSelectedBook(initialBook)
+    //         }
+    //     }
+    // }, [books, selectedBookName]);
 
 
-    useEffect(() => {
-        if (selectedChapterNumber !== null && chapters && chapters.length > 0) {
-            const chapter = chapters.find(chapter => chapter.number === parseInt(selectedChapterNumber))
-            setSelectedChapter(chapter.id);
-        }
-    }, [chapters, selectedChapterNumber]);
+    // useEffect(() => {
+    //     if (selectedChapterNumber !== null && chapters && chapters.length > 0) {
+    //         const chapter = chapters.find(chapter => chapter.number === parseInt(selectedChapterNumber))
+    //         setSelectedChapter(chapter.id);
+    //     }
+    // }, [chapters, selectedChapterNumber]);
 
 
-    useEffect(() => {
-        if (verses && verses.length > 0 || selectedVerseNumber) {
-            setSelectedVerse(verses.find(verse => verse.id === parseInt(selectedVerseId)));
-        }
+    // useEffect(() => {
+    //     if (verses && verses.length > 0 || selectedVerseNumber) {
+    //         setSelectedVerse(verses.find(verse => verse.id === parseInt(selectedVerseId)));
+    //     }
 
-    }, [verses, selectedVerseNumber])
+    // }, [verses, selectedVerseNumber])
 
 
     useEffect(() => {
@@ -201,7 +227,6 @@ const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selecte
         ? `${bookName} ${chapterNumber}`
         : `${bookName} ${chapterNumber} : ${verseNumber}`;
 
-
     return (
         <div className="search-container">
             <div className="search-dropdowns">
@@ -215,7 +240,6 @@ const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selecte
                         <option key={book.id} value={book.id}>{book.name}</option>
                     ))}
                 </select>
-
                 <select
                     className="dropdown"
                     onChange={(e) => setSelectedChapter(e.target.value)}
@@ -227,7 +251,6 @@ const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selecte
                         <option key={chapter.id} value={chapter.id}>{chapter.number}</option>
                     ))}
                 </select>
-
                 <select
                     className="dropdown"
                     onChange={(e) => setSelectedVerseId(e.target.value)}
@@ -248,8 +271,9 @@ const Search = ({ searchVerses, selectedBookName, selectedChapterNumber, selecte
                     placeholder="Search by Bible verse..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
                 />
-                <button className="search-btn">Search</button>
+                <button className="search-btn" onClick={handleSearchClick}>Search</button>
             </div>
 
             <div className="bible-content">
