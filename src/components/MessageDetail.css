@@ -109,6 +109,38 @@
     margin-top: 5px;
 }
 
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.share-btn {
+    padding: 8px 12px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.share-btn.facebook {
+    background-color: #4267B2;
+}
+
+.share-btn.twitter {
+    background-color: #1DA1F2;
+}
+
+.share-btn.linkedin {
+    background-color: #0077b5;
+}
+
+.share-btn.native {
+    background-color: #4CAF50;
+}
+
+
 /* Responsive Styles */
 @media (min-width: 600px) {
     .message-detail h1 {
