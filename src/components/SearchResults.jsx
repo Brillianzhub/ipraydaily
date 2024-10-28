@@ -78,7 +78,7 @@ const SearchResults = () => {
     }
 
 
-    const pageTitle = selectedBookName && selectedChapterNumber ? `${selectedBookName} ${selectedChapterNumber}` : null;
+    // const pageTitle = selectedBookName && selectedChapterNumber ? `${selectedBookName} ${selectedChapterNumber}` : null;
 
 
     return (

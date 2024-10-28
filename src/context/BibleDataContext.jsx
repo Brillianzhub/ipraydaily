@@ -23,6 +23,8 @@ export const BibleDataProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentChapter, setCurrentChapter] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+
 
     const navigate = useNavigate();
     const [selectedVersion, setSelectedVersion] = useState('KJV');
@@ -55,7 +57,8 @@ export const BibleDataProvider = ({ children }) => {
     }, [selectedBookId]);
 
 
-    const handleSearchClick = async (term = searchTerm) => {
+    const handleSearchClick = (term = inputValue || searchTerm) => {
+        setSearchTerm(term)
         handleSearch({
             searchTerm: term,
             bibleBooks,
@@ -95,6 +98,8 @@ export const BibleDataProvider = ({ children }) => {
             setSelectedVersion,
             handleSearchClick,
             handleKeyDown,
+            inputValue,
+            setInputValue,
             navigate,
             verses,
             setVerses,

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './SearchSection.css';
 import { useBibleData } from '../context/BibleDataContext';
 
 const SearchSection = () => {
-    const prayerCategories = ["Healing", "Thanksgiving", "Salvation"];
 
     const {
         searchTerm,
@@ -13,6 +12,8 @@ const SearchSection = () => {
         setSelectedVersion,
         handleSearchClick,
         handleKeyDown,
+        setInputValue,
+        inputValue
     } = useBibleData();
 
 
@@ -23,8 +24,8 @@ const SearchSection = () => {
                     type="text"
                     className="search-bar"
                     placeholder="Search by Bible verse..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
                 <div className="dropdown-row">
@@ -39,7 +40,7 @@ const SearchSection = () => {
                         <option value="ASV">American Standard Version (ASV)</option>
                     </select>
                 </div>
-                <button className="search-btn" onClick={handleSearchClick}>Search</button>
+                <button className="search-btn" onClick={() => handleSearchClick(inputValue)}>Search</button>
             </div>
         </div>
     );
