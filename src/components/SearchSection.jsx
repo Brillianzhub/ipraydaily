@@ -6,8 +6,6 @@ import { useBibleData } from '../context/BibleDataContext';
 const SearchSection = () => {
 
     const {
-        searchTerm,
-        setSearchTerm,
         selectedVersion,
         setSelectedVersion,
         handleSearchClick,

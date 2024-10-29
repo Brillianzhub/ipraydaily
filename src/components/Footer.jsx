@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import './Footer.css';
-import logo from '../assets/images/logo.png';
+
 
 const Footer = () => {
     return (
@@ -9,15 +9,15 @@ const Footer = () => {
             <footer className="content-container footer">
                 <div className="container footer-container">
                     <div className="footer-logo">
-                        <img src={logo} alt="Logo" />
+                        <img src="/images/logo.png" alt="Logo" />
                     </div>
                     <div className="footer-links">
                         <div className="footer-column">
                             <h4>Resources</h4>
                             <ul>
-                                <li><Link to="/koinonia-messages">Koinonia Messages</Link></li>
-                                <li><Link to="/about">About</Link></li>
-                                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+                                <li><Link href="/koinonia-messages">Koinonia Messages</Link></li>
+                                <li><Link href="/about">About</Link></li>
+                                <li><Link href="/privacy-policy">Privacy Policy</Link></li>
                             </ul>
                         </div>
                         <div className="footer-column">

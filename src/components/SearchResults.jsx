@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import goback from '../assets/images/go-back.png';
-import goforward from '../assets/images/go-forward.png';
-
 import './Search.css';
 import { useBibleData } from '../context/BibleDataContext';
 
@@ -77,10 +74,6 @@ const SearchResults = () => {
         setShowFullChapter(false);
     }
 
-
-    // const pageTitle = selectedBookName && selectedChapterNumber ? `${selectedBookName} ${selectedChapterNumber}` : null;
-
-
     return (
         <div className="search-container">
             <div className="bible-content">
@@ -91,7 +84,7 @@ const SearchResults = () => {
                             className="nav-button left"
                             onClick={handlePreviousChapter}
                         >
-                            <img src={goback} alt='Go Back' />
+                            <img src="images/go-back.png" alt='Go Back' />
                         </button>
 
                         <h2>{searchTerm}</h2>
@@ -100,7 +93,7 @@ const SearchResults = () => {
                             className="nav-button left"
                             onClick={handleNextChapter}
                         >
-                            <img src={goforward} alt='Go Back' />
+                            <img src='images/go-forward.png' alt='Go Back' />
                         </button>
 
                     </div>

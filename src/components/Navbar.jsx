@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import './Navbar.css';
-import logo from '../assets/images/logo.png';
-import menu from '../assets/images/menu.png';
 
 const Navbar = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -21,21 +19,21 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">
-                    <img src={logo} alt="Logo" />
+                <Link href="/">
+                    <img src="/images/logo.png" alt="Logo" />
                 </Link>
             </div>
             <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`} aria-expanded={isMenuOpen}>
                 <ul>
                     {navLinks.map(link => (
                         <li key={link.path}>
-                            <Link to={link.path} onClick={toggleMenu}>{link.label}</Link>
+                            <Link href={link.path} onClick={toggleMenu}>{link.label}</Link>
                         </li>
                     ))}
                 </ul>
             </div>
             <div className="navbar-toggle" onClick={toggleMenu}>
-                <img src={menu} alt="Menu" />
+                <img src="/images/menu.png" alt="Menu" />
             </div>
         </nav>
     );

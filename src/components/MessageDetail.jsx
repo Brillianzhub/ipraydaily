@@ -1,22 +1,27 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
-import { Helmet } from 'react-helmet-async';
 import { useMeta } from '../context/MetaContext.jsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+// import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import Head from 'next/head'; // Import Head from next/head
 
 import './MessageDetail.css';
 
 const MessageDetail = () => {
-    const { slug } = useParams();
+    const router = useRouter();
+    const slug = router.query.slug;
+
+    // const { slug } = router.query;
+
     const [blogPost, setBlogPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { metaData, setMetaData } = useMeta();
-
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -38,7 +43,9 @@ const MessageDetail = () => {
             }
         };
 
-        fetchPost();
+        if (slug) {
+            fetchPost();
+        }
     }, [slug, setMetaData]);
 
     if (loading) return <div>Loading...</div>;
@@ -47,79 +54,46 @@ const MessageDetail = () => {
 
     const {
         author = {},
-        reviewed_by = {},
-        factchecked_by = {},
         title = '',
-        description = '',
-        publish,
-        created,
-        last_updated,
         body = '',
         read_time = 0,
-        categories = [],
-        related_posts = [],
-        key_takeaways = [],
-        download_audio_link = '',
-        youtube_link = '',
         download_link = '',
-        image = ''
+        download_audio_link = '',
+        youtube_link = ''
     } = blogPost;
 
     const cleanBody = DOMPurify.sanitize(body);
 
-    const formatDate = (isoDateString) => {
-        const date = new Date(isoDateString);
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
-
-
-    const shareData = {
-        title,
-        text: description,
-        url: window.location.origin + `/koinonia-messages/${slug}`
-    };
-
     const handleShare = (platform) => {
+        const shareData = {
+            title,
+            text: blogPost.description,
+            url: window.location.origin + `/koinonia-messages/${slug}`
+        };
+
         const encodedUrl = encodeURIComponent(shareData.url);
         const encodedText = encodeURIComponent(shareData.text);
 
-        if (platform) {
-            // Social media share URLs
-            let url;
-            switch (platform) {
-                case 'facebook':
-                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
-                    break;
-                case 'twitter':
-                    url = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
-                    break;
-                case 'linkedin':
-                    url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedText}`;
-                    break;
-                default:
-                    return;
-            }
-            window.open(url, '_blank');
-        } else {
-            if (navigator.share) {
-                navigator.share({
-                    title: shareData.title,
-                    text: shareData.text,
-                    url: shareData.url,
-                }).catch(error => console.log('Error sharing:', error));
-            } else {
-                alert("Native sharing is not supported in this browser.");
-            }
+        let url;
+        switch (platform) {
+            case 'facebook':
+                url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
+                break;
+            case 'twitter':
+                url = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+                break;
+            case 'linkedin':
+                url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedText}`;
+                break;
+            default:
+                return;
         }
+        window.open(url, '_blank');
     };
 
     return (
         <div className="message-detail">
-            <Helmet>
+            <Head>
                 <title>{metaData.title}</title>
                 <meta property="og:title" content={metaData.title} />
                 <meta property="og:description" content={metaData.description} />
@@ -128,14 +102,12 @@ const MessageDetail = () => {
                 <meta name="twitter:title" content={metaData.title} />
                 <meta name="twitter:description" content={metaData.description} />
                 <meta name="twitter:image" content={metaData.image} />
-            </Helmet>
+            </Head>
 
             <h1>{title}</h1>
-            <p className='message-det-date'>{formatDate(blogPost.created)}</p>
             <p className='message-det-date'>Read time: {`${read_time} mins`}</p>
 
-
-            <div className="share-buttons">
+            {/* <div className="share-buttons">
                 <button onClick={() => handleShare('facebook')} className="share-btn facebook">
                     <FontAwesomeIcon icon={faFacebook} />
                 </button>
@@ -148,7 +120,7 @@ const MessageDetail = () => {
                 <button onClick={() => handleShare()} className="share-btn native">
                     <FontAwesomeIcon icon={faShareAlt} />
                 </button>
-            </div>
+            </div> */}
 
             <div className="body" dangerouslySetInnerHTML={{ __html: cleanBody }}></div>
             <div className="downloads">
@@ -182,23 +154,20 @@ const MessageDetail = () => {
                 </p>
             </div>)}
 
-            <div className='authors-info'>
-                {author.profile && (
+            {author.profile && (
+                <div className='authors-info'>
                     <div className='authors-photo'>
-                        <img src={author.profile.photo} />
+                        <img src={author.profile.photo} alt={author.profile.lastname} />
                     </div>
-                )}
-                {author.profile && (
                     <div className='authors-profile'>
                         <h3>SUMMARISED BY:</h3>
                         <h3>{author.profile.lastname} {author.profile.firstname}</h3>
                         <p>{author.profile.bios}</p>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };
-
 
 export default MessageDetail;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import './FeaturedPosts.css';
 
 const FeaturedPosts = () => {
@@ -46,18 +47,13 @@ const FeaturedPosts = () => {
                         <p>{truncateText(post.description, 50)}</p>
                         <div className='blog-date'>
                             <p>{formatDate(post.created)} | {post.read_time} mins read</p>
-                            <Link to={`/koinonia-messages/${post.slug}`}>
+                            <Link href={`/koinonia-messages/${post.slug}`}>
                                 <h3>View Message</h3>
                             </Link>
                         </div>
                     </div>
                 ))}
             </div>
-            {/* <div className="complete-list">
-                <Link to={`/koinonia-messages`}>
-                    <h3>View All Messages</h3>
-                </Link>
-            </div> */}
         </div>
     )
 }

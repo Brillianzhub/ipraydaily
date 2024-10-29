@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import './BlogPosts.css';
 
 const KoinoniaMessage = () => {
@@ -51,8 +53,14 @@ const KoinoniaMessage = () => {
                         <p>{truncateText(post.description, 100)}</p>
                         <div className='blog-date'>
                             <p>{formatDate(post.created)} | {post.read_time} mins read</p>
-                            <Link to={`/koinonia-messages/${post.slug}`}>
+                            {/* <Link href={`/koinonia-messages/${post.slug}`}>
                                 <h3>View Message</h3>
+                            </Link> */}
+
+                            <Link href={`/koinonia-messages/${post.slug}`}>
+                                <a>
+                                    <h3>View Message</h3>
+                                </a>
                             </Link>
                         </div>
                     </div>

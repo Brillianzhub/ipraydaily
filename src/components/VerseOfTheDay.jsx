@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './VerseOfTheDay.css';
-import play from "../assets/images/audio.png";
-import share from "../assets/images/share.png";
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 
 
@@ -168,16 +166,16 @@ const VerseOfTheDay = ({
                     <div className="action-container">
                         <div className="icon-container">
                             <button className="icon-button" aria-label="Share" onClick={handleShare}>
-                                <img src={share} alt="Share" />
+                                <img src="/images/share.png" alt="Logo" />
                             </button>
                             <button className="icon-button" aria-label="Play" onClick={handlePlayAudio}>
-                                <img src={play} alt="Play" />
+                                <img src="/images/audio.png" alt="Logo" />
                             </button>
                         </div>
                     </div>
 
                     <div className='continue-button'>
-                        <Link to="/bible">
+                        <Link href="/bible">
                             <button className="continue-reading-button">
                                 Continue Reading
                             </button>

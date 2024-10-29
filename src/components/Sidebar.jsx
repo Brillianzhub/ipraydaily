@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import facebook from '../assets/images/facebook.png';
-import twitter from '../assets/images/twitter.png';
-import youtube from '../assets/images/youtube.png';
 import './Sidebar.css';
 
 
@@ -53,9 +50,9 @@ const Sidebar = () => {
             <div className="social-media-links">
                 <h3>Follow Us</h3>
                 <div className="social-media-icons">
-                    <img src={facebook} alt='Facebook' />
-                    <img src={twitter} alt='X' />
-                    <img src={youtube} alt='Youtube' />
+                    <img src="/images/facebook.png" alt="Facebook" />
+                    <img src="/images/twitter.png" alt="X" />
+                    <img src="/images/youtube.png" alt="Youtube" />
                 </div>
                 <p>Subscribe to our newsletter and recieve a selection of cool articles every month.</p>
                 <form onSubmit={handleSubmit}>

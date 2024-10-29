@@ -1,61 +1,29 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+"use client"; // Add this line to mark the file as a client component
+
+import React, { createContext, useContext, useState } from 'react';
+import { useBibleBooks, useChapters } from '../hooks/useBibleDataHooks';
+import { useRouter } from 'next/navigation';
 import { handleSearch } from '../utils/bibleSearchUtils';
-
-
 
 const BibleDataContext = createContext();
 
 export const useBibleData = () => useContext(BibleDataContext);
 
 export const BibleDataProvider = ({ children }) => {
-
-    const [bibleBooks, setBibleBooks] = useState([]);
-    const [chapters, setChapters] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
     const [selectedBookName, setSelectedBookName] = useState("");
     const [selectedChapterNumber, setSelectedChapterNumber] = useState(null);
-    const [selectedChapterId, setSelectedChapterId] = useState('');
     const [selectedBookId, setSelectedBookId] = useState('');
     const [selectedVerse, setSelectedVerse] = useState([]);
-    const [verses, setVerses] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [currentChapter, setCurrentChapter] = useState([]);
     const [inputValue, setInputValue] = useState('');
-
-
-    const navigate = useNavigate();
     const [selectedVersion, setSelectedVersion] = useState('KJV');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedChapterId, setSelectedChapterId] = useState('');
+    const [verses, setVerses] = useState([]);
+    const [currentChapter, setCurrentChapter] = useState([]);
+    const { bibleBooks, loading, error } = useBibleBooks();
+    const chapters = useChapters(selectedBookId);
 
-    const fetchBibleBooks = async () => {
-        try {
-            const response = await axios.get('https://www.brillianzhub.com/ipray/bible_books/');
-            setBibleBooks(response.data);
-        } catch (error) {
-            setError("Error fetching Bible books: " + error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        console.log("Fetching Bible books...");
-        fetchBibleBooks();
-    }, []);
-
-    useEffect(() => {
-        if (selectedBookId) {
-            const fetchChapters = async () => {
-                const response = await fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${selectedBookId}`);
-                const data = await response.json();
-                setChapters(data);
-            };
-            fetchChapters();
-        }
-    }, [selectedBookId]);
-
+    const router = useRouter();
 
     const handleSearchClick = (term = inputValue || searchTerm) => {
         setSearchTerm(term)
@@ -69,7 +37,7 @@ export const BibleDataProvider = ({ children }) => {
             setSelectedVerse,
             selectedVersion
         });
-        navigate('/bible');
+        router.push('/bible');
     };
 
     function handleKeyDown(event) {
@@ -78,41 +46,34 @@ export const BibleDataProvider = ({ children }) => {
         }
     }
 
-
     return (
         <BibleDataContext.Provider value={{
             bibleBooks,
-            setBibleBooks,
             selectedBookName,
             setSelectedBookName,
             selectedChapterNumber,
             setSelectedChapterNumber,
-            selectedChapterId,
-            setSelectedChapterId,
+            selectedBookId,
             setSelectedBookId,
             selectedVerse,
             setSelectedVerse,
+            selectedVersion,
             searchTerm,
             setSearchTerm,
-            selectedVersion,
             setSelectedVersion,
+            currentChapter, setCurrentChapter,
+            selectedChapterId, setSelectedChapterId,
             handleSearchClick,
             handleKeyDown,
             inputValue,
-            setInputValue,
-            navigate,
             verses,
             setVerses,
+            setInputValue,
             chapters,
-            currentChapter,
-            setCurrentChapter,
             loading,
-            setLoading,
-            error,
-            setError
+            error
         }}>
             {children}
         </BibleDataContext.Provider>
     );
 };
-
