@@ -1,35 +1,10 @@
-"use client";
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import Link from 'next/link';
 import './BlogPosts.css';
 
-const KoinoniaMessage = () => {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get('https://www.brillianzhub.com/blog/');
-                setPosts(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError('Failed to fetch blog posts');
-                setLoading(false);
-            }
-        };
-
-        fetchPosts();
-    }, []);
-
+const KoinoniaMessage = ({ posts }) => {
     const truncateText = (text, limit) => {
-        if (text.length > limit) {
-            return text.slice(0, limit) + '...';
-        }
-        return text;
+        return text.length > limit ? text.slice(0, limit) + '...' : text;
     };
 
     const formatDate = (isoDateString) => {
@@ -40,7 +15,6 @@ const KoinoniaMessage = () => {
             day: 'numeric'
         });
     };
-
 
     return (
         <section className="blog-section">
@@ -53,14 +27,8 @@ const KoinoniaMessage = () => {
                         <p>{truncateText(post.description, 100)}</p>
                         <div className='blog-date'>
                             <p>{formatDate(post.created)} | {post.read_time} mins read</p>
-                            {/* <Link href={`/koinonia-messages/${post.slug}`}>
-                                <h3>View Message</h3>
-                            </Link> */}
-
                             <Link href={`/koinonia-messages/${post.slug}`}>
-                                <a>
-                                    <h3>View Message</h3>
-                                </a>
+                                <h3>View Message</h3>
                             </Link>
                         </div>
                     </div>
@@ -68,6 +36,6 @@ const KoinoniaMessage = () => {
             </div>
         </section>
     );
-}
+};
 
 export default KoinoniaMessage;

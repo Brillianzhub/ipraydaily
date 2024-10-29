@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -8,30 +6,19 @@ import KoinoniaMessage from '../../components/KoinoniaMessage';
 import Sidebar from '../../components/Sidebar';
 import '../../components/Home.css';
 
-
-
-const Koinonia = () => {
-    const [bibleBooks, setBibleBooks] = useState([]);
-    const [verses, setVerses] = useState([]);
-    const [selectedVerse, setSelectedVerse] = useState([]);
-    const [selectedBookName, setSelectedBookName] = useState("");
-    const [selectedChapterNumber, setSelectedChapterNumber] = useState(null);
-    const [currentVerse, setCurrentVerse] = useState(null);
-    const [randomVerse, setRandomVerse] = useState(null);
-
-
-    const fetchBibleBooks = async () => {
+const Koinonia = async () => {
+    // Fetching data server-side
+    const fetchPosts = async () => {
         try {
-            const response = await axios.get('https://www.brillianzhub.com/ipray/bible_books/');
-            setBibleBooks(response.data);
+            const response = await axios.get('https://www.brillianzhub.com/blog/');
+            return response.data;
         } catch (error) {
-            console.error("Error fetching Bible books:", error);
+            console.error("Error fetching posts:", error);
+            return []; // return an empty array on error
         }
     };
 
-    useEffect(() => {
-        fetchBibleBooks();
-    }, []);
+    const posts = await fetchPosts();
 
     return (
         <div className="home-container">
@@ -44,7 +31,7 @@ const Koinonia = () => {
             </div>
             <div className="content-container">
                 <div className="main-section">
-                    <KoinoniaMessage />
+                    <KoinoniaMessage posts={posts} />
                 </div>
                 <Sidebar />
             </div>

@@ -1,12 +1,28 @@
-"use client";
-
 import React from "react";
+import axios from 'axios';
 import MessageDetail from "../../../components/MessageDetail";
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import Sidebar from "../../../components/Sidebar";
 
-const KoinoniaMessageDetail = () => {
+const KoinoniaMessageDetail = async ({ params }) => {
+    const { slug } = await params;
+
+    // Fetch post details
+    const fetchPostDetails = async () => {
+        try {
+            const response = await axios.get(`https://www.brillianzhub.com/blog/${slug}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching post details:", error);
+            return null; // Handle error case
+        }
+    };
+
+    const blogPost = await fetchPostDetails();
+
+    const { post, related_posts, categories, seo_title, seo_description } = blogPost || {};
+
     return (
         <div className="home-container">
             <Navbar />
@@ -18,13 +34,24 @@ const KoinoniaMessageDetail = () => {
             </div>
             <div className="content-container">
                 <div className="main-section">
-                    <MessageDetail />
+                    {blogPost ? (
+                        <MessageDetail
+                            post={post}
+                            relatedPosts={related_posts}
+                            categories={categories}
+                            seoTitle={seo_title}
+                            seoDescription={seo_description}
+                            slug={slug}
+                        />
+                    ) : (
+                        <div>Error fetching post details.</div>
+                    )}
                 </div>
                 <Sidebar />
             </div>
             <Footer />
         </div>
     );
-}
+};
 
 export default KoinoniaMessageDetail;
