@@ -84,34 +84,38 @@ const MessageDetail = () => {
     };
 
     const handleShare = (platform) => {
-        let url;
         const encodedUrl = encodeURIComponent(shareData.url);
         const encodedText = encodeURIComponent(shareData.text);
 
-        switch (platform) {
-            case 'facebook':
-                url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
-                break;
-            case 'twitter':
-                url = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
-                break;
-            case 'linkedin':
-                url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedText}`;
-                break;
-            default:
-                return;
-        }
-        window.open(url, '_blank');
-    };
-
-    const handleNativeShare = () => {
-        if (navigator.share) {
-            navigator.share(shareData).catch(error => console.log('Error sharing:', error));
+        if (platform) {
+            // Social media share URLs
+            let url;
+            switch (platform) {
+                case 'facebook':
+                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
+                    break;
+                case 'twitter':
+                    url = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+                    break;
+                case 'linkedin':
+                    url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedText}`;
+                    break;
+                default:
+                    return;
+            }
+            window.open(url, '_blank');
         } else {
-            alert("Sharing not supported in this browser.");
+            if (navigator.share) {
+                navigator.share({
+                    title: shareData.title,
+                    text: shareData.text,
+                    url: shareData.url,
+                }).catch(error => console.log('Error sharing:', error));
+            } else {
+                alert("Native sharing is not supported in this browser.");
+            }
         }
     };
-
 
     return (
         <div className="message-detail">
@@ -145,13 +149,6 @@ const MessageDetail = () => {
                     <FontAwesomeIcon icon={faShareAlt} />
                 </button>
             </div>
-
-            {/* <div className="share-buttons">
-                <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on Twitter</button>
-                <button onClick={() => handleShare('linkedin')} className="share-btn linkedin">Share on LinkedIn</button>
-                <button onClick={handleNativeShare} className="share-btn native">Share</button>
-            </div> */}
 
             <div className="body" dangerouslySetInnerHTML={{ __html: cleanBody }}></div>
             <div className="downloads">
