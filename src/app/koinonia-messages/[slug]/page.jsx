@@ -8,20 +8,22 @@ import Sidebar from "../../../components/Sidebar";
 const KoinoniaMessageDetail = async ({ params }) => {
     const { slug } = await params;
 
-    // Fetch post details
     const fetchPostDetails = async () => {
         try {
             const response = await axios.get(`https://www.brillianzhub.com/blog/${slug}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching post details:", error);
-            return null; // Handle error case
+            return null;
         }
     };
 
     const blogPost = await fetchPostDetails();
 
     const { post, related_posts, categories, seo_title, seo_description } = blogPost || {};
+
+    const fullURL = `${process.env.NEXT_PUBLIC_SITE_URL}/koinonia-messages/${slug}`;
+
 
     return (
         <div className="home-container">
@@ -42,6 +44,7 @@ const KoinoniaMessageDetail = async ({ params }) => {
                             seoTitle={seo_title}
                             seoDescription={seo_description}
                             slug={slug}
+                            fullURL={fullURL}
                         />
                     ) : (
                         <div>Error fetching post details.</div>

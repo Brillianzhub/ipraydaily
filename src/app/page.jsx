@@ -10,11 +10,9 @@ import Footer from '../components/Footer';
 import FeaturedPosts from '../components/FeaturedPosts';
 import Sidebar from '../components/Sidebar';
 import { useBibleData } from '../context/BibleDataContext';
-import { useRouter } from 'next/navigation';
 import '../components/Home.css';
 
 const Home = () => {
-  const [currentVerse, setCurrentVerse] = useState(null);
   const [randomVerse, setRandomVerse] = useState(null);
   const [showVerse, setShowVerse] = useState(true);
   const [prayer, setPrayer] = useState([]);
@@ -22,19 +20,14 @@ const Home = () => {
 
   const {
     bibleBooks,
-    selectedBookName,
     setSelectedBookName,
-    selectedChapterNumber,
     setSelectedChapterNumber,
-    selectedVerse,
     setSelectedVerse,
-    verses,
     setVerses,
     loading,
     error
   } = useBibleData();
 
-  const router = useRouter();
 
   useEffect(() => {
     const fetchPrayer = async () => {
@@ -50,19 +43,6 @@ const Home = () => {
     fetchPrayer();
   }, [])
 
-  useEffect(() => {
-    if (verses && verses.length) {
-      router.push({
-        pathname: '/bible',
-        query: {
-          verses: JSON.stringify(verses),
-          selectedBookName,
-          selectedChapterNumber,
-          selectedVerseNumber: selectedVerse
-        }
-      });
-    }
-  }, [verses, router]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -76,8 +56,6 @@ const Home = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
-
-  const categories = ['Salvation', 'Courage', 'Deliverance', 'Blessing', 'Advancement', 'Dominion'];
 
   return (
     <div className="home-container">

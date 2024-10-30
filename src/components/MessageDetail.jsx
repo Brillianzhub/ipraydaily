@@ -1,42 +1,14 @@
 import React from 'react';
-// import DOMPurify from 'dompurify';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-// import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
-
 import Head from 'next/head';
+import Image from 'next/image';
 
 import './MessageDetail.css';
 
-const MessageDetail = ({ post, relatedPosts, categories, seoTitle, seoDescription, slug, blogPost }) => {
-    
+const MessageDetail = ({ post, slug, fullURL, }) => {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullURL)}`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&fullURL=${encodeURIComponent(fullURL)}`;
+    const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(fullURL)}&title=${encodeURIComponent(post.title)}`;
 
-    const handleShare = (platform) => {
-        const shareData = {
-            title,
-            text: blogPost.description,
-            url: window.location.origin + `/koinonia-messages/${slug}`
-        };
-
-        const encodedUrl = encodeURIComponent(shareData.url);
-        const encodedText = encodeURIComponent(shareData.text);
-
-        let url;
-        switch (platform) {
-            case 'facebook':
-                url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
-                break;
-            case 'twitter':
-                url = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
-                break;
-            case 'linkedin':
-                url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedText}`;
-                break;
-            default:
-                return;
-        }
-        window.open(url, '_blank');
-    };
 
     return (
         <div className="message-detail">
@@ -55,20 +27,18 @@ const MessageDetail = ({ post, relatedPosts, categories, seoTitle, seoDescriptio
             <h1>{post.title}</h1>
             <p className='message-det-date'>Read time: {`${post.read_time} mins`}</p>
 
-            {/* <div className="share-buttons">
-                <button onClick={() => handleShare('facebook')} className="share-btn facebook">
-                    <FontAwesomeIcon icon={faFacebook} />
-                </button>
-                <button onClick={() => handleShare('twitter')} className="share-btn twitter">
-                    <FontAwesomeIcon icon={faTwitter} />
-                </button>
-                <button onClick={() => handleShare('linkedin')} className="share-btn linkedin">
-                    <FontAwesomeIcon icon={faLinkedin} />
-                </button>
-                <button onClick={() => handleShare()} className="share-btn native">
-                    <FontAwesomeIcon icon={faShareAlt} />
-                </button>
-            </div> */}
+            <div className="share-buttons">
+                <a href={facebookUrl} target="_blank" rel="noopener noreferrer" >
+                    <Image src="/images/facebook-share.png" alt="Share on Facebook" width={48} height={48} />
+                </a>
+                <a href={twitterUrl} target="_blank" rel="noopener noreferrer" >
+                    <Image src="/images/twitter-share.png" alt="Share on Twitter" width={48} height={48} />
+                </a>
+                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" >
+                    <Image src="/images/linkedin-share.png" alt="Share on LinkedIn" width={48} height={48} />
+                </a>
+            </div>
+
 
             <div className="body" dangerouslySetInnerHTML={{ __html: post.body }}></div>
             <div className="downloads">
@@ -105,7 +75,12 @@ const MessageDetail = ({ post, relatedPosts, categories, seoTitle, seoDescriptio
             {post.author.profile && (
                 <div className='authors-info'>
                     <div className='authors-photo'>
-                        <img src={post.author.profile.photo} alt={post.author.profile.lastname} />
+                        <Image
+                            src={post.author.profile.photo}
+                            alt={post.author.profile.lastname}
+                            width={100}
+                            height={100}
+                        />
                     </div>
                     <div className='authors-profile'>
                         <h3>SUMMARISED BY:</h3>

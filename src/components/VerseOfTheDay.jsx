@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './VerseOfTheDay.css';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 
@@ -10,9 +11,6 @@ const VerseOfTheDay = ({
     setRandomVerse
 }) => {
     const [promises, setPromises] = useState([]);
-    const [currentPromise, setCurrentPromise] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,12 +21,9 @@ const VerseOfTheDay = ({
                 }
                 const data = await response.json();
                 setPromises(data);
-
-                setCurrentPromise(response.data[Math.floor(Math.random() * response.data.length)]);
+                // setCurrentPromise(response.data[Math.floor(Math.random() * response.data.length)]);
             } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
+                console.log(error.message);
             }
         };
         fetchData();
@@ -48,7 +43,8 @@ const VerseOfTheDay = ({
 
     const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)]
 
-    const fetchRandomVerse = () => {
+
+    const fetchRandomVerse = useCallback(async () => {
         if (!bibleBooks || bibleBooks.length === 0) {
             console.error("Bible books data is not available.");
             return;
@@ -61,47 +57,48 @@ const VerseOfTheDay = ({
             return;
         }
 
-        fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${randomBook.id}`)
-            .then(response => response.json())
-            .then(chapters => {
-                if (!chapters || chapters.length === 0) {
-                    console.error("No chapters available for the selected book.");
-                    return;
-                }
+        try {
+            const chaptersResponse = await fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${randomBook.id}`);
+            const chapters = await chaptersResponse.json();
 
-                const randomChapter = getRandomItem(chapters);
+            if (!chapters || chapters.length === 0) {
+                console.error("No chapters available for the selected book.");
+                return;
+            }
 
-                if (!randomChapter || !randomChapter.id) {
-                    console.error("No valid chapter selected.");
-                    return;
-                }
+            const randomChapter = getRandomItem(chapters);
 
-                fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${randomChapter.id}`)
-                    .then(response => response.json())
-                    .then(verses => {
-                        if (!verses || verses.length === 0) {
-                            console.error("No verses available for the selected chapter.");
-                            return;
-                        }
+            if (!randomChapter || !randomChapter.id) {
+                console.error("No valid chapter selected.");
+                return;
+            }
 
-                        const randomVerse = getRandomItem(verses);
+            const versesResponse = await fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${randomChapter.id}`);
+            const verses = await versesResponse.json();
 
-                        if (!randomVerse || !randomVerse.verse) {
-                            console.error("No valid verse selected.");
-                            return;
-                        }
+            if (!verses || verses.length === 0) {
+                console.error("No verses available for the selected chapter.");
+                return;
+            }
 
-                        setRandomVerse({
-                            bookName: randomBook.name,
-                            chapterNumber: randomChapter.number,
-                            verse: randomVerse.verse,
-                            text: randomVerse.text,
-                        });
-                    })
-                    .catch(error => console.error("Error fetching verses:", error));
-            })
-            .catch(error => console.error("Error fetching chapters:", error));
-    };
+            const randomVerse = getRandomItem(verses);
+
+            if (!randomVerse || !randomVerse.verse) {
+                console.error("No valid verse selected.");
+                return;
+            }
+
+            setRandomVerse({
+                bookName: randomBook.name,
+                chapterNumber: randomChapter.number,
+                verse: randomVerse.verse,
+                text: randomVerse.text,
+            });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }, [bibleBooks]);
+
 
 
 
@@ -113,11 +110,10 @@ const VerseOfTheDay = ({
         }, 86400000);
 
         return () => clearInterval(intervalId);
-    }, [bibleBooks]);
+    }, [bibleBooks, fetchRandomVerse]);
 
     const bookReference = randomVerse ? `${randomVerse.bookName} ${randomVerse.chapterNumber}:${randomVerse.verse}` : 'Book';
 
-    const audioRef = useRef(null);
 
     const handlePlayAudio = () => {
         if (randomVerse && randomVerse.text) {
@@ -166,10 +162,21 @@ const VerseOfTheDay = ({
                     <div className="action-container">
                         <div className="icon-container">
                             <button className="icon-button" aria-label="Share" onClick={handleShare}>
-                                <img src="/images/share.png" alt="Logo" />
+                                <Image
+                                    src="/images/share.png"
+                                    alt="Logo"
+                                    width={48}
+                                    height={48}
+                                />
+
                             </button>
                             <button className="icon-button" aria-label="Play" onClick={handlePlayAudio}>
-                                <img src="/images/audio.png" alt="Logo" />
+                                <Image
+                                    src="/images/audio.png"
+                                    alt="Logo"
+                                    width={48}
+                                    height={48}
+                                />
                             </button>
                         </div>
                     </div>

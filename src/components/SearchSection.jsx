@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './SearchSection.css';
 import { useBibleData } from '../context/BibleDataContext';

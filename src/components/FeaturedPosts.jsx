@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 import './FeaturedPosts.css';
+import Image from 'next/image';
 
 const FeaturedPosts = () => {
     const [featuredPosts, setFeaturedPosts] = useState([]);
@@ -42,7 +43,12 @@ const FeaturedPosts = () => {
             <div className='featured-posts'>
                 {featuredPosts.map((post, index) => (
                     <div className='featured-posts-list' key={index} >
-                        <img src={post.image} alt='Image' />
+                        <Image
+                            src={post.image}
+                            alt='Image'
+                            width={500}
+                            height={300}
+                        />
                         <h3>{post.title}</h3>
                         <p>{truncateText(post.description, 50)}</p>
                         <div className='blog-date'>

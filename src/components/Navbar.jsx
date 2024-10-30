@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import './Navbar.css';
+import Image from 'next/image';
 
 const Navbar = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="navbar-logo">
                 <Link href="/">
-                    <img src="/images/logo.png" alt="Logo" />
+                    <Image src="/images/logo.png" alt="Logo" width={48} height={48} />
                 </Link>
             </div>
             <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`} aria-expanded={isMenuOpen}>
@@ -34,7 +35,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-toggle" onClick={toggleMenu}>
-                <img src="/images/menu.png" alt="Menu" />
+                <Image src="/images/menu.png" alt="Menu" width={48} height={48} />
             </div>
         </nav>
     );

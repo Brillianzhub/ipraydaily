@@ -8,7 +8,7 @@ const Banner = () => {
                 <div className="banner">
                     <div className="overlay"></div>
                     <div className="quote">
-                        "... Men ought always to pray, and not to faint. <span>Luke 18:1</span>"
+                        &rsquo;... Men ought always to pray, and not to faint. <span>Luke 18:1</span>&rsquo;
                     </div>
                 </div>
             </div>

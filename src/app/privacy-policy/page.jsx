@@ -1,15 +1,13 @@
 import React from 'react';
-import SearchSection from './SearchSection';
-import Footer from './Footer'
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import SearchResults from './SearchResults';
-
-import './WordStudy.css';
-import './Home.css';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import Policy from '../../components/Policy';
+import Sidebar from '../../components/Sidebar';
+import '../../components/Home.css';
 
 
-const WordStudy = () => {
+const PrivacyPolicy = () => {
+
 
     return (
         <div className="home-container">
@@ -22,8 +20,7 @@ const WordStudy = () => {
             </div>
             <div className="content-container">
                 <div className="main-section">
-                    <SearchSection />
-                    <SearchResults />
+                    <Policy />
                 </div>
                 <Sidebar />
             </div>
@@ -32,4 +29,4 @@ const WordStudy = () => {
     );
 };
 
-export default WordStudy;
+export default PrivacyPolicy;

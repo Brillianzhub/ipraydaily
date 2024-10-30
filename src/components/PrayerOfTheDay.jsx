@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './VerseOfTheDay.css';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 const PrayerOfTheDay = ({ prayer, currentPrayer, setCurrentPrayer }) => {
 
-    const getRandomPrayer = () => {
+    const getRandomPrayer = useCallback(async () => {
         if (prayer.length > 0) {
             const randomPrayer = prayer[Math.floor(Math.random() * prayer.length)];
             setCurrentPrayer(randomPrayer);
         }
-    };
+    }, [prayer]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -18,9 +19,8 @@ const PrayerOfTheDay = ({ prayer, currentPrayer, setCurrentPrayer }) => {
         }, 86400000);
 
         return () => clearInterval(intervalId);
-    }, [prayer]);
+    }, [getRandomPrayer]);
 
-    const audioRef = useRef(null);
 
     const handlePlayAudio = () => {
         if (currentPrayer && currentPrayer.text) {
@@ -66,10 +66,10 @@ const PrayerOfTheDay = ({ prayer, currentPrayer, setCurrentPrayer }) => {
                     <div className="action-container">
                         <div className="icon-container">
                             <button className="icon-button" aria-label="Share" onClick={handleShare}>
-                                <img src="/images/share.png" alt="Logo" />
+                                <Image src="/images/share.png" alt="Logo" width={48} height={48} />
                             </button>
                             <button className="icon-button" aria-label="Play" onClick={handlePlayAudio}>
-                                <img src="/images/audio.png" alt="Logo" />
+                                <Image src="/images/audio.png" alt="Logo" width={48} height={48} />
                             </button>
                         </div>
                     </div>

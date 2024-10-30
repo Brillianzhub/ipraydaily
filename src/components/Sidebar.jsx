@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import './Sidebar.css';
+import Image from 'next/image';
 
 
 const Sidebar = () => {
@@ -10,10 +11,6 @@ const Sidebar = () => {
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
-    }
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
     }
 
     const handleSubscribe = async () => {
@@ -51,9 +48,24 @@ const Sidebar = () => {
             <div className="social-media-links">
                 <h3>Follow Us</h3>
                 <div className="social-media-icons">
-                    <img src="/images/facebook.png" alt="Facebook" />
-                    <img src="/images/twitter.png" alt="X" />
-                    <img src="/images/youtube.png" alt="Youtube" />
+                    <Image
+                        src="/images/facebook.png"
+                        alt="Facebook"
+                        width={48}
+                        height={48}
+                    />
+                    <Image
+                        src="/images/twitter.png"
+                        alt="X"
+                        width={48}
+                        height={48}
+                    />
+                    <Image
+                        src="/images/youtube.png"
+                        alt="Youtube"
+                        width={48}
+                        height={48}
+                    />
                 </div>
                 <p>Subscribe to our newsletter and recieve a selection of cool articles every month.</p>
                 <form onSubmit={handleSubmit}>

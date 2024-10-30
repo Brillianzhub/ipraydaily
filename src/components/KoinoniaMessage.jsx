@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import './BlogPosts.css';
+import Image from 'next/image';
 
 const KoinoniaMessage = ({ posts }) => {
     const truncateText = (text, limit) => {
@@ -22,7 +23,7 @@ const KoinoniaMessage = ({ posts }) => {
             <div className="message-list">
                 {posts.map((post, index) => (
                     <div className="blog-post" key={index}>
-                        <img src={post.image} alt={post.title} />
+                        <Image src={post.image} alt={post.title} layout='response' width={100} height={150} />
                         <h3>{post.title}</h3>
                         <p>{truncateText(post.description, 100)}</p>
                         <div className='blog-date'>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Search.css';
 import { useBibleData } from '../context/BibleDataContext';
+import Image from 'next/image';
 
 const SearchResults = () => {
     const [showFullChapter, setShowFullChapter] = useState(false);
@@ -8,19 +9,14 @@ const SearchResults = () => {
     const {
         verses,
         selectedBookName,
-        selectedChapterNumber,
         selectedVerse,
         setSelectedChapterId,
         setSelectedBookId,
-        selectedChapterId,
         setSearchTerm,
         searchTerm,
         handleSearchClick,
-        setSelectedChapterNumber,
         bibleBooks,
-        chapters,
         currentChapter,
-        setCurrentChapter
     } = useBibleData();
 
 
@@ -84,7 +80,12 @@ const SearchResults = () => {
                             className="nav-button left"
                             onClick={handlePreviousChapter}
                         >
-                            <img src="images/go-back.png" alt='Go Back' />
+                            <Image
+                                src="/images/go-back.png"
+                                alt='Go Back'
+                                width={48}
+                                height={48}
+                            />
                         </button>
 
                         <h2>{searchTerm}</h2>
@@ -93,7 +94,12 @@ const SearchResults = () => {
                             className="nav-button left"
                             onClick={handleNextChapter}
                         >
-                            <img src='images/go-forward.png' alt='Go Back' />
+                            <Image
+                                src="/images/go-forward.png"
+                                alt="Go Back"
+                                width={48}
+                                height={48}
+                            />
                         </button>
 
                     </div>

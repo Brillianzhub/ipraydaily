@@ -1,7 +1,4 @@
-"use client";
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import About from '../../components/About';
@@ -11,29 +8,6 @@ import '../../components/Home.css';
 
 
 const AboutPage = () => {
-    const [bibleBooks, setBibleBooks] = useState([]);
-    const [verses, setVerses] = useState([]);
-    const [selectedVerse, setSelectedVerse] = useState([]);
-    const [selectedBookName, setSelectedBookName] = useState("");
-    const [selectedChapterNumber, setSelectedChapterNumber] = useState(null);
-    const [currentVerse, setCurrentVerse] = useState(null);
-    const [randomVerse, setRandomVerse] = useState(null);
-
-
-    const categories = ['Salvation', 'Courage', 'Deliverance', 'Blessing', 'Advancement', 'Dominion'];
-
-    const fetchBibleBooks = async () => {
-        try {
-            const response = await axios.get('https://www.brillianzhub.com/ipray/bible_books/');
-            setBibleBooks(response.data);
-        } catch (error) {
-            console.error("Error fetching Bible books:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchBibleBooks();
-    }, []);
 
     return (
         <div className="home-container">

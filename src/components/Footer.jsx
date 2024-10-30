@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import './Footer.css';
+import Image from 'next/image';
 
 
 const Footer = () => {
@@ -9,7 +10,12 @@ const Footer = () => {
             <footer className="content-container footer">
                 <div className="container footer-container">
                     <div className="footer-logo">
-                        <img src="/images/logo.png" alt="Logo" />
+                        <Image
+                            src="/images/logo.png"
+                            alt="Logo"
+                            width={48}
+                            height={48}
+                        />
                     </div>
                     <div className="footer-links">
                         <div className="footer-column">

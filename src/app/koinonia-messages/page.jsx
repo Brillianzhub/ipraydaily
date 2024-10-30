@@ -4,17 +4,17 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import KoinoniaMessage from '../../components/KoinoniaMessage';
 import Sidebar from '../../components/Sidebar';
+import Head from 'next/head';
 import '../../components/Home.css';
 
 const Koinonia = async () => {
-    // Fetching data server-side
     const fetchPosts = async () => {
         try {
             const response = await axios.get('https://www.brillianzhub.com/blog/');
             return response.data;
         } catch (error) {
             console.error("Error fetching posts:", error);
-            return []; // return an empty array on error
+            return [];
         }
     };
 
@@ -22,6 +22,17 @@ const Koinonia = async () => {
 
     return (
         <div className="home-container">
+            <Head>
+                <title>Koinonia Messages - IPray Daily</title>
+                <meta name="description" content="Explore the latest messages from Koinonia Global on IPray Daily." />
+                <meta property="og:title" content="Koinonia Messages - IPray Daily" />
+                <meta property="og:description" content="Get access to inspiring messages from Koinonia Global." />
+                <meta property="og:url" content="https://ipraydaily.net/koinonia-messages" />
+                <meta property="og:type" content="website" />
+                <link rel="canonical" href="https://ipraydaily.net/koinonia-messages" />
+            </Head>
+
+
             <Navbar />
             <div className="banner-section">
                 <h1>
