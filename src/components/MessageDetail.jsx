@@ -4,6 +4,11 @@ import Image from 'next/image';
 
 import './MessageDetail.css';
 
+export const metadata = {
+    title: "Message - IPray Daily",
+    description: "Read messages and insights on IPray Daily.",
+  };
+
 const MessageDetail = ({ post, slug, fullURL, }) => {
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullURL)}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&fullURL=${encodeURIComponent(fullURL)}`;

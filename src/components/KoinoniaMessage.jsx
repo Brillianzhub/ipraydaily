@@ -23,7 +23,7 @@ const KoinoniaMessage = ({ posts }) => {
             <div className="message-list">
                 {posts.map((post, index) => (
                     <div className="blog-post" key={index}>
-                        <Image src={post.image} alt={post.title} layout='response' width={100} height={150} />
+                        <Image src={post.image} alt={post.title} layout='response' width={100} height={80} />
                         <h3>{post.title}</h3>
                         <p>{truncateText(post.description, 100)}</p>
                         <div className='blog-date'>

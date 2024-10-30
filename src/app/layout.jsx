@@ -17,8 +17,9 @@ const geistMono = localFont({
 
 // Metadata for SEO and consistent Head elements
 export const metadata = {
-  title: "IPray Daily - Your Daily Bible & Prayer Companion",
-  description: "Empowering daily prayers with scriptures and resources.",
+  title: "Bible Verses | Daily Prayer | Divine Word",
+  description: "Discover inspiring Bible verses. Search, read, and meditate on God's Word. Find comfort, hope, and guidance through Scripture.",
+  keywords: "Bible verses, Scripture, God's Word, Bible study, Christian, spiritual, devotion, prayer, IPray Daily, Koinonia Global Messages",
   icons: {
     icon: "/images/ipray_ico.ico",
   },
