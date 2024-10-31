@@ -7,7 +7,7 @@ import './MessageDetail.css';
 export const metadata = {
     title: "Message - IPray Daily",
     description: "Read messages and insights on IPray Daily.",
-  };
+};
 
 const MessageDetail = ({ post, slug, fullURL, }) => {
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullURL)}`;
@@ -59,23 +59,26 @@ const MessageDetail = ({ post, slug, fullURL, }) => {
                 )}
             </div>
 
-            {post.youtube_link && (<div className="youtube-preview">
-                <h3>Watch on YouTube</h3>
-                <iframe
-                    width="560"
-                    height="315"
-                    src={youtube_link.replace("watch?v=", "embed/")}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
-                <p>
-                    <a href={post.youtube_link} target="_blank" rel="noopener noreferrer">
-                        Watch on YouTube
-                    </a>
-                </p>
-            </div>)}
+            {post.youtube_link && (
+                <div className="youtube-preview">
+                    <h3>Watch on YouTube</h3>
+                    <iframe
+                        width="560"
+                        height="315"
+                        src={post.youtube_link.replace("watch?v=", "embed/")}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                    <p>
+                        <a href={post.youtube_link} target="_blank" rel="noopener noreferrer">
+                            Watch on YouTube
+                        </a>
+                    </p>
+                </div>
+            )}
+
 
             {post.author.profile && (
                 <div className='authors-info'>
