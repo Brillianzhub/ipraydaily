@@ -10,15 +10,27 @@ import '../../components/Home.css';
 const Koinonia = async () => {
     const fetchPosts = async () => {
         try {
-            const response = await axios.get('https://www.brillianzhub.com/blog/');
-            return response.data;
+            const response = await fetch('https://www.brillianzhub.com/blog/');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data.results); // Log to inspect structure
+
+            // Check if data is an array
+            return Array.isArray(data.results) ? data.results : [];
         } catch (error) {
             console.error("Error fetching posts:", error);
             return [];
         }
     };
 
+
+
     const posts = await fetchPosts();
+
+    console.log(posts)
 
     return (
         <div className="home-container">

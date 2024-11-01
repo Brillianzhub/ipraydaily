@@ -30,7 +30,20 @@ const MessageDetail = ({ post, slug, fullURL, }) => {
             </Head>
 
             <h1>{post.title}</h1>
-            <p className='message-det-date'>Read time: {`${post.read_time} mins`}</p>
+            {post.download_audio_link && (
+                <div style={{ padding: 10 }} className="audio-player">
+                    <audio controls>
+                        <source
+                            src="https://cloud.appwrite.io/v1/storage/buckets/6659a498002189004c46/files/666883d3002e9d7bdf69/view?project=6659a034000bb03e26e1&mode=admin"
+                            type="audio/mpeg"
+                        />
+                        Your browser does not support the audio element.
+                    </audio>
+
+
+                </div>
+            )}
+            <p style={{ paddingTop: 10 }} className='message-det-date'>Read time: {`${post.read_time} mins`}</p>
 
             <div className="share-buttons">
                 <a href={facebookUrl} target="_blank" rel="noopener noreferrer" >
@@ -53,10 +66,15 @@ const MessageDetail = ({ post, slug, fullURL, }) => {
                     </a>
                 )}
                 {post.download_audio_link && (
-                    <a href={post.download_audio_link} target="_blank" rel="noopener noreferrer">
-                        <button>Download Audio</button>
-                    </a>
+                    <div className="audio-player">
+                        <p>
+                            <a href={post.download_audio_link} target="_blank" rel="noopener noreferrer">
+                                <button>Download Audio</button>
+                            </a>
+                        </p>
+                    </div>
                 )}
+
             </div>
 
             {post.youtube_link && (
