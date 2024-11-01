@@ -44,7 +44,6 @@ const Home = () => {
     fetchPrayer();
   }, [])
 
-  console.log(currentPrayer)
 
   useEffect(() => {
     const intervalId = setInterval(() => {

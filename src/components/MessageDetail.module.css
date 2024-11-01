@@ -1,4 +1,6 @@
-.message-detail {
+/* MessageDetail.module.css */
+
+.messageDetail {
     max-width: 800px;
     margin: 0 auto;
     padding: 10px;
@@ -6,19 +8,19 @@
     line-height: 1.6;
 }
 
-.message-detail h1 {
+.messageDetail h1 {
     font-size: 1.5em;
     margin-bottom: 20px;
     color: #333;
     text-align: left;
 }
 
-.message-det-date {
+.messageDetDate {
     font-style: italic;
     color: #324162;
 }
 
-.message-detail p {
+.messageDetail p {
     font-size: 1.1em;
     color: #555;
     margin-bottom: 10px;
@@ -51,12 +53,12 @@
     background-color: #0056b3;
 }
 
-.youtube-preview {
+.youtubePreview {
     margin-top: 30px;
     text-align: center;
 }
 
-.youtube-preview iframe {
+.youtubePreview iframe {
     width: 100%;
     height: auto;
     max-width: 560px;
@@ -64,22 +66,22 @@
     margin: 20px 0;
 }
 
-.youtube-preview h3 {
+.youtubePreview h3 {
     font-size: 1.5em;
     margin-bottom: 10px;
 }
 
-.youtube-preview a {
+.youtubePreview a {
     color: #007bff;
     text-decoration: none;
     font-weight: bold;
 }
 
-.youtube-preview a:hover {
+.youtubePreview a:hover {
     text-decoration: underline;
 }
 
-.authors-info {
+.authorsInfo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -87,7 +89,7 @@
     text-align: center;
 }
 
-.authors-photo img {
+.authorsPhoto img {
     width: 70px;
     height: 70px;
     object-fit: cover;
@@ -95,28 +97,26 @@
     margin-bottom: 10px;
 }
 
-.authors-profile h3 {
+.authorsProfile h3 {
     font-size: 15px;
     margin: 0;
     color: #0C4B6E;
-    ;
 }
 
-.authors-profile p {
+.authorsProfile p {
     font-size: 15px;
     color: #777;
     font-style: italic;
     margin-top: 5px;
 }
 
-
-.share-buttons {
+.shareButtons {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.share-btn {
+.shareBtn {
     padding: 8px 12px;
     border: none;
     color: #fff;
@@ -124,26 +124,25 @@
     border-radius: 4px;
 }
 
-.share-btn.facebook {
+.shareBtn.facebook {
     background-color: #4267B2;
 }
 
-.share-btn.twitter {
+.shareBtn.twitter {
     background-color: #1DA1F2;
 }
 
-.share-btn.linkedin {
+.shareBtn.linkedin {
     background-color: #0077b5;
 }
 
-.share-btn.native {
+.shareBtn.native {
     background-color: #4CAF50;
 }
 
-
 /* Responsive Styles */
 @media (min-width: 600px) {
-    .message-detail h1 {
+    .messageDetail h1 {
         font-size: 2.5em;
         color: #324162;
     }
@@ -153,24 +152,24 @@
         font-size: 1.1em;
     }
 
-    .authors-info {
+    .authorsInfo {
         flex-direction: row;
         align-items: flex-start;
         text-align: left;
     }
 
-    .authors-photo img {
+    .authorsPhoto img {
         margin-right: 20px;
         margin-bottom: 0;
     }
 }
 
 @media (min-width: 768px) {
-    .message-detail {
+    .messageDetail {
         padding: 20px;
     }
 
-    .message-detail h1 {
+    .messageDetail h1 {
         font-size: 2.2em;
         color: #324162;
     }
@@ -184,7 +183,7 @@
         font-size: 1.2em;
     }
 
-    .authors-photo img {
+    .authorsPhoto img {
         width: 70px;
         height: 70px;
     }
