@@ -10,7 +10,7 @@ export const useBibleBooks = () => {
         const loadBooks = async () => {
             try {
                 const data = await fetchBibleBooks();
-                setBibleBooks(data);
+                setBibleBooks(data.results);
             } catch (err) {
                 setError("Error fetching Bible books: " + err.message);
             } finally {
@@ -31,7 +31,7 @@ export const useChapters = (selectedBookId) => {
         const loadChapters = async () => {
             if (selectedBookId) {
                 const data = await fetchChaptersByBookId(selectedBookId);
-                setChapters(data);
+                setChapters(data.results);
             }
         };
 

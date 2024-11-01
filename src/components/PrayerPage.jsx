@@ -15,7 +15,7 @@ const PrayerPage = () => {
             try {
                 const response = await fetch('https://www.brillianzhub.com/ipray/categories');
                 const data = await response.json();
-                setCategories(data);
+                setCategories(data.results);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             } finally {
@@ -68,7 +68,7 @@ const PrayerPage = () => {
                         <div key={prayer.id} className="prayer-item">
                             <h3>{prayer.category.title}</h3>
                             <p>{prayer.text}</p>
-                            <p><span>{prayer.bible_quotation}</span>&nbsp;
+                            <p id='prayer-verse'><span>{prayer.bible_quotation}</span>&nbsp;
                                 {prayer.bible_verse}
                             </p>
 

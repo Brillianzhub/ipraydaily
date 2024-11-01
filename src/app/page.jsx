@@ -33,7 +33,8 @@ const Home = () => {
     const fetchPrayer = async () => {
       try {
         const response = await fetch(`https://www.brillianzhub.com/ipray/prayerpoints`);
-        const data = await response.json()
+        const dataValues = await response.json()
+        const data = dataValues.results;
         setPrayer(data);
         setCurrentPrayer(data[Math.floor(Math.random() * data.length)]);
       } catch (error) {
@@ -43,6 +44,7 @@ const Home = () => {
     fetchPrayer();
   }, [])
 
+  console.log(currentPrayer)
 
   useEffect(() => {
     const intervalId = setInterval(() => {

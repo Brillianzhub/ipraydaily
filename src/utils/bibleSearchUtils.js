@@ -37,15 +37,14 @@ export function parseReference(reference) {
         endVerse: endVerse
     };
 }
-
 export function handleSearch({
     searchTerm = "",
     bibleBooks = [],
-    setCurrentChapter = () => { },
-    setSelectedBookName = () => { },
-    setSelectedChapterNumber = () => { },
-    setVerses = () => { },
-    setSelectedVerse = () => { },
+    setCurrentChapter = function () { },
+    setSelectedBookName = function () { },
+    setSelectedChapterNumber = function () { },
+    setVerses = function () { },
+    setSelectedVerse = function () { },
     selectedVersion = "",
 } = {}) {
     if (searchTerm) {
@@ -59,11 +58,10 @@ export function handleSearch({
             fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${foundBook.id}`)
                 .then(response => response.json())
                 .then(chapterData => {
-                    const foundChapter = chapterData.find(chapter => chapter.number === parseInt(searchRef.chapter));
-
+                    const foundChapter = chapterData.results.find(chapter => chapter.number === parseInt(searchRef.chapter));
                     if (foundChapter) {
                         setSelectedChapterNumber(foundChapter.number);
-                        setCurrentChapter(foundChapter)
+                        setCurrentChapter(foundChapter);
 
                         let apiUrl = '';
                         if (selectedVersion === 'KJV') {
@@ -79,23 +77,28 @@ export function handleSearch({
                         fetch(apiUrl)
                             .then(response => response.json())
                             .then(verseData => {
-                                if (!searchRef.verse) {
-                                    searchRef.startVerse = 1;
-                                    searchRef.endVerse = verseData.length;
-                                }
-                                setSelectedVerse(verseData);
+                                if (verseData && Array.isArray(verseData.results)) {
+                                    if (!searchRef.verse) {
+                                        searchRef.startVerse = 1;
+                                        searchRef.endVerse = verseData.results.length;
+                                    }
 
-                                const foundVerses = verseData.filter(verse =>
-                                    verse.verse >= searchRef.startVerse && verse.verse <= searchRef.endVerse
-                                );
+                                    const foundVerses = verseData.results.filter(verse =>
+                                        verse.verse >= searchRef.startVerse && verse.verse <= searchRef.endVerse
+                                    );
 
-                                if (foundVerses.length > 0) {
-                                    setVerses(foundVerses);
+                                    if (foundVerses.length > 0) {
+                                        setVerses(foundVerses);
+                                        setSelectedVerse(foundVerses);
+                                    } else {
+                                        console.error("Verses not found in specified range.");
+                                    }
                                 } else {
-                                    console.error("Verses not found");
+                                    console.error("Verse data is not in the expected format:", verseData);
                                 }
                             })
                             .catch(error => console.error("Error fetching verses:", error));
+
                     } else {
                         console.error("Chapter not found");
                     }

@@ -20,7 +20,7 @@ const VerseOfTheDay = ({
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setPromises(data);
+                setPromises(data.results);
                 // setCurrentPromise(response.data[Math.floor(Math.random() * response.data.length)]);
             } catch (error) {
                 console.log(error.message);
@@ -59,7 +59,9 @@ const VerseOfTheDay = ({
 
         try {
             const chaptersResponse = await fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${randomBook.id}`);
-            const chapters = await chaptersResponse.json();
+
+            const chapterData = await chaptersResponse.json();
+            const chapters = chapterData.results;
 
             if (!chapters || chapters.length === 0) {
                 console.error("No chapters available for the selected book.");
@@ -74,7 +76,9 @@ const VerseOfTheDay = ({
             }
 
             const versesResponse = await fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${randomChapter.id}`);
-            const verses = await versesResponse.json();
+            const verseData = await versesResponse.json();
+
+            const verses = verseData.results;
 
             if (!verses || verses.length === 0) {
                 console.error("No verses available for the selected chapter.");

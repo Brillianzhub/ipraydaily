@@ -12,7 +12,7 @@ const FeaturedPosts = () => {
             try {
                 const response = await fetch('https://www.brillianzhub.com/blog');
                 const data = await response.json();
-                setFeaturedPosts(data.slice(0, 3))
+                setFeaturedPosts(data.results.slice(0, 3))
             } catch (error) {
                 console.log("Failed to fetch data", error)
             }

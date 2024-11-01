@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import KoinoniaMessage from '../../components/KoinoniaMessage';
@@ -16,9 +15,7 @@ const Koinonia = async () => {
             }
 
             const data = await response.json();
-            console.log(data.results); // Log to inspect structure
 
-            // Check if data is an array
             return Array.isArray(data.results) ? data.results : [];
         } catch (error) {
             console.error("Error fetching posts:", error);
@@ -26,11 +23,7 @@ const Koinonia = async () => {
         }
     };
 
-
-
     const posts = await fetchPosts();
-
-    console.log(posts)
 
     return (
         <div className="home-container">
