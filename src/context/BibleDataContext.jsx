@@ -1,9 +1,9 @@
-"use client"; // Add this line to mark the file as a client component
-
+"use client";
 import React, { createContext, useContext, useState } from 'react';
 import { useBibleBooks, useChapters } from '../hooks/useBibleDataHooks';
 import { useRouter } from 'next/navigation';
-import { handleSearch } from '../utils/bibleSearchUtils';
+import { fetchSearchResults } from '../utils/searchUtils';
+
 
 const BibleDataContext = createContext();
 
@@ -22,29 +22,35 @@ export const BibleDataProvider = ({ children }) => {
     const [currentChapter, setCurrentChapter] = useState([]);
     const { bibleBooks, loading, error } = useBibleBooks();
     const chapters = useChapters(selectedBookId);
+    const [showNextChapter, setShowNextChapter] = useState(false);
+
+
+    const [nextChapter, setNextChapter] = useState([]);
+
+
+    const [results, setResults] = useState([]);
 
     const router = useRouter();
 
-    const handleSearchClick = (term = inputValue || searchTerm) => {
-        setSearchTerm(term)
-        handleSearch({
-            searchTerm: term,
-            bibleBooks,
-            setSelectedBookName,
-            setSelectedChapterNumber,
-            setVerses,
-            setCurrentChapter,
-            setSelectedVerse,
-            selectedVersion
-        });
+    const handleAPISearch = async () => {
+        const query = `${searchTerm} & ${selectedVersion}`;
+        const data = await fetchSearchResults(query);
+        setResults(data);
+        setShowNextChapter(false);
+
+        if (nextChapter.length > 0) {
+            setNextChapter([]);
+        }
+
         router.push('/bible');
     };
 
     function handleKeyDown(event) {
         if (event.key === 'Enter') {
-            handleSearchClick();
+            handleAPISearch();
         }
     }
+
 
     return (
         <BibleDataContext.Provider value={{
@@ -63,8 +69,17 @@ export const BibleDataProvider = ({ children }) => {
             setSelectedVersion,
             currentChapter, setCurrentChapter,
             selectedChapterId, setSelectedChapterId,
-            handleSearchClick,
             handleKeyDown,
+
+            showNextChapter,
+            setShowNextChapter,
+
+            nextChapter,
+            setNextChapter,
+
+            handleAPISearch,
+            results,
+            setResults,
             inputValue,
             verses,
             setVerses,

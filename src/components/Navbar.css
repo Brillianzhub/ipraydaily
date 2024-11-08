@@ -6,6 +6,8 @@
 
 .navbar {
     background-color: #0C4B6E;
+    /* background-color: rgba(12, 75, 110, 0.95); */
+    /* opacity: 95%; */
     color: #fff;
     padding: 1rem;
     display: flex;

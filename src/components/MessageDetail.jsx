@@ -1,5 +1,5 @@
 import React from 'react';
-import Head from 'next/head';
+// import Head from 'next/head';
 import Image from 'next/image';
 
 import styles from './MessageDetail.module.css';
@@ -9,14 +9,14 @@ export const metadata = {
     description: "Read messages and insights on IPray Daily.",
 };
 
-const MessageDetail = ({ post, slug, fullURL }) => {
+const MessageDetail = ({ post, fullURL }) => {
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullURL)}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&fullURL=${encodeURIComponent(fullURL)}`;
     const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(fullURL)}&title=${encodeURIComponent(post.title)}`;
 
     return (
         <div className={styles.messageDetail}>
-            <Head>
+            {/* <Head>
                 <title>{post.title}</title>
                 <meta name="description" content={post.description} />
                 <meta property="og:title" content={post.title} />
@@ -26,7 +26,7 @@ const MessageDetail = ({ post, slug, fullURL }) => {
                 <meta name="twitter:title" content={post.title} />
                 <meta name="twitter:description" content={post.description} />
                 <meta name="twitter:image" content={post.image} />
-            </Head>
+            </Head> */}
 
             <h1>{post.title}</h1>
             {post.download_audio_link && (

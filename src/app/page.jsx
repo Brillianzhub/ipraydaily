@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 import FeaturedPosts from '../components/FeaturedPosts';
 import Sidebar from '../components/Sidebar';
 import { useBibleData } from '../context/BibleDataContext';
+// import LoadingScreen from '../components/LoadingScreen';
 import '../components/Home.css';
 
 const Home = () => {
@@ -24,8 +25,7 @@ const Home = () => {
     setSelectedChapterNumber,
     setSelectedVerse,
     setVerses,
-    loading,
-    error
+    // setLoading,
   } = useBibleData();
 
 
@@ -53,9 +53,16 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  // useEffect(() => {
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  //   const timer = setTimeout(() => setLoading(false), 2000);
+  //   return () => clearTimeout(timer)
+  // }, [])
+
+
+  // if (loading) return <div><LoadingScreen /></div>;
+  // if (error) return <div>{error}</div>;
+
 
 
   return (

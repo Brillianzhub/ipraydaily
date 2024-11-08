@@ -4,15 +4,15 @@ import './SearchSection.css';
 import { useBibleData } from '../context/BibleDataContext';
 
 const SearchSection = () => {
-
     const {
         selectedVersion,
         setSelectedVersion,
-        handleSearchClick,
         handleKeyDown,
-        setInputValue,
-        inputValue
+        handleAPISearch,
+        searchTerm,
+        setSearchTerm,
     } = useBibleData();
+
 
 
     return (
@@ -22,8 +22,8 @@ const SearchSection = () => {
                     type="text"
                     className="search-bar"
                     placeholder="Search by Bible verse..."
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
                 <div className="dropdown-row">
@@ -38,7 +38,7 @@ const SearchSection = () => {
                         <option value="ASV">American Standard Version (ASV)</option>
                     </select>
                 </div>
-                <button className="search-btn" onClick={() => handleSearchClick(inputValue)}>Search</button>
+                <button className="search-btn" onClick={handleAPISearch}>Search</button>
             </div>
         </div>
     );
