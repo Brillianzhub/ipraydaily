@@ -29,7 +29,7 @@ const MessageDetail = ({ post, fullURL }) => {
             </Head> */}
 
             <h1>{post.title}</h1>
-            {post.download_audio_link && (
+            {/* {post.download_audio_link && (
                 <div style={{ padding: 10 }} className="audio-player">
                     <audio controls>
                         <source
@@ -39,7 +39,7 @@ const MessageDetail = ({ post, fullURL }) => {
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-            )}
+            )} */}
             <p style={{ paddingTop: 10 }} className={styles.messageDetDate}>Read time: {`${post.read_time} mins`}</p>
 
             <div className={styles.shareButtons}>

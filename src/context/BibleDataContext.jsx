@@ -24,6 +24,9 @@ export const BibleDataProvider = ({ children }) => {
     const chapters = useChapters(selectedBookId);
     const [showNextChapter, setShowNextChapter] = useState(false);
 
+    const [nextBookName, setNextBookName] = useState('');
+    const [nextBookChapter, setNextBookChapter] = useState('');
+
 
     const [nextChapter, setNextChapter] = useState([]);
 
@@ -40,6 +43,8 @@ export const BibleDataProvider = ({ children }) => {
 
         if (nextChapter.length > 0) {
             setNextChapter([]);
+            setNextBookChapter('');
+            setNextBookName('');
         }
 
         router.push('/bible');
@@ -76,6 +81,11 @@ export const BibleDataProvider = ({ children }) => {
 
             nextChapter,
             setNextChapter,
+
+            nextBookName,
+            setNextBookName,
+            nextBookChapter,
+            setNextBookChapter,
 
             handleAPISearch,
             results,

@@ -11,6 +11,8 @@ import FeaturedPosts from '../components/FeaturedPosts';
 import Sidebar from '../components/Sidebar';
 import { useBibleData } from '../context/BibleDataContext';
 // import LoadingScreen from '../components/LoadingScreen';
+
+import CookieBanner from '../components/CookieBanner';
 import '../components/Home.css';
 
 const Home = () => {
@@ -103,6 +105,7 @@ const Home = () => {
         </div>
         <Sidebar />
       </div>
+      <CookieBanner />
       <Footer />
     </div>
   );

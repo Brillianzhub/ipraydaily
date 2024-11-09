@@ -9,7 +9,6 @@
     gap: 10px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    /* Ensure the dropdowns wrap on smaller screens */
 }
 
 .search-dropdowns .dropdown {
@@ -25,7 +24,7 @@
 .search-row {
     display: flex;
     gap: 10px;
-    align-items: center;
+    /* align-items: center; */
     margin-bottom: 20px;
 }
 
@@ -99,6 +98,20 @@
 .bible-content p {
     margin-bottom: 20px;
 }
+
+.hide-full-chapter-button {
+    background-color: #F7910B;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hide-full-chapter-button:hover {
+    background-color: #0C4B6E;
+}
+
 
 /* Responsive Media Queries */
 @media (max-width: 768px) {

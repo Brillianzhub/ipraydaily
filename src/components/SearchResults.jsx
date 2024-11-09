@@ -11,9 +11,6 @@ const SearchResults = () => {
     const [bookName, setBookName] = useState('');
     const [bookChapter, setBookChapter] = useState('');
     const [bookVerse, setBookVerse] = useState('');
-
-    const [nextBookName, setNextBookName] = useState('');
-    const [nextBookChapter, setNextBookChapter] = useState('');
     const [bookChapterId, setBookChapterId] = useState('');
 
 
@@ -25,6 +22,10 @@ const SearchResults = () => {
         nextChapter,
         selectedVersion,
         setNextChapter,
+        nextBookName,
+        setNextBookName,
+        nextBookChapter,
+        setNextBookChapter
     } = useBibleData();
 
     useEffect(() => {
@@ -187,21 +188,36 @@ const SearchResults = () => {
                             {nextChapter.map(verse => (
                                 <p key={verse.id}><strong>{verse.verse}</strong> {verse.text}</p>
                             ))}
-                            <button onClick={handleHideFullChapter}>Hide Full Chapter</button>
+                            {/* <button
+                                onClick={handleHideFullChapter}
+                                className="hide-full-chapter-button"
+                            >
+                                Show Full Chapter
+                            </button> */}
                         </div>
                     ) : showFullChapter && results && results.length > 0 ? (
                         <div className="full-chapter">
                             {results.map(verse => (
                                 <p key={verse.id}><strong>{verse.verse}</strong> {verse.text}</p>
                             ))}
-                            <button onClick={handleHideFullChapter}>Hide Full Chapter</button>
+                            <button
+                                onClick={handleHideFullChapter}
+                                className="hide-full-chapter-button"
+                            >
+                                Hide Full Chapter
+                            </button>
                         </div>
                     ) : (
                         <div className="full-chapter">
                             {selectedResults.map(verse => (
                                 <p key={verse.id}><strong>{verse.verse}</strong> {verse.text}</p>
                             ))}
-                            <button onClick={handleShowFullChapter}>Hide Full Chapter</button>
+                            <button
+                                onClick={handleShowFullChapter}
+                                className="hide-full-chapter-button"
+                            >
+                                Show Full Chapter
+                            </button>
                         </div>
                     )}
                 </div>
