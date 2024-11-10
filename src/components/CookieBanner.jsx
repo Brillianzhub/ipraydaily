@@ -4,13 +4,12 @@ import './CookieBanner.css';
 const CookieBanner = () => {
     const [showBanner, setShowBanner] = useState(false);
 
-    // Show the banner after 30 seconds if cookies haven't been accepted or declined
     useEffect(() => {
         const timer = setTimeout(() => {
             if (!localStorage.getItem('cookiesAccepted') && !localStorage.getItem('cookiesDeclined')) {
                 setShowBanner(true);
             }
-        }, 30000); // 30 seconds
+        }, 30000);
 
         return () => clearTimeout(timer);
     }, []);
