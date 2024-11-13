@@ -33,7 +33,7 @@ const MessageDetail = ({ post, fullURL }) => {
                 <div style={{ padding: 10 }} className="audio-player">
                     <audio controls>
                         <source
-                            src="https://cloud.appwrite.io/v1/storage/buckets/6659a498002189004c46/files/666883d3002e9d7bdf69/view?project=6659a034000bb03e26e1&mode=admin"
+                            src={post.download_audio_link}
                             type="audio/mpeg"
                         />
                         Your browser does not support the audio element.
@@ -77,7 +77,7 @@ const MessageDetail = ({ post, fullURL }) => {
                     <h3>Watch on YouTube</h3>
                     <iframe
                         width="560"
-                        height="315"
+                        height="450"
                         src={post.youtube_link.replace("watch?v=", "embed/")}
                         title="YouTube video player"
                         frameBorder="0"

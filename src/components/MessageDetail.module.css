@@ -60,9 +60,9 @@
 
 .youtubePreview iframe {
     width: 100%;
-    height: auto;
+    height: 315px;
     max-width: 560px;
-    max-height: 315px;
+    /* max-height: 400px; */
     margin: 20px 0;
 }
 

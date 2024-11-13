@@ -15,6 +15,7 @@ const Koinonia = async () => {
             }
 
             const data = await response.json();
+            console.log(data)
 
             return Array.isArray(data.results) ? data.results : [];
         } catch (error) {
@@ -36,8 +37,6 @@ const Koinonia = async () => {
                 <meta property="og:type" content="website" />
                 <link rel="canonical" href="https://ipraydaily.net/koinonia-messages" />
             </Head>
-
-
             <Navbar />
             <div className="banner-section">
                 <h1>

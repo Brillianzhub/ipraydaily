@@ -1,3 +1,5 @@
+/* Navbar.module.css */
+
 /* Navbar Styles */
 .container {
     width: 80%;
@@ -17,51 +19,48 @@
     max-width: 1200px;
 }
 
-.navbar-logo img {
+.navbarLogo img {
     max-height: 40px;
     display: flex;
     align-items: center;
 }
 
-
-.navbar-links {
+.navbarLinks {
     display: flex;
     align-items: center;
     z-index: 99;
 }
 
-.navbar-links ul {
+.navbarLinks ul {
     list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
 }
 
-.navbar-links ul li {
+.navbarLinks ul li {
     margin-left: 1.5rem;
 }
 
-.navbar-links ul li a {
+.navbarLinks ul li a {
     text-decoration: none;
     color: #F7910B;
     font-size: 1.1rem;
     transition: color 0.3s ease;
 }
 
-.navbar-links ul li a:hover {
+.navbarLinks ul li a:hover {
     color: white;
 }
 
+/* Mobile Styles */
 @media (max-width: 768px) {
-
     .navbar {
         justify-content: space-between;
         width: 100%;
-
-
     }
 
-    .navbar-links {
+    .navbarLinks {
         position: absolute;
         top: 100%;
         right: 0;
@@ -74,51 +73,52 @@
         z-index: 99;
     }
 
-    .navbar-links.active {
+    .navbarLinksActive {
         display: flex;
     }
 
-    .navbar-links ul {
+    .navbarLinks ul {
         flex-direction: column;
         width: 100%;
     }
 
-    .navbar-links ul li {
+    .navbarLinks ul li {
         margin: 1rem 0;
     }
 
-    .navbar-links ul li a {
+    .navbarLinks ul li a {
         font-size: 1.2rem;
         padding: 1rem;
         text-align: center;
         width: 100%;
     }
 
-    .navbar-toggle {
+    .navbarToggle {
         cursor: pointer;
         display: flex;
         align-items: center;
         z-index: 101;
     }
 
-    .navbar-toggle img {
+    .navbarToggle img {
         height: 30px;
         width: 30px;
     }
 
-    .navbar-links {
+    .navbarLinks {
         transition: max-height 0.3s ease-in-out;
         max-height: 0;
         overflow: hidden;
     }
 
-    .navbar-links.active {
+    .navbarLinksActive {
         max-height: 300px;
     }
 }
 
+/* Hide toggle on larger screens */
 @media (min-width: 768px) {
-    .navbar-toggle {
+    .navbarToggle {
         display: none;
     }
 }

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import './Navbar.css';
 import Image from 'next/image';
+import styles from './Navbar.module.css';
 
 const Navbar = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -19,13 +19,13 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="navbar">
-            <div className="navbar-logo">
+        <nav className={styles.navbar}>
+            <div className={styles.navbarLogo}>
                 <Link href="/">
                     <Image src="/images/logo.png" alt="Logo" width={48} height={48} />
                 </Link>
             </div>
-            <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`} aria-expanded={isMenuOpen}>
+            <div className={`${styles.navbarLinks} ${isMenuOpen ? styles.navbarLinksActive : ''}`} aria-expanded={isMenuOpen}>
                 <ul>
                     {navLinks.map(link => (
                         <li key={link.path}>
@@ -34,7 +34,7 @@ const Navbar = () => {
                     ))}
                 </ul>
             </div>
-            <div className="navbar-toggle" onClick={toggleMenu}>
+            <div className={styles.navbarToggle} onClick={toggleMenu}>
                 <Image src="/images/menu.png" alt="Menu" width={48} height={48} />
             </div>
         </nav>
