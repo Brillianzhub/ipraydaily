@@ -6,7 +6,6 @@ import Footer from '../../../components/Footer';
 import Sidebar from "../../../components/Sidebar";
 import '../../../components/Home.css';
 
-// import '../../components/Home.css';
 
 const KoinoniaMessageDetail = async ({ params }) => {
     const { slug } = await params;

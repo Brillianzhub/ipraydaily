@@ -2,6 +2,7 @@
 
 .messageDetail {
     max-width: 800px;
+    background-color: #f9f9f9;
     margin: 0 auto;
     padding: 10px;
     font-family: 'Arial', sans-serif;
@@ -21,10 +22,10 @@
 }
 
 .messageDetail p {
-    font-size: 1.1em;
-    color: #555;
+    color: #444;
     margin-bottom: 10px;
 }
+
 
 .body {
     margin: 20px 0;

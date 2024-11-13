@@ -14,6 +14,7 @@ const MessageDetail = ({ post, fullURL }) => {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&fullURL=${encodeURIComponent(fullURL)}`;
     const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(fullURL)}&title=${encodeURIComponent(post.title)}`;
 
+    console.log(post.category)
     return (
         <div className={styles.messageDetail}>
             {/* <Head>
@@ -102,11 +103,19 @@ const MessageDetail = ({ post, fullURL }) => {
                             height={100}
                         />
                     </div>
-                    <div className={styles.authorsProfile}>
-                        <h3>SUMMARISED BY:</h3>
-                        <h3>{post.author.profile.lastname} {post.author.profile.firstname}</h3>
-                        <p>{post.author.profile.bios}</p>
-                    </div>
+                    {post.category !== 3 ? (
+                        <div className={styles.authorsProfile}>
+                            <h3>WRITTEN BY:</h3>
+                            <h3>{post.author.profile.lastname} {post.author.profile.firstname}</h3>
+                            <p>{post.author.profile.bios}</p>
+                        </div>
+                    ) : (
+                        <div className={styles.authorsProfile}>
+                            <h3>SUMMARISED BY:</h3>
+                            <h3>{post.author.profile.lastname} {post.author.profile.firstname}</h3>
+                            <p>{post.author.profile.bios}</p>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
