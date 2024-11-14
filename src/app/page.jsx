@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import FeaturedPosts from '../components/FeaturedPosts';
 import Sidebar from '../components/Sidebar';
+import BannerSection from '../components/BannerSection';
 import { useBibleData } from '../context/BibleDataContext';
 // import LoadingScreen from '../components/LoadingScreen';
 
@@ -70,12 +71,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <Navbar />
-      <div className="banner-section">
-        <h1>
-          ...Men ought always to pray, and not to faint.&nbsp;
-          <span>Luke 18:1 (KJV)</span>
-        </h1>
-      </div>
+      <BannerSection />
       <div className="content-container">
         <div className="main-section">
           <SearchSection

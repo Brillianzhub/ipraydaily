@@ -9,6 +9,7 @@ import SearchResults from '../../components/SearchResults';
 import Sidebar from '../../components/Sidebar';
 import '../../components/WordStudy.css';
 import '../../components/Home.css';
+import BannerSection from '@/components/BannerSection';
 
 
 const WordStudy = () => {
@@ -16,12 +17,7 @@ const WordStudy = () => {
     return (
         <div className="home-container">
             <Navbar />
-            <div className="banner-section">
-                <h1>
-                    ...Men ought always to pray, and not to faint.&nbsp;
-                    <span>Luke 18:1 (KJV)</span>
-                </h1>
-            </div>
+            <BannerSection />
             <div className="content-container">
                 <div className="main-section">
                     <SearchSection />

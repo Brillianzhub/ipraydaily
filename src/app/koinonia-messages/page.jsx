@@ -5,6 +5,7 @@ import KoinoniaMessage from '../../components/KoinoniaMessage';
 import Sidebar from '../../components/Sidebar';
 import Head from 'next/head';
 import '../../components/Home.css';
+import BannerSection from '@/components/BannerSection';
 
 const Koinonia = async () => {
     const fetchPosts = async () => {
@@ -38,12 +39,7 @@ const Koinonia = async () => {
                 <link rel="canonical" href="https://ipraydaily.net/koinonia-messages" />
             </Head>
             <Navbar />
-            <div className="banner-section">
-                <h1>
-                    ...Men ought always to pray, and not to faint.&nbsp;
-                    <span>Luke 18:1 (KJV)</span>
-                </h1>
-            </div>
+            <BannerSection />
             <div className="content-container">
                 <div className="main-section">
                     <KoinoniaMessage posts={posts} />

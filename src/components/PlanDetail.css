@@ -1,0 +1,114 @@
+.main-activity {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.activity-screen {
+    position: relative;
+    flex: 3;
+    background-color: #1a1a1a;
+    /* background-color: #f0f0f0; */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    height: 300px;
+}
+
+.timer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.activity-screen h1 {
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.activity-list {
+    flex: 1;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Ripple effect */
+.activity-screen::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: ripple 2.5s infinite;
+    z-index: 0;
+}
+
+@keyframes ripple {
+    0% {
+        width: 20px;
+        height: 20px;
+        opacity: 0.6;
+    }
+
+    50% {
+        width: 200px;
+        height: 200px;
+        opacity: 0.3;
+    }
+
+    100% {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+    }
+}
+
+
+/* Responsive adjustments for small screens */
+@media (max-width: 768px) {
+    .main-activity {
+        flex-direction: column;
+        height: 400px;
+    }
+
+    .activity-screen {
+        width: 100%;
+        /* Full width on small screens */
+        /* height: 250px; */
+        /* Set consistent height */
+    }
+
+    .activity-screen h1 {
+        font-size: 20px;
+        /* Smaller font size */
+    }
+
+    .timer {
+        font-size: 14px;
+        /* Adjust timer font size */
+    }
+
+    .activity-list {
+        max-width: 100%;
+        /* Take full width when stacked */
+        flex-direction: row;
+        gap: 15px;
+        flex-wrap: wrap;
+        /* Wrap items if necessary */
+    }
+}
