@@ -58,7 +58,7 @@ const PlanDetail = ({ plan }) => {
                 </div>
                 <div className="activity-list">
                     {plan.map((activity, index) => (
-                        <div key={index}>
+                        <div key={index} className="activity-menu">
                             <h2>{activity.activity}</h2>
                             <p>Duration: {activity.duration} mins</p>
                         </div>

@@ -4,7 +4,7 @@
     align-items: flex-start;
     padding: 20px;
     flex-direction: row;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .activity-screen {
@@ -43,8 +43,16 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
 }
 
+.activity-menu {
+    border-radius: 8px;
+    padding: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: blue;
+}
 
 /* Ripple effect */
 .activity-screen::before {
