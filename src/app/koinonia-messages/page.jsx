@@ -16,7 +16,6 @@ const Koinonia = async () => {
             }
 
             const data = await response.json();
-            console.log(data)
 
             return Array.isArray(data.results) ? data.results : [];
         } catch (error) {
