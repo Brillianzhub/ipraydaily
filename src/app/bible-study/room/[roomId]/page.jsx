@@ -1,58 +1,73 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import BannerSection from '@/components/BannerSection';
 import Sidebar from '@/components/Sidebar';
-import { useSearchParams } from "next/navigation";
+
 import PlanDetail from "@/components/PlanDetail";
 import planData from '@/assets/planData.json';
-
 import '@/components/Home.css';
 
 
-const RoomDetailPage = ({ params: roomId }) => {
-    const params = React.use(roomId);
-    console.log(params)
-    const [plan, setPlan] = useState(null);
-    const [users, setUsers] = useState([]);
-    const [userName, setUserName] = useState('');
-    const [joined, setJoined] = useState(false);
+
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
+import { useSearchParams } from "next/navigation";
+
+let socket;
+
+const RoomDetailPage = ({ params }) => {
     const searchParams = useSearchParams();
-    const planId = searchParams.get('planId');
+    const planId = searchParams.get("planId");
+    const [plan, setPlan] = useState(null);
+    const [roomId, setRoomId] = useState(null);
+    const [userName, setUserName] = useState("");
+    const [joined, setJoined] = useState(false);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        if (planId) {
-            const selectedPlan = planData.plans[planId];
-            setPlan(selectedPlan);
-
-            if (users.length === 0) {
-                setUsers([{ id: 'admin', name: 'Admin', role: 'Admin' }]);
-                setJoined(true);
-            }
-        } else {
-            console.error("Plan ID is missing in the query params!");
+        async function unwrapParams() {
+            const unwrappedParams = await params;
+            setRoomId(unwrappedParams.roomId); // Unwrap the roomId
         }
-    }, [planId]);
+        unwrapParams();
+    }, [params]);
+
+    useEffect(() => {
+        if (!roomId) return;
+
+        socket = io("http://localhost:3002");
+
+        socket.on("userList", (updatedUsers) => {
+            setUsers(updatedUsers);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [roomId]);
+
+
+    
 
     const handleJoinRoom = () => {
         if (!userName) {
-            alert('Please enter your name!')
+            alert("Please enter your name!");
             return;
         }
 
-        const newUser = { id: Date.now(), name: userName, role: "Paricipant" };
-        setUsers((prevUsers) => [...prevUsers, newUser]);
-        setUserName('');
+        if (!roomId) {
+            alert("Room ID is missing!");
+            return;
+        }
+
+        socket.emit("joinRoom", { roomId, userName });
         setJoined(true);
     };
 
-    if (!plan) {
-        return <div>Loading...</div>;
-    }
-
-
     return (
+
+
         <div className="home-container">
             <Navbar />
             <BannerSection />
@@ -71,21 +86,29 @@ const RoomDetailPage = ({ params: roomId }) => {
                         </div>
                     ) : (
                         <div className="participants-list">
-                            <h2>Participants:</h2>
                             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                                {users.map((user) => (
-                                    <div
-                                        key={user.id}
-                                        style={{
-                                            margin: '10px',
-                                            padding: '10px',
-                                            background: user.role === 'Admin' ? '#ffc107' : '#e0e0e0',
-                                            borderRadius: '8px'
-                                        }}
-                                    >
-                                        <strong>{user.name}</strong> {user.role === 'Admin' && '(Admin)'}
+                                {!joined ? (
+                                    <div>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your name"
+                                            value={userName}
+                                            onChange={(e) => setUserName(e.target.value)}
+                                        />
+                                        <button onClick={handleJoinRoom}>Join Room</button>
                                     </div>
-                                ))}
+                                ) : (
+                                    <div>
+                                        <h3>Participants:</h3>
+                                        <ul>
+                                            {users.map((user) => (
+                                                <li key={user.id}>
+                                                    {user.name} {user.role === "Admin" && "(Admin)"}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
@@ -99,4 +122,27 @@ const RoomDetailPage = ({ params: roomId }) => {
 
 export default RoomDetailPage;
 
-
+{/* <div className="room-detail">
+    {!joined ? (
+        <div>
+            <input
+                type="text"
+                placeholder="Enter your name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+            />
+            <button onClick={handleJoinRoom}>Join Room</button>
+        </div>
+    ) : (
+        <div>
+            <h3>Participants:</h3>
+            <ul>
+                {users.map((user) => (
+                    <li key={user.id}>
+                        {user.name} {user.role === "Admin" && "(Admin)"}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+</div> */}

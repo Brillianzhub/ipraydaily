@@ -19,7 +19,6 @@ const BibleStudy = () => {
                     <PlanList />
                 </div>
                 <Sidebar />
-
             </div>
             <Footer />
         </div>
