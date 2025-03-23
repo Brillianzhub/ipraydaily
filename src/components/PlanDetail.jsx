@@ -23,7 +23,7 @@ const PlanDetail = ({ plan }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [timeLeft, goToNextActivity]);
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);

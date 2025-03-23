@@ -3,23 +3,19 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import BannerSection from '@/components/BannerSection';
 import Sidebar from '@/components/Sidebar';
-
 import PlanDetail from "@/components/PlanDetail";
-import planData from '@/assets/planData.json';
+
 import '@/components/Home.css';
 
 
 
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import { useSearchParams } from "next/navigation";
+
 
 let socket;
 
 const RoomDetailPage = ({ params }) => {
-    const searchParams = useSearchParams();
-    const planId = searchParams.get("planId");
-    const [plan, setPlan] = useState(null);
     const [roomId, setRoomId] = useState(null);
     const [userName, setUserName] = useState("");
     const [joined, setJoined] = useState(false);
@@ -48,7 +44,7 @@ const RoomDetailPage = ({ params }) => {
     }, [roomId]);
 
 
-    
+
 
     const handleJoinRoom = () => {
         if (!userName) {

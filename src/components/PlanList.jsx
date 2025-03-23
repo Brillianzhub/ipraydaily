@@ -16,7 +16,6 @@ const PlanList = () => {
     const [roomId, setRoomId] = useState('');
     const [linkCopied, setLinkCopied] = useState(false);
     const [roomCreationVisible, setRoomCreationVisible] = useState(false);
-    const [users, setUsers] = useState([]);
     const [userName, setUserName] = useState("");
     const router = useRouter();
 
