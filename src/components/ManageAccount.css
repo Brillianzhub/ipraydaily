@@ -1,0 +1,41 @@
+/* .main-section {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+} */
+
+.main-section h2,
+.main-section h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.main-section p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.main-section ul,
+.main-section ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.delete-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #0070f3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.delete-btn:hover {
+    background: #0056b3;
+}
