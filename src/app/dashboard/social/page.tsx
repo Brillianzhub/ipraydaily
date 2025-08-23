@@ -66,30 +66,6 @@ interface HymnStanza {
   text: string
 }
 
-interface HymnResponse {
-  id: number
-  title: string
-  author: string
-  year: number
-  has_chorus: boolean
-  chorus: string
-  last_updated: string
-  stanzas: HymnStanza[]
-  shareCount?: number
-  lastShared?: string
-}
-
-interface PrayerResponse {
-  id: number
-  prayer_category: string
-  prayer: string
-  prayer_scripture: string
-  publish: boolean
-  featured: boolean
-  last_updated: string
-  shareCount?: number
-  lastShared?: string
-}
 
 interface ContentItem {
   id: string

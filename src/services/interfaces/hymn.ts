@@ -1,6 +1,12 @@
 export interface Hymn {
-    id: string;
-    title: string;
-    lyrics: string;
-    // add other fields your API returns
-  }
+  id: number
+  title: string
+  author: string
+  year: number
+  has_chorus: boolean
+  chorus: string
+  last_updated: string
+  stanzas: any[]
+  shareCount?: number
+  lastShared?: string
+}
