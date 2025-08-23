@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import { BibleDataProvider } from '../context/BibleDataContext';
 import "./globals.css";
+import { ClientProvider } from "@/components/ClientProvider";
 
 // Load fonts with variable usage
 const geistSans = localFont({
@@ -29,9 +30,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <BibleDataProvider>
-          {children}
-        </BibleDataProvider>
+        <ClientProvider>
+          <BibleDataProvider>
+            {children}
+          </BibleDataProvider>
+        </ClientProvider>
       </body>
     </html>
   );
