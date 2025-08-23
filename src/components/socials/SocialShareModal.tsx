@@ -253,9 +253,9 @@ export function SocialShareModal({ isOpen, onClose, content, onShareSuccess }: S
                       ? 'ring-2 shadow-lg'
                       : 'hover:shadow-md'
                     }`}
-                  style={{
-                    ringColor: selectedTemplate.id === template.id ? '#0088DD' : 'transparent'
-                  }}
+                  // style={{
+                  //   ringColor: selectedTemplate.id === template.id ? '#0088DD' : 'transparent'
+                  // }}
                   onClick={() => setSelectedTemplate(template)}
                 >
                   <CardHeader className="pb-3">
