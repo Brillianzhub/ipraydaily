@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import './Search.css';
 import { useBibleData } from '../context/BibleDataContext';

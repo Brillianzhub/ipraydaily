@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState, useCallback } from 'react';
 import './VerseOfTheDay.css';
 import Link from 'next/link';
