@@ -61,12 +61,6 @@ interface DevotionResponse {
   lastShared?: string
 }
 
-interface HymnStanza {
-  stanza_number: number
-  text: string
-}
-
-
 interface ContentItem {
   id: string
   title: string
