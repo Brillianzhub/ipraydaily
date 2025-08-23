@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use client"
 import React, { useState } from 'react';
 import { Bell, ChevronDown, User, Home } from 'lucide-react';

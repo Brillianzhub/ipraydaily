@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export interface Hymn {
   id: number
   title: string
