@@ -6,17 +6,19 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { 
-  BookOpen, 
-  Heart, 
-  Music, 
-  MessageCircle, 
-  Users, 
+import {
+  BookOpen,
+  Heart,
+  Music,
+  MessageCircle,
+  Users,
   Share2,
   TrendingUp,
   Calendar,
   ArrowUpRight
 } from 'lucide-react'
+import PrivateRoute from '@/components/admin/PrivateRoutes'
+
 
 interface DashboardStats {
   totalContent: number
@@ -90,10 +92,11 @@ export default function DashboardPage() {
   ]
 
   return (
+    <PrivateRoute>
       <div className="space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-teal-800">Dashboard Overview</h1>
+          <h1 className="text-3xl font-bold" style={{ color: '#0c4b6e' }}>Dashboard Overview</h1>
           <p className="text-gray-600">Welcome back! Here's what's happening with your content.</p>
         </div>
 
@@ -102,10 +105,10 @@ export default function DashboardPage() {
           <Card className="shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">Total Content</CardTitle>
-              <Users className="h-4 w-4 text-teal-600" />
+              <Users className="h-4 w-4" style={{ color: '#0c4b6e' }} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-teal-800">
+              <div className="text-2xl font-bold" style={{ color: '#0c4b6e' }}>
                 {stats.totalContent.toLocaleString()}
               </div>
               <p className="text-xs text-gray-600">
@@ -120,7 +123,7 @@ export default function DashboardPage() {
               <Share2 className="h-4 w-4 text-orange-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-teal-800">
+              <div className="text-2xl font-bold" style={{ color: '#0c4b6e' }}>
                 {stats.totalShares.toLocaleString()}
               </div>
               <p className="text-xs text-gray-600">
@@ -135,7 +138,7 @@ export default function DashboardPage() {
               <TrendingUp className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-teal-800">
+              <div className="text-2xl font-bold" style={{ color: '#0c4b6e' }}>
                 +{stats.weeklyGrowth}%
               </div>
               <p className="text-xs text-gray-600">
@@ -147,14 +150,14 @@ export default function DashboardPage() {
 
         {/* Content Categories */}
         <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-teal-800">Content Categories</h2>
-            <Button variant="outline" size="sm" className="text-teal-700 border-teal-200 hover:bg-teal-50">
+          {/* <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold" style={{ color: '#0c4b6e' }}>Content Categories</h2>
+            <Button variant="outline" size="sm" className="border-[#0c4b6e]/20 hover:bg-[#0c4b6e]/5" style={{ color: '#0c4b6e' }}>
               <Calendar className="w-4 h-4 mr-2" />
               View Calendar
             </Button>
-          </div>
-          
+          </div> */}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contentCards.map((card) => (
               <Card key={card.title} className="shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
@@ -163,13 +166,15 @@ export default function DashboardPage() {
                     <div className={`p-2 rounded-lg ${card.bgColor}`}>
                       <card.icon className={`h-5 w-5 ${card.color}`} />
                     </div>
-                    <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-teal-600 transition-colors" />
+                    <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-[#0c4b6e] transition-colors" />
                   </div>
-                  <CardTitle className="text-lg font-semibold text-teal-800">{card.title}</CardTitle>
+                  <CardTitle className="text-lg font-semibold" style={{ color: '#0c4b6e' }}>
+                    {card.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <div className="text-3xl font-bold text-teal-800">
+                    <div className="text-3xl font-bold" style={{ color: '#0c4b6e' }}>
                       {card.count.toLocaleString()}
                     </div>
                     <CardDescription>{card.description}</CardDescription>
@@ -182,29 +187,7 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
-
-        {/* Quick Actions */}
-        <div>
-          <h2 className="text-xl font-semibold text-teal-800 mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button className="h-24 bg-teal-700 hover:bg-teal-800 text-white justify-start flex-col">
-              <Share2 className="h-6 w-6 mb-2" />
-              <span>Share to Social Media</span>
-            </Button>
-            
-            <Button variant="outline" className="h-24 justify-start flex-col opacity-50 cursor-not-allowed">
-              <Users className="h-6 w-6 mb-2" />
-              <span>Send Email Notifications</span>
-              <Badge variant="secondary" className="text-xs mt-1">Coming Soon</Badge>
-            </Button>
-            
-            <Button variant="outline" className="h-24 justify-start flex-col opacity-50 cursor-not-allowed">
-              <MessageCircle className="h-6 w-6 mb-2" />
-              <span>Update App Notifications</span>
-              <Badge variant="secondary" className="text-xs mt-1">Coming Soon</Badge>
-            </Button>
-          </div>
-        </div>
       </div>
+    </PrivateRoute>
   )
 }

@@ -1,8 +1,10 @@
 /* eslint-disable */
 
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bell, ChevronDown, User, Home } from 'lucide-react';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 interface NotificationProps {
     count?: number;
@@ -20,25 +22,57 @@ interface AdminNavbarProps {
     onNotificationClick?: () => void;
     onProfileClick?: () => void;
     notifications?: NotificationProps;
-    user?: AdminUser;
+    // user?: AdminUser;
     className?: string;
     pageTitle?: string;
 }
 
 const AdminNavbar: React.FC<AdminNavbarProps> = ({
-    onNotificationClick,
     onProfileClick,
     notifications = { hasNotifications: false, count: 0 },
-    user = { name: 'Admin User', email: 'chuksbon6@gmail.com' },
+    // user: propUser,
     className = '',
     pageTitle = 'Admin Dashboard'
 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [user, setUser] = useState<AdminUser>({ name: 'Admin User', email: 'chuksbon6@gmail.com' });
+    const router = useRouter();
 
-    const handleNotificationClick = (): void => {
-        if (onNotificationClick) {
-            onNotificationClick();
+    // Load user data from cookies on component mount
+    useEffect(() => {
+        const userData = Cookies.get('user_data');
+        if (userData) {
+            try {
+                const parsedUser = JSON.parse(userData);
+                setUser({
+                    name: parsedUser.first_name || 'Admin User',
+                    email: parsedUser.email || '',
+                    avatar: parsedUser.avatar || parsedUser.profile_picture,
+                    role: parsedUser.role || parsedUser.user_type
+                });
+            } catch (error) {
+                console.error('Error parsing user data from cookies:', error);
+                // Keep default user data if parsing fails
+            }
         }
+
+        // If user prop is provided, it takes precedence
+        // if (propUser) {
+        //     setUser(propUser);
+        // }
+    }, []);
+
+    const handleLogout = (): void => {
+        // Clear all auth-related cookies
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        Cookies.remove('user_data');
+
+        // Close dropdown
+        setIsDropdownOpen(false);
+
+        // Redirect to auth page using Next.js router
+        router.push('/auth');
     };
 
     const handleProfileClick = (): void => {
@@ -90,6 +124,11 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({
                                 <div className="text-sm font-medium text-gray-900">
                                     {user.name}
                                 </div>
+                                {user.role && (
+                                    <div className="text-xs text-gray-500">
+                                        {user.role}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Dropdown Arrow */}
@@ -102,16 +141,12 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({
                                 <div className="px-4 py-3 border-b border-gray-100">
                                     <div className="text-sm font-medium text-gray-900">{user.name}</div>
                                     <div className="text-sm text-gray-500">{user.email}</div>
+                                    {user.role && (
+                                        <div className="text-xs text-gray-400 mt-1">{user.role}</div>
+                                    )}
                                 </div>
                                 <div className="py-1">
-                                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        <svg className="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        Settings
-                                    </button>
-                                    <button className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                    <button onClick={handleLogout} className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                                         <svg className="w-4 h-4 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                         </svg>

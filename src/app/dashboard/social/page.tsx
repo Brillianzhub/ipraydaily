@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -37,13 +37,16 @@ import {
   Users,
   Eye,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  Palette
 } from 'lucide-react'
 import { SocialShareModal } from '@/components/socials/SocialShareModal'
 import { useFetchTodayDevotion } from '@/services/requests/devotion'
 import { useFetchHymns } from '@/services/requests/hymns'
 import { useFetchPrayers } from '@/services/requests/prayers'
 import { useFetchShareTemplates } from '@/services/requests/templates'
+import { useFetchBibleChapter } from '@/services/requests/bibles'
+import { allBibleBooks } from '@/utils/bible'
 
 // Updated interfaces based on API response
 interface DevotionResponse {
@@ -63,6 +66,21 @@ interface DevotionResponse {
   lastShared?: string
 }
 
+interface ShareTemplate {
+  id: number
+  name: string
+  template_type: string
+  gradient_colors: string[]
+  background: string
+  text_color: string
+  styles: {
+    container: any
+    [key: string]: any
+  }
+  created_at: string
+  updated_at: string
+}
+
 interface ContentItem {
   id: string
   title: string
@@ -75,6 +93,7 @@ interface ContentItem {
   lastShared?: string
   scripture?: string
   theme?: string
+  template?: ShareTemplate // Add template data
 }
 
 interface ShareStats {
@@ -90,20 +109,36 @@ export default function SocialMediaPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null)
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
   const [showShareModal, setShowShareModal] = useState(false)
   const [activeTab, setActiveTab] = useState('share')
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage] = useState(9) // 3x3 grid
+  const [itemsPerPage] = useState(6) // 3x3 grid
+  const [bibleParams, setBibleParams] = useState({
+    version: 'KJV', // or whatever default version you want
+    bookName: 'Matthew', // default book
+    chapterNumber: 1 // default chapter
+  })
+
 
   // API calls
   const { data: todayDevotion, isLoading: devotionLoading, error: devotionError, refetch: refetchDevotion } = useFetchTodayDevotion()
   const { data: hymns, isLoading: hymnsLoading, error: hymnsError, refetch: refetchHymns } = useFetchHymns()
   const { data: prayers, isLoading: prayersLoading, error: prayersError, refetch: refetchPrayers } = useFetchPrayers()
-  // const { data: shareTemplates, isLoading: templatesLoading, error: templatesError, refetch: refetchTemplates } = useFetchShareTemplates()
-
+  const { data: shareTemplates, isLoading: templatesLoading, error: templatesError, refetch: refetchTemplates } = useFetchShareTemplates()
+  const {
+    data: bibleVerses,
+    isLoading: bibleLoading,
+    error: bibleError,
+    refetch: refetchBible
+  } = useFetchBibleChapter(
+    bibleParams.version,
+    bibleParams.bookName,
+    bibleParams.chapterNumber
+  )
   // Combine loading states
-  const isLoading = devotionLoading || hymnsLoading || prayersLoading
-  const hasError = devotionError || hymnsError || prayersError
+  const isLoading = devotionLoading || hymnsLoading || prayersLoading || templatesLoading
+  const hasError = devotionError || hymnsError || prayersError || templatesError
 
   // Transform API data to ContentItem format
   const contentItems = useMemo(() => {
@@ -123,31 +158,53 @@ export default function SocialMediaPage() {
         scripture: `${todayDevotion.bible_verse_text} - ${todayDevotion.bible_verse_reference}`,
         theme: todayDevotion.monthly_theme
       })
+    }
 
-      // Add bible verse as separate item
+    // Add Bible chapter data
+    if (bibleVerses && Array.isArray(bibleVerses) && bibleVerses.length > 0) {
+      // Add the entire chapter as one item
+      const chapterText = bibleVerses.map(v => `${v.verse}. ${v.text}`).join(' ')
       items.push({
-        id: `verse-${todayDevotion.id}`,
-        title: todayDevotion.bible_verse_reference,
-        content: todayDevotion.bible_verse_text,
+        id: `bible-chapter-${bibleParams.bookName}-${bibleParams.chapterNumber}`,
+        title: `${bibleParams.bookName} Chapter ${bibleParams.chapterNumber}`,
+        content: chapterText,
         category: 'bible-verse',
-        date: todayDevotion.devotional_date,
-        tags: ['bible-verse', 'scripture', 'daily'],
-        shareCount: Math.floor(Math.random() * 50) + 10,
-        scripture: todayDevotion.bible_verse_reference
+        date: new Date().toISOString().split('T')[0],
+        tags: ['bible-chapter', bibleParams.bookName.toLowerCase(), bibleParams.version.toLowerCase()],
+        shareCount: Math.floor(Math.random() * 60) + 15,
+        scripture: `${bibleParams.bookName} ${bibleParams.chapterNumber} (${bibleParams.version})`
       })
 
-      // Add prayer as separate item
-      if (todayDevotion.prayer) {
+      // Add first few verses as individual items (to avoid too many items)
+      bibleVerses.slice(0, 5).forEach(verse => {
         items.push({
-          id: `devotion-prayer-${todayDevotion.id}`,
-          title: 'Daily Prayer',
-          content: todayDevotion.prayer,
-          category: 'prayer',
-          date: todayDevotion.devotional_date,
-          tags: ['prayer', 'daily', 'devotional'],
-          shareCount: Math.floor(Math.random() * 30) + 5
+          id: `verse-${bibleParams.bookName}-${bibleParams.chapterNumber}-${verse.verse}`,
+          title: `${bibleParams.bookName} ${bibleParams.chapterNumber}:${verse.verse}`,
+          content: verse.text,
+          category: 'bible-verse',
+          date: new Date().toISOString().split('T')[0],
+          tags: ['bible-verse', 'scripture', bibleParams.bookName.toLowerCase(), bibleParams.version.toLowerCase()],
+          shareCount: Math.floor(Math.random() * 40) + 5,
+          scripture: `${bibleParams.bookName} ${bibleParams.chapterNumber}:${verse.verse} (${bibleParams.version})`
         })
-      }
+      })
+
+      // Add some popular/key verses from the chapter
+      const keyVerses = bibleVerses.filter(v => [1, 14, 29].includes(v.verse)) // John 1:1, 1:14, 1:29 are key verses
+      keyVerses.forEach(verse => {
+        if (!items.find(item => item.id === `verse-${bibleParams.bookName}-${bibleParams.chapterNumber}-${verse.verse}`)) {
+          items.push({
+            id: `key-verse-${bibleParams.bookName}-${bibleParams.chapterNumber}-${verse.verse}`,
+            title: `${bibleParams.bookName} ${bibleParams.chapterNumber}:${verse.verse} (Key Verse)`,
+            content: verse.text,
+            category: 'bible-verse',
+            date: new Date().toISOString().split('T')[0],
+            tags: ['bible-verse', 'key-verse', 'scripture', bibleParams.bookName.toLowerCase(), bibleParams.version.toLowerCase()],
+            shareCount: Math.floor(Math.random() * 80) + 20, // Higher share count for key verses
+            scripture: `${bibleParams.bookName} ${bibleParams.chapterNumber}:${verse.verse} (${bibleParams.version})`
+          })
+        }
+      })
     }
 
     // Add hymns
@@ -188,7 +245,8 @@ export default function SocialMediaPage() {
     }
 
     return items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  }, [todayDevotion, hymns, prayers])
+  }, [todayDevotion, hymns, prayers, bibleVerses])
+
 
   // Mock share stats (you can replace with actual API call later)
   const shareStats: ShareStats = useMemo(() => ({
@@ -240,6 +298,20 @@ export default function SocialMediaPage() {
 
   const handleShare = (item: ContentItem) => {
     setSelectedItem(item)
+
+    // Auto-select appropriate template based on content type
+    if (shareTemplates && Array.isArray(shareTemplates)) {
+      const appropriateTemplate = shareTemplates.find((template: any) => {
+        if (item.category === 'bible-verse' && template.template_type === 'verse') {
+          return true
+        }
+        // Add more template matching logic here
+        return false
+      })
+
+      setSelectedTemplate(appropriateTemplate || shareTemplates[0] || null)
+    }
+
     setShowShareModal(true)
   }
 
@@ -247,7 +319,7 @@ export default function SocialMediaPage() {
     refetchDevotion()
     refetchHymns()
     refetchPrayers()
-    // refetchTemplates()
+    refetchTemplates()
   }
 
   const getCategoryIcon = (category: string) => {
@@ -288,7 +360,6 @@ export default function SocialMediaPage() {
     { value: 'bible-verse', label: 'Bible Verses', count: contentItems.filter(i => i.category === 'bible-verse').length },
     { value: 'prayer', label: 'Prayers', count: contentItems.filter(i => i.category === 'prayer').length },
     { value: 'hymn', label: 'Hymns', count: contentItems.filter(i => i.category === 'hymn').length },
-    { value: 'share-template', label: 'Share Templates', count: contentItems.filter(i => i.category === 'share-template').length }
   ]
 
   // Mock recent shares (you can replace with actual API call)
@@ -305,15 +376,12 @@ export default function SocialMediaPage() {
     const showEllipsis = totalPages > 7
 
     if (showEllipsis) {
-      // Show first page
       items.push(1)
 
-      // Show ellipsis if current page is far from start
       if (currentPage > 4) {
         items.push('ellipsis-start')
       }
 
-      // Show pages around current page
       const start = Math.max(2, currentPage - 1)
       const end = Math.min(totalPages - 1, currentPage + 1)
 
@@ -323,17 +391,14 @@ export default function SocialMediaPage() {
         }
       }
 
-      // Show ellipsis if current page is far from end
       if (currentPage < totalPages - 3) {
         items.push('ellipsis-end')
       }
 
-      // Show last page
       if (totalPages > 1) {
         items.push(totalPages)
       }
     } else {
-      // Show all pages if total pages <= 7
       for (let i = 1; i <= totalPages; i++) {
         items.push(i)
       }
@@ -341,6 +406,83 @@ export default function SocialMediaPage() {
 
     return items
   }
+
+  const handleBibleParamsChange = useCallback((newParams: Partial<typeof bibleParams>) => {
+    setBibleParams(prev => ({ ...prev, ...newParams }))
+  }, [])
+
+  const BibleSelector = useCallback(() => (
+    <Card className="shadow-sm mb-6">
+      <CardHeader>
+        <CardTitle className="text-lg" style={{ color: '#0088DD' }}>Bible Chapter Selection</CardTitle>
+        <CardDescription>Choose a specific Bible chapter to include in your shareable content</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">Version</label>
+            <Select value={bibleParams.version} onValueChange={(value) => handleBibleParamsChange({ version: value })}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select version" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="KJV">King James Version</SelectItem>
+                <SelectItem value="AMP">Amplified Version</SelectItem>
+                <SelectItem value="ASV">American Standard Version</SelectItem>
+                <SelectItem value="NIV">New International Version</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">Book</label>
+            <Select
+              value={bibleParams.bookName}
+              onValueChange={(value) => handleBibleParamsChange({ bookName: value })}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select book" />
+              </SelectTrigger>
+              <SelectContent className="max-h-60 overflow-y-auto">
+                <div className="px-2 py-1 text-xs font-semibold text-gray-500 bg-gray-50">Old Testament</div>
+                {allBibleBooks.slice(0, 39).map((book) => (
+                  <SelectItem key={book.abbreviation} value={book.name}>
+                    {book.name}
+                  </SelectItem>
+                ))}
+                <div className="px-2 py-1 text-xs font-semibold text-gray-500 bg-gray-50 border-t">New Testament</div>
+                {allBibleBooks.slice(39).map((book) => (
+                  <SelectItem key={book.abbreviation} value={book.name}>
+                    {book.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">Chapter</label>
+            <Input
+              type="number"
+              min="1"
+              placeholder="Chapter number"
+              value={bibleParams.chapterNumber}
+              onChange={(e) => handleBibleParamsChange({ chapterNumber: parseInt(e.target.value) || 1 })}
+            />
+          </div>
+        </div>
+
+        {bibleVerses && bibleVerses?.length > 0 && (
+          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+            <p className="text-sm text-gray-600">
+              Loaded {bibleVerses?.length} verses from {bibleParams.bookName} Chapter {bibleParams.chapterNumber} ({bibleParams.version})
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  ), [bibleParams, bibleVerses, handleBibleParamsChange])
+
 
   if (hasError) {
     return (
@@ -365,14 +507,14 @@ export default function SocialMediaPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold" style={{ color: '#0088DD' }}>Social Media Sharing</h1>
           <p className="text-gray-600 text-sm">Share spiritual content across social media platforms</p>
         </div>
-        <div className="flex gap-3">
+        {/* <div className="flex gap-3">
           <Button
             variant="outline"
             size="sm"
@@ -384,7 +526,7 @@ export default function SocialMediaPage() {
             <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {/* Stats Cards */}
@@ -449,6 +591,57 @@ export default function SocialMediaPage() {
           </CardContent>
         </Card>
       </div>
+
+      <div>
+        <BibleSelector />
+      </div>
+
+      {/* Available Templates Section */}
+      {shareTemplates && shareTemplates.length > 0 && (
+        <Card className="shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2" style={{ color: '#0088DD' }}>
+              <Palette className="h-5 w-5" />
+              Available Templates
+            </CardTitle>
+            <CardDescription>Choose a template style for your content</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {shareTemplates.map((template: any) => (
+                <div
+                  key={template.id}
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all hover:scale-105 ${selectedTemplate?.id === template.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
+                    }`}
+                  onClick={() => setSelectedTemplate(template)}
+                >
+                  {/* Template Preview */}
+                  <div
+                    className="w-full h-24 rounded-lg mb-3 flex items-center justify-center text-white text-xs font-medium relative overflow-hidden"
+                    style={{
+                      background: template.gradient_colors
+                        ? `linear-gradient(45deg, ${template.gradient_colors.join(', ')})`
+                        : template.background,
+                    }}
+                  >
+                    <div className="text-center">
+                      <div style={{ color: template.text_color }}>
+                        Sample Text
+                      </div>
+                      <div className="text-xs opacity-75" style={{ color: template.text_color }}>
+                        Bible Verse
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 className="font-medium text-sm text-gray-900">{template.name}</h4>
+                  <p className="text-xs text-gray-500 capitalize">{template.template_type} template</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -671,128 +864,28 @@ export default function SocialMediaPage() {
             )}
           </div>
         </TabsContent>
-
-        {/* Analytics Tab */}
-        <TabsContent value="analytics" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-lg" style={{ color: '#0088DD' }}>Platform Performance</CardTitle>
-                <CardDescription>Share distribution across platforms</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[
-                    { platform: 'Facebook', shares: Math.floor(shareStats.totalShares * 0.45), percentage: 45, color: 'bg-blue-500' },
-                    { platform: 'Instagram', shares: Math.floor(shareStats.totalShares * 0.28), percentage: 28, color: 'bg-pink-500' },
-                    { platform: 'Twitter', shares: Math.floor(shareStats.totalShares * 0.18), percentage: 18, color: 'bg-black' },
-                    { platform: 'WhatsApp', shares: Math.floor(shareStats.totalShares * 0.09), percentage: 9, color: 'bg-green-500' }
-                  ].map((platform) => (
-                    <div key={platform.platform} className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-3 h-3 rounded-full ${platform.color}`}></div>
-                        <span className="font-medium">{platform.platform}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-600">{platform.shares} shares</span>
-                        <div className="w-24 bg-gray-200 rounded-full h-2">
-                          <div
-                            className={`h-2 rounded-full ${platform.color}`}
-                            style={{ width: `${platform.percentage}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm font-medium">{platform.percentage}%</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-lg" style={{ color: '#0088DD' }}>Recent Activity</CardTitle>
-                <CardDescription>Latest shares and engagement</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentShares.map((share, index) => {
-                    const PlatformIcon = getPlatformIcon(share.platform)
-                    return (
-                      <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                        <div className="flex-shrink-0">
-                          <PlatformIcon className="h-4 w-4 text-gray-600" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
-                            {share.content}
-                          </p>
-                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
-                            <Clock className="h-3 w-3" />
-                            <span>{share.time}</span>
-                          </div>
-                          <p className="text-xs text-gray-600 mt-1">
-                            {share.engagement}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card className="shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg" style={{ color: '#0088DD' }}>Content Performance</CardTitle>
-              <CardDescription>Most shared content by category</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {categoryOptions.slice(1).map((category) => {
-                  const categoryItems = contentItems.filter(item => item.category === category.value)
-                  const totalShares = categoryItems.reduce((sum, item) => sum + item.shareCount, 0)
-                  const Icon = getCategoryIcon(category.value)
-
-                  return (
-                    <div key={category.value} className="text-center">
-                      <div className={`mx-auto w-12 h-12 rounded-lg flex items-center justify-center ${getCategoryColor(category.value).split(' ')[1]} mb-3`}>
-                        <Icon className={`h-6 w-6 ${getCategoryColor(category.value).split(' ')[0]}`} />
-                      </div>
-                      <h3 className="font-medium text-gray-900">{category.label}</h3>
-                      <p className="text-2xl font-bold" style={{ color: '#0088DD' }}>
-                        {totalShares}
-                      </p>
-                      <p className="text-xs text-gray-500">total shares</p>
-                    </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
       </Tabs>
 
-      {/* Share Modal */}
-      {selectedItem && (
+      {/* Social Share Modal */}
+      {showShareModal && selectedItem && (
         <SocialShareModal
           isOpen={showShareModal}
           onClose={() => {
             setShowShareModal(false)
             setSelectedItem(null)
+            setSelectedTemplate(null)
           }}
-          content={{
-            title: selectedItem.title,
-            description: selectedItem.content,
-            scripture: selectedItem.scripture,
-            category: selectedItem.category,
-            tags: selectedItem.tags
-          }}
+          contentItem={selectedItem}
+          selectedTemplate={selectedTemplate}
+          shareTemplates={shareTemplates || []}
+          onTemplateSelect={setSelectedTemplate}
           onShareSuccess={(platform) => {
-            // Handle successful share
-            console.log(`Shared to ${platform}:`, selectedItem.title)
-            // You can update share counts here
+            console.log(`Content shared to ${platform}`)
+            // You can add analytics tracking here
+            // trackShare(selectedItem.id, platform)
+
+            // Optionally close the modal after successful share
+            // setShowShareModal(false)
           }}
         />
       )}

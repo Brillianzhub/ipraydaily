@@ -99,7 +99,7 @@ const AdminSidebar: React.FC = () => {
     };
 
     return (
-        <div className={`${isCollapsed ? 'w-20' : 'w-72'} bg-white h-screen flex flex-col shadow-2xl border-r border-gray-200/60 transition-all duration-300 ease-in-out backdrop-blur-sm`}>
+        <div className={`${isCollapsed ? 'w-20' : 'w-72'} bg-white h-screen sticky bottom-0 flex flex-col shadow-xl border-r border-gray-200/60 transition-all duration-300 ease-in-out backdrop-blur-sm`}>
             {/* Header */}
             <div className="p-6 border-b border-gray-100/80 backdrop-blur-sm">
                 <div className="flex items-center justify-between">
@@ -140,7 +140,7 @@ const AdminSidebar: React.FC = () => {
                         Main Menu
                     </h3>
                 )}
-                <nav className="space-y-2">
+                <nav className="space-y-2 max-h-[600px] overflow-y-auto">
                     {menuItems.map((item: MenuItem, index: number) => {
                         const Icon = item.icon;
                         const isActive = isItemActive(item.href);

@@ -2,8 +2,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import AdminSidebar from "../../components/layout/AdminSidebar";
-import AdminNavbar from "../../components/layout/AdminNavbar";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminNavbar from "../../components/admin/AdminNavbar";
 
 
 export default function DashboardLayout({ children }) {
@@ -16,11 +16,13 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex bg-gray-50">
+      <div className="sticky top-0 h-screen overflow-y-auto">
+        <AdminSidebar />
+      </div>
+      <div className="flex-1 flex min-h-screen flex-col">
         <AdminNavbar />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   );
