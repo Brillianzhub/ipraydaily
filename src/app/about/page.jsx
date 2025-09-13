@@ -1,28 +1,24 @@
-import React from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import About from '../../components/About';
-import Sidebar from '../../components/Sidebar';
+import AboutHeroSection from '@/components/about/AboutHero'
+import AboutUsSection from '@/components/about/AboutSection'
+import VisionSection from '@/components/about/AboutVision'
+import CoreValuesSection from '@/components/about/Corevalues'
+import OfferSection from '@/components/about/Offers'
+import OurStorySection from '@/components/about/OurStory'
+import PrayerTransform from '@/components/prayers/PrayerTransform'
+import React from 'react'
 
-import '../../components/Home.css';
-import BannerSection from '@/components/BannerSection';
-
-
-const AboutPage = () => {
-
+const page = () => {
     return (
-        <div className="home-container">
-            <Navbar />
-            <BannerSection />
-            <div className="content-container">
-                <div className="main-section">
-                    <About />
-                </div>
-                <Sidebar />
-            </div>
-            <Footer />
-        </div>
-    );
-};
+        <>
+            <AboutHeroSection />
+            <AboutUsSection />
+            <VisionSection />
+            <CoreValuesSection />
+            <OurStorySection />
+            <OfferSection />
+            <PrayerTransform />
+        </>
+    )
+}
 
-export default AboutPage;
+export default page
