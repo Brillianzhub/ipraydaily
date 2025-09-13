@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { Search, Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 export default function PrayerBlogSection() {
     const [activeCategory, setActiveCategory] = useState('All Post');
@@ -195,11 +196,13 @@ export default function PrayerBlogSection() {
                                     <span>{article.date}</span>
                                 </div>
                             </div>
-
-                            {/* Read Article Button */}
-                            <button className="w-full bg-[#0284C7] text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 text-sm">
-                                Read Article
-                            </button>
+                            <div className='mt-16'>
+                                <Link href="/blog/123">
+                                    <button className="w-full bg-[#0284C7] text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 text-sm">
+                                        Read Article
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 ))}

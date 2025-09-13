@@ -27,7 +27,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Download App Button */}
-                <div className="flex items-center">
+                <div className="hidden sm:flex items-center">
                     <button className="bg-[#0284C7] text-white px-6 py-2.5 rounded-lg font-medium transition-colors duration-200 shadow-sm">
                         Download App
                     </button>

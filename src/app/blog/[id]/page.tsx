@@ -52,15 +52,15 @@ const MorningPrayerBlogPost = () => {
             </div>
 
             {/* Main Content */}
-            <div className="max-w-4xl mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto px-4 py-8 mb-52">
                 {/* Quote */}
                 <div className="text-center italic text-gray-600 mb-8 text-lg">
-                    "In the morning, Lord, You hear my voice; in the morning I lay my requests before You and wait expectantly." — Psalm 5:3
+                &apos;In the morning, Lord, You hear my voice; in the morning I lay my requests before You and wait expectantly.&apos; — Psalm 5:3
                 </div>
 
                 {/* Introduction */}
                 <div className="mb-8 text-gray-700 leading-relaxed">
-                    Mornings set the tone for the entire day. When you start your morning with intentional prayer, you invite peace, clarity, and God's guidance into every decision and interaction. Morning prayer isn't just a routine—it's a spiritual reset that aligns your heart with God's will before the world's distractions begin.
+                    Mornings set the tone for the entire day. When you start your morning with intentional prayer, you invite peace, clarity, and God&apos;s guidance into every decision and interaction. Morning prayer isn&apos;t just a routine—it&apos;s a spiritual reset that aligns your heart with God&apos;s will before the world&apos;s distractions begin.
                 </div>
 
                 {/* Why Morning Prayer Matters */}
@@ -119,7 +119,7 @@ const MorningPrayerBlogPost = () => {
                 <section className="mb-8">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">Sample Morning Prayer</h2>
                     <div className="border-l-4 border-orange-400 pl-6 py-4 bg-orange-50 text-gray-700 italic">
-                        "Heavenly Father, thank You for the gift of a new day. Guide my thoughts, my words, and my actions. Give me wisdom to make the right choices, strength to overcome challenges, and peace to carry through the day. May everything I do bring glory to You. In Jesus' name, Amen."
+                    &apos;Heavenly Father, thank You for the gift of a new day. Guide my thoughts, my words, and my actions. Give me wisdom to make the right choices, strength to overcome challenges, and peace to carry through the day. May everything I do bring glory to You. In Jesus&apos; name, Amen.&apos;
                     </div>
                 </section>
 
@@ -127,7 +127,7 @@ const MorningPrayerBlogPost = () => {
                 <section className="mb-12">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">Final Reflection</h2>
                     <p className="text-gray-700">
-                        Morning prayer is more than a ritual—it's a way to walk in step with God daily. As you make it a habit, you'll notice more peace, clarity, and spiritual growth in your life.
+                        Morning prayer is more than a ritual—it&apos;s a way to walk in step with God daily. As you make it a habit, you&apos;ll notice more peace, clarity, and spiritual growth in your life.
                     </p>
                 </section>
 
@@ -180,7 +180,7 @@ const MorningPrayerBlogPost = () => {
 
                             <button
                                 onClick={handleSubmit}
-                                className="bg-blue-600 text-white px-8 py-3 rounded font-semibold hover:bg-blue-700 transition-colors duration-200"
+                                className="bg-[#0284C7] rounded-md text-white px-8 py-3 font-semibold transition-colors duration-200"
                             >
                                 Submit
                             </button>

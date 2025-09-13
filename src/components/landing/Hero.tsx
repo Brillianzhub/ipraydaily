@@ -10,7 +10,7 @@ const HeroSection = () => {
                 {/* Left Content */}
                 <div className="space-y-8">
                     <div className="space-y-4">
-                        <h1 className="text-5xl lg:text-6xl leading-normal">
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-normal">
                             <span className="text-orange-500 font-bold ">IPRAY</span>{' '}
                             <span className="text-gray-800 font-bold ">DAILY YOUR</span>
                             <br />
@@ -59,7 +59,7 @@ const HeroSection = () => {
 
                 {/* Right Content - Phone Mockups */}
                 <div className="relative flex justify-center items-center">
-                    <img src="/heroimage.png" alt="hero" className='object-cover w-[800px] h-[700px]' />
+                    <img src="/heroimage.png" alt="hero" className='object-cover sm:w-[800px] sm:h-[700px]' />
                 </div>
             </div>
         </section>

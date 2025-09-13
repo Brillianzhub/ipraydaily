@@ -9,7 +9,7 @@ export default function OurStorySection() {
                     <div className="space-y-6">
                         <div>
 
-                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                            <h2 className="text-4xl font-bold text-gray-900 leading-tight">
                                 Our Story
                             </h2>
                         </div>
@@ -24,7 +24,7 @@ export default function OurStorySection() {
                     <div className="relative">
                         <div className=" rounded-2xl overflow-hidden shadow-xl">
                             <img
-                                src="/story.png"
+                                src="/ourstory.png"
                                 alt="Hands joined in prayer"
                                 className="w-full h-full object-cover"
 

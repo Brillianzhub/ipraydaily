@@ -58,8 +58,8 @@ const TestimonialsSection = () => {
                         Lives transformed through prayer
                     </h1>
                     <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                        Hear from believers around the world who are experiencing God's power through IPray
-                        Daily's guided prayers and Bible study tools.
+                        Hear from believers around the world who are experiencing God&apos;s power through IPray
+                        Daily&apos;s guided prayers and Bible study tools.
                     </p>
                 </div>
 
@@ -79,7 +79,7 @@ const TestimonialsSection = () => {
                                         <div className="relative bg-gray-50 rounded-2xl p-8">
                                             {/* Quote Icon */}
                                             <div className="absolute top-6 left-6 text-6xl text-blue-200 font-serif leading-none">
-                                                "
+                                            &apos;
                                             </div>
 
                                             {/* Stars */}
@@ -111,7 +111,7 @@ const TestimonialsSection = () => {
                                         <div className="relative bg-gray-50 rounded-2xl p-8">
                                             {/* Quote Icon */}
                                             <div className="absolute top-6 left-6 text-6xl text-blue-200 font-serif leading-none">
-                                                "
+                                            &apos;
                                             </div>
 
                                             {/* Stars */}
