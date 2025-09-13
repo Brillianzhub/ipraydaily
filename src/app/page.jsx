@@ -1,110 +1,22 @@
-"use client";
+import FeaturesSection from '@/components/landing/Features'
+import HeroSection from '@/components/landing/Hero'
+import Transform from '@/components/landing/Transform'
+import Toolkit from '@/components/landing/Toolkit'
+import React from 'react'
+import GuidedPrayers from '@/components/landing/GuidedPrayers'
+import TestimonialsSection from '@/components/landing/Testimonials'
 
-import React, { useEffect, useState } from 'react';
-import SearchSection from '../components/SearchSection';
-import VerseOfTheDay from '../components/VerseOfTheDay';
-import PrayerOfTheDay from '../components/PrayerOfTheDay';
-import MobileAppSection from '../components/MobileAppSection';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import FeaturedPosts from '../components/FeaturedPosts';
-import Sidebar from '../components/Sidebar';
-import BannerSection from '../components/BannerSection';
-import { useBibleData } from '../context/BibleDataContext';
-// import LoadingScreen from '../components/LoadingScreen';
-
-import CookieBanner from '../components/CookieBanner';
-import '../components/Home.css';
-
-const Home = () => {
-  const [randomVerse, setRandomVerse] = useState(null);
-  const [showVerse, setShowVerse] = useState(true);
-  const [prayer, setPrayer] = useState([]);
-  const [currentPrayer, setCurrentPrayer] = useState(null);
-
-  const {
-    bibleBooks,
-    setSelectedBookName,
-    setSelectedChapterNumber,
-    setSelectedVerse,
-    setVerses,
-    // setLoading,
-  } = useBibleData();
-
-
-  useEffect(() => {
-    const fetchPrayer = async () => {
-      try {
-        const response = await fetch(`https://www.brillianzhub.com/ipray/prayerpoints`);
-        const dataValues = await response.json()
-        const data = dataValues.results;
-        setPrayer(data);
-        setCurrentPrayer(data[Math.floor(Math.random() * data.length)]);
-      } catch (error) {
-        console.log("Unable to fetch data", error)
-      }
-    };
-    fetchPrayer();
-  }, [])
-
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setShowVerse(prev => !prev);
-    }, 120000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  // useEffect(() => {
-
-  //   const timer = setTimeout(() => setLoading(false), 2000);
-  //   return () => clearTimeout(timer)
-  // }, [])
-
-
-  // if (loading) return <div><LoadingScreen /></div>;
-  // if (error) return <div>{error}</div>;
-
-
-
+const page = () => {
   return (
-    <div className="home-container">
-      <Navbar />
-      <BannerSection />
-      <div className="content-container">
-        <div className="main-section">
-          <SearchSection
-            bibleBooks={bibleBooks}
-            setSelectedBookName={setSelectedBookName}
-            setSelectedChapterNumber={setSelectedChapterNumber}
-            setSelectedVerse={setSelectedVerse}
-            setVerses={setVerses}
-          />
-          <div className="animated-section">
-            {showVerse ? (
-              <VerseOfTheDay
-                bibleBooks={bibleBooks}
-                randomVerse={randomVerse}
-                setRandomVerse={setRandomVerse}
-              />
-            ) : (
-              <PrayerOfTheDay
-                prayer={prayer}
-                currentPrayer={currentPrayer}
-                setCurrentPrayer={setCurrentPrayer}
-              />
-            )}
-          </div>
-          <FeaturedPosts />
-          <MobileAppSection />
-        </div>
-        <Sidebar />
-      </div>
-      <CookieBanner />
-      <Footer />
-    </div>
-  );
-};
+    <>
+      <HeroSection />
+      <FeaturesSection />
+      <Toolkit />
+      <GuidedPrayers />
+      <TestimonialsSection />
+      <Transform />
+    </>
+  )
+}
 
-export default Home;
+export default page
