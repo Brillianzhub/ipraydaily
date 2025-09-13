@@ -11,7 +11,7 @@ export default function AboutUsSection() {
                             <p className="text-sm font-semibold tracking-wider text-gray-600 mb-2">
                                 About Us
                             </p>
-                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                            <h2 className="text-4xl font-bold text-gray-900 leading-tight">
                                 Who We Are
                             </h2>
                         </div>
@@ -19,7 +19,7 @@ export default function AboutUsSection() {
                         <p className="text-lg text-gray-600 leading-relaxed">
                             iPray Daily is a Christian prayer and devotional app created by<br></br>
                             Brillianzhub. We exist to help believers grow a consistent prayer life,
-                            deepen their knowledge of God's Word, and strengthen their daily walk
+                            deepen their knowledge of God&apos;s Word, and strengthen their daily walk
                             with Christ.
                         </p>
                     </div>

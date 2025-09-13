@@ -58,7 +58,7 @@ const GuidedPrayers = () => {
                             {/* Bible Verse */}
                             <div className="mb-6">
                                 <p className="text-gray-700 italic text-lg leading-relaxed">
-                                    "{prayer.verse}"
+                                &apos;{prayer.verse}&apos;
                                 </p>
                             </div>
 

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { Mail, Globe, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Mail, Globe } from 'lucide-react';
 
 export default function ContactSection() {
     const [formData, setFormData] = useState({
