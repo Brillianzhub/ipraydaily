@@ -29,7 +29,7 @@ const page = () => {
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8">
                         <h1 className="text-3xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
                         <p className="text-lg text-gray-600 leading-relaxed">
-                            iPray Daily (<strong>"we," "us," or "our"</strong>) is committed to protecting the privacy of our users (<strong>"you" or "your"</strong>). This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our mobile application (<strong>"App"</strong>).
+                            iPray Daily (<strong>&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;</strong>) is committed to protecting the privacy of our users (<strong>&quot;you&quot; or &quot;your&quot;</strong>). This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our mobile application (<strong>&quot;App&quot;</strong>).
                         </p>
                     </div>
 
@@ -140,7 +140,7 @@ const page = () => {
                             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
                                 <span className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">7</span>
                                 <Baby className="w-6 h-6 mr-2 text-blue-600" />
-                                Children's Privacy
+                                Children&quot;s Privacy
                             </h2>
                             <p className="text-gray-600 leading-relaxed">
                                 Our App is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian, and you believe your child has provided us with personal information, please contact us. If we learn that we have collected personal information from a child under 13, we will delete that information from our servers.
