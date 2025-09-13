@@ -34,7 +34,7 @@ export default function ContactSection() {
                                 Contact Information
                             </h2>
                             <p className="text-gray-600 text-lg leading-relaxed">
-                                We'd love to hear from you. Reach out through any of the options below:
+                                We&quot;d love to hear from you. Reach out through any of the options below:
                             </p>
                         </div>
 
