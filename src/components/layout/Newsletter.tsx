@@ -16,7 +16,7 @@ const NewsletterSection = () => {
     return (
         <div className="w-full py-8 sm:py-12 lg:py-16 px-4 absolute left-0 right-0 top-[-16rem] sm:top-[-10rem] lg:top-[-12rem]">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-gradient-to-r from-blue-200 via-green-200 to-yellow-300 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 shadow-2xl">
+                <div className="bg-gradient-to-r from-[#A5CDE2] via-[#819563] to-[#FFA500] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 shadow-2xl">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
                         {/* Left side - Text */}
                         <div className="flex-1 max-w-lg text-center lg:text-left">
