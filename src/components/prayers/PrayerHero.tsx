@@ -8,7 +8,7 @@ const PrayerHeroSection = () => {
             {/* Content */}
             <div className="relative z-10 flex items-center justify-center min-h-[400px] px-6 py-16">
                 <div className="text-center max-w-4xl mx-auto">
-                    <h1 className="text-5xl font-bold text-white mb-8 leading-tight">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-white mb-8 leading-tight">
                         Guided Prayers & Scripture
                     </h1>
 

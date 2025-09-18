@@ -9,7 +9,7 @@ const AboutHeroSection = () => {
             <div className="relative z-10 flex items-center justify-center min-h-[400px] px-6 py-16">
                 <div className="text-center max-w-4xl mx-auto">
                     <h1 className="text-5xl font-bold text-white mb-8 leading-tight">
-                        IPray Daily Blog
+                        IPray Daily About
                     </h1>
 
                     <p className="text-lg text-white/90 leading-relaxed max-w-3xl mx-auto font-light">
