@@ -20,9 +20,9 @@ const Transform = () => {
                     scripture-based prayer. Your spiritual breakthrough is just one download away.
                 </p>
 
-                <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
+                <div className="flex flex-row justify-center items-center gap-3 sm:gap-4">
                     <a
-                        href="#"
+                        href="https://play.google.com/store/apps/details?id=com.brillianzhub.ipray"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Get it on Google Play"
@@ -37,7 +37,7 @@ const Transform = () => {
                     </a>
 
                     <a
-                        href="#"
+                        href="https://apps.apple.com/app/ipray-daily/id6746961354"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Download on the App Store"
