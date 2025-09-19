@@ -17,10 +17,41 @@ const Toolkit = () => {
                     <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
                         Whether you&apos;re new to faith or a mature believer, this app is built to help you bridge the gap between knowledge and practice—so that the promises of God can find full expression in your life.
                     </p>
+                    <div className="flex flex-row items-center gap-3 sm:gap-4">
+                        <a
+                            href="https://play.google.com/store/apps/details?id=com.brillianzhub.ipray"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Get it on Google Play"
+                            className="shrink-0"
+                        >
+                            <img
+                                src="/playstore.svg"
+                                alt="Get it on Google Play"
+                                className="h-12 w-auto transition-transform hover:scale-105 drop-shadow-sm"
+                                loading="lazy"
+                            />
+                        </a>
 
-                    <button className="bg-[#0284C7] text-white font-semibold py-3 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                        <a
+                            href="https://apps.apple.com/app/ipray-daily/id6746961354"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Download on the App Store"
+                            className="shrink-0"
+                        >
+                            <img
+                                src="/appstore.svg"
+                                alt="Download on the App Store"
+                                className="h-12 w-auto transition-transform hover:scale-105 drop-shadow-sm"
+                                loading="lazy"
+                            />
+                        </a>
+                    </div>
+
+                    {/* <button className="bg-[#0284C7] text-white font-semibold py-3 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
                         Download App
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Right Side - Abstract Design */}
