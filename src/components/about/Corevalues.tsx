@@ -1,25 +1,24 @@
 import React from 'react';
-import { Monitor, Users, Target, Heart } from 'lucide-react';
 
 const CoreValuesSection = () => {
     const values = [
         {
-            icon: Monitor,
+            icon: "/bible.svg",
             title: "Faith",
             description: "Christ at the center of everything we do."
         },
         {
-            icon: Users,
+            icon: "/users.svg",
             title: "Community",
             description: "Building connections through shared devotion."
         },
         {
-            icon: Target,
+            icon: "/target.svg",
             title: "Excellence",
             description: "Creating tools that are simple, reliable, and meaningful."
         },
         {
-            icon: Heart,
+            icon: "/globe.svg",
             title: "Impact",
             description: "Empowering lives with the transforming truth of God's Word."
         }
@@ -38,7 +37,6 @@ const CoreValuesSection = () => {
                 {/* Values Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
                     {values.map((value, index) => {
-                        const IconComponent = value.icon;
                         return (
                             <div
                                 key={index}
@@ -47,9 +45,10 @@ const CoreValuesSection = () => {
                                 {/* Icon Container */}
                                 <div className="flex absolute top-[-2rem] right-0 left-0 justify-center mb-6">
                                     <div className="bg-gray-100 rounded-2xl p-4 group-hover:bg-blue-50 transition-colors duration-300">
-                                        <IconComponent
-                                            size={32}
-                                            className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                                        <img
+                                            src={value.icon}
+                                            alt={`${value.title} icon`}
+                                            className="w-8 h-8 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
                                         />
                                     </div>
                                 </div>
