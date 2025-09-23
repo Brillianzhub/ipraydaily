@@ -2,8 +2,6 @@ import localFont from "next/font/local";
 import { BibleDataProvider } from '../context/BibleDataContext';
 import "./globals.css";
 import { ClientProvider } from "@/components/ClientProvider";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 
 // Load fonts with variable usage
 const geistSans = localFont({
@@ -24,7 +22,7 @@ export const metadata = {
   description: "Discover inspiring Bible verses. Search, read, and meditate on God's Word. Find comfort, hope, and guidance through Scripture.",
   keywords: "Bible verses, Scripture, God's Word, Bible study, Christian, spiritual, devotion, prayer, IPray Daily, Koinonia Global Messages",
   icons: {
-    icon: "/images/ipray_ico.ico",
+    icon: "/images/favicon.ico",
   },
 };
 
@@ -34,9 +32,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientProvider>
           <BibleDataProvider>
-            <Navbar />
             {children}
-            <Footer />
           </BibleDataProvider>
         </ClientProvider>
       </body>
