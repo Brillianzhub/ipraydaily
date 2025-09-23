@@ -42,10 +42,8 @@ const AdminSidebar: React.FC = () => {
         },
         {
             icon: BookOpen,
-            label: 'Content Management',
-            href: '/content-management',
-            badge: 'Soon',
-            disabled: true
+            label: 'Blog Management',
+            href: '/dashboard/blog-management',
         },
         {
             icon: Mail,
