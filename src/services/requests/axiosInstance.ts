@@ -16,6 +16,10 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Token ${token}`;
     }
+    if (config.data instanceof FormData) {
+      // Remove any preset content-type so Axios sets the multipart boundary
+      delete (config.headers as any)['Content-Type'];
+    }
     return config;
   },
   (error) => {
@@ -33,7 +37,7 @@ api.interceptors.response.use(
       // Token expired or invalid
       Cookies.remove('auth_token');
       Cookies.remove('user_data');
-      
+
       // Redirect to login page
       if (typeof window !== 'undefined') {
         window.location.href = '/auth';

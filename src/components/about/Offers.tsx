@@ -29,7 +29,7 @@ export default function OfferSection() {
                 </h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                    <img src="/offer.png" className='object-cover w-full h-full' />
+                    <img src="/aboutnew.png" className='object-cover w-full h-full' />
 
                     <div className="relative">
                         {features.map((feature, index) => (

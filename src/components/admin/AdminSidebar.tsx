@@ -10,7 +10,10 @@ import {
     Users,
     Settings,
     Menu,
-    ChevronLeft
+    ChevronLeft,
+    Hand,
+    User,
+    Calendar
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -46,11 +49,19 @@ const AdminSidebar: React.FC = () => {
             href: '/dashboard/blog-management',
         },
         {
+            icon: Hand,
+            label: 'Prayer Management',
+            href: '/dashboard/prayer-management',
+        },
+        {
+            icon: Calendar,
+            label: 'Event Management',
+            href: '/dashboard/event-management',
+        },
+        {
             icon: Mail,
             label: 'Email Notifications',
-            href: '/email-notifications',
-            badge: 'Soon',
-            disabled: true
+            href: '/dashboard/email-notifications',
         },
         {
             icon: Bell,
@@ -60,12 +71,17 @@ const AdminSidebar: React.FC = () => {
             disabled: true
         },
         {
-            icon: Users,
-            label: 'User Management',
-            href: '/user-management',
-            badge: 'Soon',
-            disabled: true
-        }
+            icon: User,
+            label: 'Contact Management',
+            href: '/dashboard/contact-management',
+        },
+        // {
+        //     icon: Users,
+        //     label: 'Reviews',
+        //     href: '/reviews',
+        //     badge: 'Soon',
+        //     disabled: true
+        // }
     ];
 
     const bottomMenuItem: MenuItem = {
@@ -238,7 +254,7 @@ const AdminSidebar: React.FC = () => {
 
             {/* Bottom Settings - Fixed at bottom */}
             <div className="border-t border-gray-100/80 p-4 mt-auto backdrop-blur-sm">
-                {!isCollapsed && (
+                {/* {!isCollapsed && (
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-4 mb-3">
                         System
                     </h3>
@@ -293,7 +309,6 @@ const AdminSidebar: React.FC = () => {
                         )}
                     </button>
 
-                    {/* Tooltip for collapsed state */}
                     {isCollapsed && (
                         <div className="absolute left-full ml-4 top-1/2 transform -translate-y-1/2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 shadow-lg">
                             {bottomMenuItem.label}
@@ -305,7 +320,7 @@ const AdminSidebar: React.FC = () => {
                             <div className="absolute right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
                         </div>
                     )}
-                </div>
+                </div> */}
             </div>
         </div>
     );

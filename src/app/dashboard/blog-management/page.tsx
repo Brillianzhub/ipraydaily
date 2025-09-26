@@ -20,6 +20,7 @@ import {
     AlertTriangle
 } from 'lucide-react';
 import { api } from '@/services/requests/axiosInstance';
+import { useRouter } from 'next/navigation';
 
 const BlogManagement = () => {
     const [posts, setPosts] = useState([]);
@@ -31,7 +32,10 @@ const BlogManagement = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [postToDelete, setPostToDelete] = useState(null);
     const [actionLoading, setActionLoading] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
     const postsPerPage = 10;
+    const router = useRouter()
 
     // Mock data - replace with actual API call
     useEffect(() => {
@@ -57,15 +61,15 @@ const BlogManagement = () => {
     const handleToggleStatus = async (slug, currentStatus) => {
         setActionLoading(slug);
         try {
-           await api.post(`/blogs/toggle/${slug}/`);
-            // setTimeout(() => {
-            //     setPosts(posts.map(post =>
-            //         post.slug === slug
-            //             ? { ...post, status: currentStatus === 'published' ? 'draft' : 'published' }
-            //             : post
-            //     ));
-            //     setActionLoading(null);
-            // }, 1000);
+            await api.post(`/blogs/toggle/${slug}/`);
+            setTimeout(() => {
+                setPosts(posts.map(post =>
+                    post.slug === slug
+                        ? { ...post, status: currentStatus === 'published' ? 'draft' : 'published' }
+                        : post
+                ));
+                setActionLoading(null);
+            }, 1000);
             setActionLoading(null);
         } catch (error) {
             console.error('Error toggling post status:', error);
@@ -78,13 +82,13 @@ const BlogManagement = () => {
 
         setActionLoading(postToDelete.slug);
         try {
-            // Replace with actual API call: await api.delete(`/blogs/delete/${postToDelete.slug}/`);
+            await api.delete(`/blogs/delete/${postToDelete.slug}/`);
             setTimeout(() => {
-                setPosts(posts.filter(post => post.slug !== postToDelete.slug));
                 setShowDeleteModal(false);
                 setPostToDelete(null);
                 setActionLoading(null);
             }, 1000);
+            await fetchPosts()
         } catch (error) {
             console.error('Error deleting post:', error);
             setActionLoading(null);
@@ -125,7 +129,7 @@ const BlogManagement = () => {
     const startIndex = (currentPage - 1) * postsPerPage;
     const currentPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
@@ -133,7 +137,31 @@ const BlogManagement = () => {
         });
     };
 
-    const categories = [...new Set(posts.map(post => post.category))];
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                setCategoriesLoading(true);
+                const response = await api.get('/blogs/categories/');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                setCategories([
+                    { id: 1, name: 'Sermon' },
+                    { id: 2, name: 'Devotional' },
+                    { id: 3, name: 'Prayer Guide' },
+                    { id: 4, name: 'Spiritual Growth' },
+                    { id: 5, name: 'Bible Study' },
+                    { id: 6, name: 'Christian Living' },
+                    { id: 7, name: 'Testimonies' },
+                    { id: 8, name: 'Faith Stories' },
+                ]);
+            } finally {
+                setCategoriesLoading(false);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -146,7 +174,7 @@ const BlogManagement = () => {
                     </div>
                     <button
                         className="bg-[#0088DD] hover:bg-[#0077CC] text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors"
-                        onClick={() => {/* Navigate to create post */ }}
+                        onClick={() => router.push("/dashboard/blog-management/create")}
                     >
                         <Plus size={20} />
                         New Post
@@ -167,7 +195,7 @@ const BlogManagement = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow-sm border">
+                    {/* <div className="bg-white p-6 rounded-lg shadow-sm border">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm font-medium text-gray-600">Published</p>
@@ -179,9 +207,9 @@ const BlogManagement = () => {
                                 <Eye className="h-6 w-6 text-green-600" />
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="bg-white p-6 rounded-lg shadow-sm border">
+                    {/* <div className="bg-white p-6 rounded-lg shadow-sm border">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm font-medium text-gray-600">Drafts</p>
@@ -193,7 +221,7 @@ const BlogManagement = () => {
                                 <EyeOff className="h-6 w-6 text-yellow-600" />
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="bg-white p-6 rounded-lg shadow-sm border">
                         <div className="flex items-center justify-between">
@@ -232,11 +260,11 @@ const BlogManagement = () => {
                             >
                                 <option value="all">All Categories</option>
                                 {categories.map(category => (
-                                    <option key={category} value={category}>{category}</option>
+                                    <option key={category.id} value={String(category.id)}>{category.name}</option>
                                 ))}
                             </select>
 
-                            <select
+                            {/* <select
                                 value={selectedStatus}
                                 onChange={(e) => setSelectedStatus(e.target.value)}
                                 className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent"
@@ -244,7 +272,7 @@ const BlogManagement = () => {
                                 <option value="all">All Status</option>
                                 <option value="published">Published</option>
                                 <option value="draft">Draft</option>
-                            </select>
+                            </select> */}
                         </div>
                     </div>
                 </div>
@@ -274,9 +302,9 @@ const BlogManagement = () => {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Author & Category
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status
-                                    </th>
+                                    </th> */}
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Dates
                                     </th>
@@ -305,10 +333,10 @@ const BlogManagement = () => {
                                                             {post.title}
                                                         </h3>
                                                         {post.featured && (
-                                                            <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                                                            <Star className="w-4 h-4 text-amber-500 fill-current" />
                                                         )}
                                                     </div>
-                                                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                                                    <p className="text-sm  text-gray-500 mt-1 line-clamp-2">
                                                         {post.description}
                                                     </p>
                                                     <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
@@ -335,7 +363,7 @@ const BlogManagement = () => {
                                             </div>
                                         </td>
 
-                                        <td className="px-6 py-4">
+                                        {/* <td className="px-6 py-4">
                                             <div className="flex items-center gap-2">
                                                 <button
                                                     onClick={() => handleToggleStatus(post.slug, post.status)}
@@ -355,16 +383,13 @@ const BlogManagement = () => {
                                                     {post.status === 'published' ? 'Published' : 'Draft'}
                                                 </button>
                                             </div>
-                                        </td>
+                                        </td> */}
 
                                         <td className="px-6 py-4">
                                             <div className="text-sm text-gray-500">
                                                 <div className="flex items-center gap-1 mb-1">
                                                     <Calendar size={12} />
-                                                    <span>Created: {formatDate(post.created)}</span>
-                                                </div>
-                                                <div className="text-xs text-gray-400">
-                                                    Updated: {formatDate(post.last_updated)}
+                                                    <span>Created: {formatDate(post.publish)}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -372,9 +397,9 @@ const BlogManagement = () => {
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <button
-                                                    onClick={() => handleToggleFeatured(post.slug)}
+
                                                     disabled={actionLoading === post.slug}
-                                                    className={`p-2 rounded-lg transition-colors ${post.featured
+                                                    className={`p-2 rounded-lg cursor-default transition-colors ${post.featured
                                                         ? 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200'
                                                         : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
                                                         } ${actionLoading === post.slug ? 'opacity-50' : ''}`}
@@ -384,7 +409,7 @@ const BlogManagement = () => {
                                                 </button>
 
                                                 <button
-                                                    onClick={() => {/* Navigate to edit */ }}
+                                                    onClick={() => router.push(`/dashboard/blog-management/edit/${post.slug}`)}
                                                     className="p-2 bg-[#0088DD] bg-opacity-10 text-[#0088DD] rounded-lg hover:bg-[#0088DD] hover:bg-opacity-20 transition-colors"
                                                     title="Edit post"
                                                 >

@@ -3,6 +3,7 @@ export interface Prayer {
   prayer_category: string
   prayer: string
   prayer_scripture: string
+  scripture_text: string
   publish: boolean
   featured: boolean
   last_updated: string

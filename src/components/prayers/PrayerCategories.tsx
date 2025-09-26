@@ -167,7 +167,7 @@ const PrayerCategoriesSection = () => {
     const [shareDialogOpen, setShareDialogOpen] = useState(false);
     const [selectedPrayer, setSelectedPrayer] = useState(null);
     const itemsPerPage = 6;
-    const { data, isLoading, isError, refetch} = useFetchPrayers();
+    const { data, isLoading, isError, refetch } = useFetchPrayers();
 
     // Category mapping for better display names
     const categoryDisplayNames = {
@@ -417,6 +417,12 @@ const PrayerCategoriesSection = () => {
                                 <div className="mb-6">
                                     <p className="text-gray-800 leading-relaxed">
                                         {prayer.prayer}
+                                    </p>
+
+                                </div>
+                                <div className="mb-6">
+                                    <p className="text-gray-800 italic leading-relaxed">
+                                        {prayer.scripture_text}
                                     </p>
                                 </div>
 
