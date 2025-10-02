@@ -9,7 +9,7 @@ import { Facebook, Instagram, Twitter } from 'lucide-react';
 import { useRef, useState } from "react";
 
 export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
-    const [selectedTemplate, setSelectedTemplate] = useState('Modern');
+    const [selectedTemplate, setSelectedTemplate] = useState('Heavenly Blue');
     const [isGenerating, setIsGenerating] = useState(false);
     const previewRef = useRef(null);
 
@@ -69,45 +69,95 @@ export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
 
     // Template styles
     const templates = {
-        'Minimalist': {
-            bg: 'bg-gray-50',
-            border: 'border-gray-200',
-            text: 'text-gray-800',
-            accent: 'text-gray-600',
-            scripture: 'text-gray-700',
-            downloadBg: '#f9fafb',
+        'Heavenly Blue': {
+            bg: 'bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400',
+            border: 'border-transparent',
+            text: 'text-white',
+            accent: 'text-blue-100',
+            scripture: 'text-blue-50',
+            downloadBg: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #22d3ee 100%)',
+            downloadText: '#ffffff',
+            downloadAccent: '#dbeafe'
+        },
+        'Golden Dawn': {
+            bg: 'bg-gradient-to-br from-amber-400 via-orange-400 to-yellow-300',
+            border: 'border-transparent',
+            text: 'text-gray-900',
+            accent: 'text-amber-900',
+            scripture: 'text-orange-900',
+            downloadBg: 'linear-gradient(135deg, #fbbf24 0%, #fb923c 50%, #fde047 100%)',
             downloadText: '#1f2937',
-            downloadAccent: '#4b5563'
+            downloadAccent: '#78350f'
         },
-        'Nature': {
-            bg: 'bg-green-50',
-            border: 'border-green-200',
-            text: 'text-green-800',
-            accent: 'text-green-600',
-            scripture: 'text-green-700',
-            downloadBg: '#f0fdf4',
-            downloadText: '#166534',
-            downloadAccent: '#16a34a'
-        },
-        'Modern': {
-            bg: 'bg-gradient-to-br from-purple-500 to-pink-500',
+        'Royal Purple': {
+            bg: 'bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500',
             border: 'border-transparent',
             text: 'text-white',
             accent: 'text-purple-100',
-            scripture: 'text-purple-100',
-            downloadBg: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+            scripture: 'text-pink-100',
+            downloadBg: 'linear-gradient(135deg, #9333ea 0%, #a855f7 50%, #ec4899 100%)',
             downloadText: '#ffffff',
-            downloadAccent: '#e9d5ff'
+            downloadAccent: '#f3e8ff'
         },
-        'Classic': {
-            bg: 'bg-slate-700',
-            border: 'border-slate-600',
+        'Forest Green': {
+            bg: 'bg-gradient-to-br from-emerald-600 via-green-500 to-teal-400',
+            border: 'border-transparent',
+            text: 'text-white',
+            accent: 'text-emerald-100',
+            scripture: 'text-teal-50',
+            downloadBg: 'linear-gradient(135deg, #059669 0%, #22c55e 50%, #2dd4bf 100%)',
+            downloadText: '#ffffff',
+            downloadAccent: '#d1fae5'
+        },
+        'Sunset Orange': {
+            bg: 'bg-gradient-to-br from-rose-500 via-orange-500 to-amber-400',
+            border: 'border-transparent',
+            text: 'text-white',
+            accent: 'text-rose-100',
+            scripture: 'text-orange-50',
+            downloadBg: 'linear-gradient(135deg, #f43f5e 0%, #f97316 50%, #fbbf24 100%)',
+            downloadText: '#ffffff',
+            downloadAccent: '#ffe4e6'
+        },
+        'Midnight Navy': {
+            bg: 'bg-gradient-to-br from-slate-800 via-blue-900 to-indigo-900',
+            border: 'border-transparent',
             text: 'text-white',
             accent: 'text-slate-300',
-            scripture: 'text-slate-200',
-            downloadBg: '#334155',
+            scripture: 'text-blue-200',
+            downloadBg: 'linear-gradient(135deg, #1e293b 0%, #1e3a8a 50%, #312e81 100%)',
             downloadText: '#ffffff',
             downloadAccent: '#cbd5e1'
+        },
+        'Clean White': {
+            bg: 'bg-white',
+            border: 'border-gray-200',
+            text: 'text-gray-900',
+            accent: 'text-gray-600',
+            scripture: 'text-gray-700',
+            downloadBg: '#ffffff',
+            downloadText: '#111827',
+            downloadAccent: '#4b5563'
+        },
+        'Ocean Deep': {
+            bg: 'bg-gradient-to-br from-cyan-600 via-blue-600 to-indigo-600',
+            border: 'border-transparent',
+            text: 'text-white',
+            accent: 'text-cyan-100',
+            scripture: 'text-blue-100',
+            downloadBg: 'linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #4f46e5 100%)',
+            downloadText: '#ffffff',
+            downloadAccent: '#cffafe'
+        },
+        'Warm Coral': {
+            bg: 'bg-gradient-to-br from-pink-400 via-rose-400 to-red-400',
+            border: 'border-transparent',
+            text: 'text-white',
+            accent: 'text-pink-100',
+            scripture: 'text-rose-50',
+            downloadBg: 'linear-gradient(135deg, #f472b6 0%, #fb7185 50%, #f87171 100%)',
+            downloadText: '#ffffff',
+            downloadAccent: '#fce7f3'
         }
     };
 
@@ -131,11 +181,53 @@ export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
             canvas.height = height;
 
             // Set background
-            if (selectedTemplate === 'Modern') {
-                // Create gradient for Modern template
+            if (selectedTemplate === 'Heavenly Blue') {
                 const gradient = ctx.createLinearGradient(0, 0, width, height);
-                gradient.addColorStop(0, '#8b5cf6');
+                gradient.addColorStop(0, '#2563eb');
+                gradient.addColorStop(0.5, '#3b82f6');
+                gradient.addColorStop(1, '#22d3ee');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Golden Dawn') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#fbbf24');
+                gradient.addColorStop(0.5, '#fb923c');
+                gradient.addColorStop(1, '#fde047');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Royal Purple') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#9333ea');
+                gradient.addColorStop(0.5, '#a855f7');
                 gradient.addColorStop(1, '#ec4899');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Forest Green') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#059669');
+                gradient.addColorStop(0.5, '#22c55e');
+                gradient.addColorStop(1, '#2dd4bf');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Sunset Orange') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#f43f5e');
+                gradient.addColorStop(0.5, '#f97316');
+                gradient.addColorStop(1, '#fbbf24');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Midnight Navy') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#1e293b');
+                gradient.addColorStop(0.5, '#1e3a8a');
+                gradient.addColorStop(1, '#312e81');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Ocean Deep') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#0891b2');
+                gradient.addColorStop(0.5, '#2563eb');
+                gradient.addColorStop(1, '#4f46e5');
+                ctx.fillStyle = gradient;
+            } else if (selectedTemplate === 'Warm Coral') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, '#f472b6');
+                gradient.addColorStop(0.5, '#fb7185');
+                gradient.addColorStop(1, '#f87171');
                 ctx.fillStyle = gradient;
             } else {
                 ctx.fillStyle = currentTemplate.downloadBg;
@@ -185,7 +277,7 @@ export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `prayer-${categoryDisplay.toLowerCase().replace(/\s+/g, '-')}-${selectedTemplate.toLowerCase()}.png`;
+                a.download = `prayer-${categoryDisplay.toLowerCase().replace(/\s+/g, '-')}-${selectedTemplate.toLowerCase().replace(/\s+/g, '-')}.png`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -268,7 +360,7 @@ export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
                     {/* Template Selection */}
                     <div>
                         <h4 className="text-sm font-medium text-gray-700 mb-3">Choose a Template</h4>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-3 gap-3">
                             {Object.keys(templates).map((template) => (
                                 <button
                                     key={template}
@@ -278,12 +370,12 @@ export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
                                         : 'border-gray-200 hover:border-gray-300'
                                         }`}
                                 >
-                                    <div className={`w-full h-16 rounded ${templates[template].bg} ${templates[template].border} border mb-2 flex items-center justify-center`}>
-                                        <span className={`text-xs font-medium ${templates[template].text}`}>
-                                            {template}
+                                    <div className={`w-full h-20 rounded ${templates[template].bg} ${templates[template].border} border mb-2 flex items-center justify-center`}>
+                                        <span className={`text-2xl font-semibold ${templates[template].text}`}>
+                                            Aa
                                         </span>
                                     </div>
-                                    <span className="text-sm font-medium text-gray-700">{template}</span>
+                                    <span className="text-xs font-medium text-gray-700 block text-center">{template}</span>
                                 </button>
                             ))}
                         </div>
@@ -299,7 +391,7 @@ export const SharePrayerDialog = ({ prayer, isOpen, onClose }) => {
                                         {prayerTitle}
                                     </h3>
                                     <p className={`text-sm ${currentTemplate.accent} italic`}>
-                                    &quot;{prayer.prayer_scripture}&quot;
+                                        &quot;{prayer.prayer_scripture}&quot;
                                     </p>
                                 </div>
 

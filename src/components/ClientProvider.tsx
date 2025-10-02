@@ -1,6 +1,7 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "@/components/ui/sonner"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -22,6 +23,7 @@ export function ClientProvider({
         <QueryClientProvider client={queryClient}>
             {children}
             <ReactQueryDevtools initialIsOpen={false} />
+            <Toaster />
         </QueryClientProvider>
     );
 }
