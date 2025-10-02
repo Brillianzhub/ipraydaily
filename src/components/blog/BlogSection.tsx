@@ -1,26 +1,48 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Search, Calendar, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { useFetchBlogs } from '@/services/requests/blogs';
+import { api } from '@/services/requests/axiosInstance';
 
 export default function PrayerBlogSection() {
     const [activeCategory, setActiveCategory] = useState('All Post');
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [categoriesLoading, setCategoriesLoading] = useState(false);
+    const [categories, setCategories] = useState(null);
+
     const { data, isLoading } = useFetchBlogs();
     const items = data?.results ?? [];
     const total = data?.count ?? 0;
-    const [searchTerm, setSearchTerm] = useState('');
 
-    const categories = [
-        'All Post',
-        'Prayer Guides',
-        'Devotional',
-        'Scripture Study',
-        'Testimonies',
-        'App Updates',
-        'Sermon'
-    ];
+    const fetchCategories = async () => {
+        try {
+            setCategoriesLoading(true);
+            const response = await api.get('/blogs/categories/');
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        } finally {
+            setCategoriesLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    // Transform API categories to display format
+    const displayCategories = useMemo(() => {
+        if (!categories || !Array.isArray(categories)) return ['All Post'];
+
+        // Extract category names from objects
+        const validCategories = categories
+            .filter(cat => cat && cat.name) // Remove invalid entries
+            .map(cat => cat.name); // Get the name property
+
+        return ['All Post', ...validCategories];
+    }, [categories]);
 
     // Get featured article (first featured blog or first blog)
     const featuredArticle = items?.find(blog => blog.featured) || items?.[0];
@@ -106,7 +128,7 @@ export default function PrayerBlogSection() {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6 bg-gray-50 min-h-screen">
+        <div className="max-w-7xl mx-auto pb-20 p-6 bg-gray-50 min-h-screen">
             {/* Featured Article */}
             {featuredArticle && (
                 <div className="bg-white rounded-xl shadow-sm mb-12 overflow-hidden">
@@ -116,7 +138,7 @@ export default function PrayerBlogSection() {
                             <img
                                 src={featuredArticle.image || '/story.png'}
                                 alt={featuredArticle.title}
-                                className="w-full h-64 lg:h-full object-cover"
+                                className="w-full h-64 lg:h-[25rem] object-cover"
                             />
                         </div>
 
@@ -168,35 +190,43 @@ export default function PrayerBlogSection() {
 
                             {/* Read Article Button */}
                             <div className='mt-6'>
-                            <Link href={`/blog/${featuredArticle.slug}`}>
-                                <button className="w-full bg-[#0284C7] text-white font-semibold py-3 rounded-lg transition-colors duration-200">
-                                    Read Article
-                                </button>
-                            </Link>
+                                <Link href={`/blog/${featuredArticle.slug}`}>
+                                    <button className="w-full bg-[#0284C7] text-white font-semibold py-3 rounded-lg transition-colors duration-200">
+                                        Read Article
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Prayer Categories Section */}
-            <div className="mb-8">
+            {/* Blog Categories Section */}
+            <div className="my-20">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Blog Categories</h2>
 
                 {/* Category Tabs */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                    {categories.map((category) => (
-                        <button
-                            key={category}
-                            onClick={() => handleCategoryChange(category)}
-                            className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-200 ${activeCategory === category
-                                ? 'bg-[#0284C7] text-white'
-                                : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                                }`}
-                        >
-                            {category}
-                        </button>
-                    ))}
+                <div className="mb-6">
+                    {categoriesLoading ? (
+                        <div className="flex justify-center py-4">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0284C7]"></div>
+                        </div>
+                    ) : (
+                        <div className="flex flex-wrap gap-2">
+                            {displayCategories.map((category) => (
+                                <button
+                                    key={category}
+                                    onClick={() => handleCategoryChange(category)}
+                                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-200 ${activeCategory === category
+                                        ? 'bg-[#0284C7] text-white'
+                                        : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                                        }`}
+                                >
+                                    {category}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Search Bar */}
@@ -222,7 +252,7 @@ export default function PrayerBlogSection() {
                                 <img
                                     src={article.image || '/blog.png'}
                                     alt={article.title}
-                                    className="w-full h-80 object-cover"
+                                    className="w-full h-[19rem] object-cover"
                                 />
                                 {/* Featured badge for featured articles in the grid */}
                                 {article.featured && (
