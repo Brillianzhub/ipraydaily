@@ -27,6 +27,7 @@ const BlogCreate = () => {
         featured: false,
         read_time: '',
         status: 'draft',
+        tags: '',
         image: null
     });
 
@@ -192,6 +193,7 @@ const BlogCreate = () => {
                 category: categoryName, // Send category name instead of ID
                 featured: formData.featured,
                 read_time: formData.read_time,
+                tags: formData.tags,
                 status: status,
                 image: imageUrl || null // Send image URL instead of file
             };
@@ -431,6 +433,23 @@ const BlogCreate = () => {
                             />
                             {errors.read_time && <p className="mt-1 text-sm text-red-600">{errors.read_time}</p>}
                         </div>
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Tags (comma separated)
+                            </label>
+                            <input
+                                type="text"
+                                name="tags"
+                                value={formData.tags}
+                                onChange={handleInputChange}
+                                placeholder="faith, prayer, devotion"
+                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent"
+                            />
+                            <p className="mt-1 text-xs text-gray-500">
+                                Separate tags with commas (e.g., faith, prayer, devotion)
+                            </p>
+                            {errors.tags && <p className="mt-1 text-sm text-red-600">{errors.tags}</p>}
+                        </div>
 
                         {/* Featured Toggle */}
                         <div className="flex items-center gap-3">
@@ -575,6 +594,7 @@ const BlogCreate = () => {
                                         featured: false,
                                         status: 'draft',
                                         read_time: '',
+                                        tags: '',
                                         image: null
                                     });
                                     setImagePreview(null);
