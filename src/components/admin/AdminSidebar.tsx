@@ -63,13 +63,13 @@ const AdminSidebar: React.FC = () => {
             label: 'Email Notifications',
             href: '/dashboard/email-notifications',
         },
-        {
-            icon: Bell,
-            label: 'App Notifications',
-            href: '/app-notifications',
-            badge: 'Soon',
-            disabled: true
-        },
+        // {
+        //     icon: Bell,
+        //     label: 'App Notifications',
+        //     href: '/app-notifications',
+        //     badge: 'Soon',
+        //     disabled: true
+        // },
         {
             icon: User,
             label: 'Contact Management',

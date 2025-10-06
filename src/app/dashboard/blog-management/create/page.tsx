@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import { api } from '@/services/requests/axiosInstance';
 import { useRouter } from 'next/navigation';
+import DOMPurify from "dompurify";
+import TipTapEditor from '@/components/admin/RichTextEditor';
 
 const BlogCreate = () => {
     const [formData, setFormData] = useState({
@@ -28,7 +30,7 @@ const BlogCreate = () => {
         read_time: '',
         status: 'draft',
         tags: '',
-        image: null
+        image: ''
     });
 
     const [errors, setErrors] = useState<any>({});
@@ -161,6 +163,11 @@ const BlogCreate = () => {
             newErrors.description = 'Description must be at least 20 characters';
         }
 
+        const bodyText = formData.body.replace(/<[^>]*>/g, '').trim();
+        if (!bodyText) {
+            newErrors.body = 'Content is required';
+        }
+
         if (!formData.category) {
             newErrors.category = 'Category is required';
         }
@@ -195,7 +202,7 @@ const BlogCreate = () => {
                 read_time: formData.read_time,
                 tags: formData.tags,
                 status: status,
-                image: imageUrl || null // Send image URL instead of file
+                image: formData.image
             };
 
             const response = await api.post('/blogs/create/', submitData);
@@ -317,11 +324,10 @@ const BlogCreate = () => {
                         />
                         {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
                         <p className="mt-1 text-sm text-gray-500">
-                            {formData.description.length}/20 characters minimum
+                            {formData.description.length}/20 words minimum
                         </p>
                     </div>
 
-                    {/* Content */}
                     <div className="bg-white p-6 rounded-lg shadow-sm border">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Content *
@@ -331,22 +337,30 @@ const BlogCreate = () => {
                                 <div className="prose max-w-none">
                                     <h3 className="text-xl font-bold mb-3">{formData.title || 'Preview Title'}</h3>
                                     <p className="text-gray-600 mb-4">{formData.description}</p>
-                                    <div className="whitespace-pre-wrap">{formData.body || 'Start writing your content...'}</div>
+                                    <div
+                                        className="prose max-w-none"
+                                        dangerouslySetInnerHTML={{
+                                            __html: DOMPurify.sanitize(formData.body || '<p>Start writing your content...</p>')
+                                        }}
+                                    />
                                 </div>
                             </div>
                         ) : (
-                            <textarea
-                                name="body"
-                                value={formData.body}
-                                onChange={handleInputChange}
-                                rows={10}
-                                placeholder="Write your blog post content here..."
-                                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent resize-none ${errors.body ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                                    }`}
+                            <TipTapEditor
+                                content={formData.body}
+                                onChange={(html) => {
+                                    setFormData(prev => ({ ...prev, body: html }));
+                                    // Clear error for body field
+                                    if (errors.body) {
+                                        setErrors(prev => ({ ...prev, body: '' }));
+                                    }
+                                }}
+                                error={errors.body}
                             />
                         )}
                         {errors.body && <p className="mt-1 text-sm text-red-600">{errors.body}</p>}
                     </div>
+
 
                     {/* Action Buttons - Moved below the form */}
                     <div className="">
@@ -474,57 +488,13 @@ const BlogCreate = () => {
                             Featured Image
                         </h3>
 
-                        {imagePreview ? (
-                            <div className="relative">
-                                <img
-                                    src={imagePreview}
-                                    alt="Preview"
-                                    className="w-full h-48 object-cover rounded-lg"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={removeImage}
-                                    className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full hover:bg-red-700"
-                                    disabled={imageUploading}
-                                >
-                                    <X size={16} />
-                                </button>
-                                {imageUploading && (
-                                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
-                                        <div className="flex items-center gap-2 text-white">
-                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                            Uploading...
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div
-                                onClick={() => !imageUploading && fileInputRef.current?.click()}
-                                className={`border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#0088DD] hover:bg-[#0088DD] hover:bg-opacity-5 cursor-pointer transition-colors ${imageUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            >
-                                {imageUploading ? (
-                                    <div className="flex flex-col items-center">
-                                        <div className="w-8 h-8 border-2 border-[#0088DD] border-t-transparent rounded-full animate-spin mb-3" />
-                                        <p className="text-sm text-gray-600">Uploading image...</p>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-3" />
-                                        <p className="text-sm text-gray-600 mb-1">Click to upload an image</p>
-                                        <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
-                                    </>
-                                )}
-                            </div>
-                        )}
-
                         <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="hidden"
-                            disabled={imageUploading}
+                            name="image"
+                            value={formData.image}
+                            className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent ${errors.read_time ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                                }`}
+                            type="text"
+                            onChange={handleInputChange}
                         />
                         {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image}</p>}
                     </div>
