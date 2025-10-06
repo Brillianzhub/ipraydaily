@@ -147,20 +147,34 @@ const EventManagementPage = () => {
         }, [editingEvent]);
 
         const handleSubmit = async () => {
-            if (isEditing) {
-                // Here you would make an API call to update the event
-                // const response = await api.get("/events")
-                console.log('Updating event:', editingEvent.id, formData);
-            } else {
-                // Here you would make an API call to create the event
-                console.log('Creating event:', formData);
-            }
-            setShowCreateModal(false);
-            setEditingEvent(null);
-            // Refresh events list
-            fetchEvents();
-        };
+            try {
+                // Convert datetime-local format to ISO string for API
+                const eventData = {
+                    ...formData,
+                    start_date: new Date(formData.start_date).toISOString(),
+                    end_date: new Date(formData.end_date).toISOString()
+                };
 
+                if (isEditing) {
+                    // Update existing event
+                    await api.put(`/events/${editingEvent.id}/`, eventData);
+                    console.log('Event updated successfully');
+                } else {
+                    // Create new event
+                    await api.post("/events/", eventData);
+                    console.log('Event created successfully');
+                }
+
+                setShowCreateModal(false);
+                setEditingEvent(null);
+                // Refresh events list
+                await fetchEvents();
+            } catch (error) {
+                console.error('Error saving event:', error.response?.data || error);
+                // Optionally show error message to user
+                alert('Failed to save event. Please check all fields and try again.');
+            }
+        };
         const handleClose = () => {
             setShowCreateModal(false);
             setEditingEvent(null);

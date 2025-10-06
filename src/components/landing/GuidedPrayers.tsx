@@ -230,7 +230,7 @@ const PrayerCard = ({ prayer }) => (
     <>
         {/* Prayer Header */}
         <div className="mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+            <h2 className="text-xl sm:text-2xl capitalize font-bold text-gray-800 mb-2">
                 {prayer.prayer_category}
             </h2>
             <p className="text-sm sm:text-base text-gray-600 font-medium">

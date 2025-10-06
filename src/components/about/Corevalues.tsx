@@ -35,7 +35,7 @@ const CoreValuesSection = () => {
                 </div>
 
                 {/* Values Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
                     {values.map((value, index) => {
                         return (
                             <div

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { api } from '@/services/requests/axiosInstance';
 import { useParams, useRouter } from 'next/navigation';
+import TipTapEditor from '@/components/admin/RichTextEditor';
 
 
 const BlogEdit = () => {
@@ -31,8 +32,7 @@ const BlogEdit = () => {
         featured: false,
         read_time: '',
         status: 'draft',
-        image: null,
-        current_image: '' // Store current image URL
+        image: ''
     });
 
     const [errors, setErrors] = useState<any>({});
@@ -74,8 +74,7 @@ const BlogEdit = () => {
                     featured: blogData.featured || false,
                     read_time: String(blogData.read_time || ''),
                     status: blogData.status || 'draft',
-                    image: null, // New image file
-                    current_image: blogData.image || '' // Existing image URL
+                    image: blogData.image, // New image file
                 });
 
                 // Set image preview if existing image
@@ -173,18 +172,15 @@ const BlogEdit = () => {
                 setErrors(prev => ({ ...prev, image: '' }));
             } catch (error) {
                 setErrors(prev => ({ ...prev, image: 'Failed to upload image. Please try again.' }));
-                setImagePreview(formData.current_image || null); // Revert to current image
+                setImagePreview(formData.image || ''); // Revert to current image
             }
         }
     };
 
     const removeImage = () => {
-        setFormData(prev => ({ ...prev, image: null, current_image: '' }));
+        setFormData(prev => ({ ...prev, image: '' }));
         setImagePreview(null);
         setImageUrl('');
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
     };
 
     const validateForm = () => {
@@ -411,15 +407,26 @@ const BlogEdit = () => {
                                 </div>
                             </div>
                         ) : (
-                            <textarea
-                                name="body"
-                                value={formData.body}
-                                onChange={handleInputChange}
-                                rows={10}
-                                placeholder="Write your blog post content here..."
-                                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent resize-none ${errors.body ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                                    }`}
+                            <TipTapEditor
+                                content={formData.body}
+                                onChange={(html) => {
+                                    setFormData(prev => ({ ...prev, body: html }));
+                                    // Clear error for body field
+                                    if (errors.body) {
+                                        setErrors(prev => ({ ...prev, body: '' }));
+                                    }
+                                }}
+                                error={errors.body}
                             />
+                            // <textarea
+                            //     name="body"
+                            //     value={formData.body}
+                            //     onChange={handleInputChange}
+                            //     rows={10}
+                            //     placeholder="Write your blog post content here..."
+                            //     className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent resize-none ${errors.body ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                            //         }`}
+                            // />
                         )}
                         {errors.body && <p className="mt-1 text-sm text-red-600">{errors.body}</p>}
                     </div>
@@ -527,18 +534,50 @@ const BlogEdit = () => {
                     </div>
 
                     {/* Featured Image */}
+                    {/* Featured Image */}
                     <div className="bg-white p-6 rounded-lg shadow-sm border">
                         <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
                             <Image size={20} />
                             Featured Image
                         </h3>
 
-                        {imagePreview ? (
+                        {/* Image URL Input */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Image URL
+                            </label>
+                            <input
+                                name="image"
+                                value={formData.image}
+                                onChange={(e) => {
+                                    handleInputChange(e);
+                                    // Update preview when URL changes
+                                    if (e.target.value) {
+                                        setImagePreview(e.target.value);
+                                        setImageUrl(e.target.value);
+                                    } else {
+                                        setImagePreview(null);
+                                        setImageUrl('');
+                                    }
+                                }}
+                                placeholder="https://example.com/image.jpg"
+                                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0088DD] focus:border-transparent ${errors.image ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                                    }`}
+                                type="text"
+                            />
+                            {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image}</p>}
+                        </div>
+
+                        {/* Image Preview */}
+                        {imagePreview && (
                             <div className="relative">
                                 <img
                                     src={imagePreview}
                                     alt="Preview"
                                     className="w-full h-48 object-cover rounded-lg"
+                                    onError={(e) => {
+                                        e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23ddd" width="100" height="100"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EInvalid URL%3C/text%3E%3C/svg%3E';
+                                    }}
                                 />
                                 <button
                                     type="button"
@@ -548,56 +587,9 @@ const BlogEdit = () => {
                                 >
                                     <X size={16} />
                                 </button>
-                                {formData.current_image && !formData.image && (
-                                    <div className="absolute bottom-2 left-2 px-2 py-1 bg-black bg-opacity-50 text-white text-xs rounded">
-                                        Current Image
-                                    </div>
-                                )}
-                                {formData.image && (
-                                    <div className="absolute bottom-2 left-2 px-2 py-1 bg-green-600 text-white text-xs rounded">
-                                        New Image
-                                    </div>
-                                )}
-                                {imageUploading && (
-                                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
-                                        <div className="flex items-center gap-2 text-white">
-                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                            Uploading...
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div
-                                onClick={() => !imageUploading && fileInputRef.current?.click()}
-                                className={`border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#0088DD] hover:bg-[#0088DD] hover:bg-opacity-5 cursor-pointer transition-colors ${imageUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            >
-                                {imageUploading ? (
-                                    <div className="flex flex-col items-center">
-                                        <div className="w-8 h-8 border-2 border-[#0088DD] border-t-transparent rounded-full animate-spin mb-3" />
-                                        <p className="text-sm text-gray-600">Uploading image...</p>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-3" />
-                                        <p className="text-sm text-gray-600 mb-1">Click to upload an image</p>
-                                        <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
-                                    </>
-                                )}
                             </div>
                         )}
-
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="hidden"
-                            disabled={imageUploading}
-                        />
-                        {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image}</p>}
                     </div>
-
                     {/* Post Status */}
                     <div className="bg-white p-6 rounded-lg shadow-sm border">
                         <h3 className="text-lg font-medium text-gray-900 mb-4">Post Info</h3>
