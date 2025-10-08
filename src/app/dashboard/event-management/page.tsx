@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Plus, Edit2, Trash2, ExternalLink, Search, Filter, Clock, MapPin, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { api } from '@/services/requests/axiosInstance';
+import { toast } from 'sonner';
 
 const EventManagementPage = () => {
     const [events, setEvents] = useState([]);
@@ -378,10 +379,10 @@ const EventManagementPage = () => {
                                     <AlertDialogFooter>
                                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                                         <AlertDialogAction
-                                            onClick={() => {
+                                            onClick={async () => {
                                                 // Delete event API call here
-                                                // const response = await api.get("/events")
-                                                console.log('Deleting event:', event.id);
+                                                const response = await api.delete("/events/")
+                                                toast.success("events deleted")
                                                 // Remove event from state (or refresh from API)
                                                 setEvents(prevEvents => prevEvents.filter(e => e.id !== event.id));
                                             }}
