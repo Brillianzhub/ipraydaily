@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+/* eslint-disable */
+import React, { useEffect, useState, useCallback } from 'react';
 import './VerseOfTheDay.css';
-import play from "../assets/images/audio.png";
-import share from "../assets/images/share.png";
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 
 
 
@@ -12,9 +12,6 @@ const VerseOfTheDay = ({
     setRandomVerse
 }) => {
     const [promises, setPromises] = useState([]);
-    const [currentPromise, setCurrentPromise] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,13 +21,10 @@ const VerseOfTheDay = ({
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setPromises(data);
-
-                setCurrentPromise(response.data[Math.floor(Math.random() * response.data.length)]);
+                setPromises(data.results);
+                // setCurrentPromise(response.data[Math.floor(Math.random() * response.data.length)]);
             } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
+                console.log(error.message);
             }
         };
         fetchData();
@@ -50,7 +44,8 @@ const VerseOfTheDay = ({
 
     const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)]
 
-    const fetchRandomVerse = () => {
+
+    const fetchRandomVerse = useCallback(async () => {
         if (!bibleBooks || bibleBooks.length === 0) {
             console.error("Bible books data is not available.");
             return;
@@ -63,47 +58,52 @@ const VerseOfTheDay = ({
             return;
         }
 
-        fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${randomBook.id}`)
-            .then(response => response.json())
-            .then(chapters => {
-                if (!chapters || chapters.length === 0) {
-                    console.error("No chapters available for the selected book.");
-                    return;
-                }
+        try {
+            const chaptersResponse = await fetch(`https://www.brillianzhub.com/ipray/bible_chapters/?book_id=${randomBook.id}`);
 
-                const randomChapter = getRandomItem(chapters);
+            const chapterData = await chaptersResponse.json();
+            const chapters = chapterData.results;
 
-                if (!randomChapter || !randomChapter.id) {
-                    console.error("No valid chapter selected.");
-                    return;
-                }
+            if (!chapters || chapters.length === 0) {
+                console.error("No chapters available for the selected book.");
+                return;
+            }
 
-                fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${randomChapter.id}`)
-                    .then(response => response.json())
-                    .then(verses => {
-                        if (!verses || verses.length === 0) {
-                            console.error("No verses available for the selected chapter.");
-                            return;
-                        }
+            const randomChapter = getRandomItem(chapters);
 
-                        const randomVerse = getRandomItem(verses);
+            if (!randomChapter || !randomChapter.id) {
+                console.error("No valid chapter selected.");
+                return;
+            }
 
-                        if (!randomVerse || !randomVerse.verse) {
-                            console.error("No valid verse selected.");
-                            return;
-                        }
+            const versesResponse = await fetch(`https://www.brillianzhub.com/ipray/bible_verses_kjv/?chapter_id=${randomChapter.id}`);
+            const verseData = await versesResponse.json();
 
-                        setRandomVerse({
-                            bookName: randomBook.name,
-                            chapterNumber: randomChapter.number,
-                            verse: randomVerse.verse,
-                            text: randomVerse.text,
-                        });
-                    })
-                    .catch(error => console.error("Error fetching verses:", error));
-            })
-            .catch(error => console.error("Error fetching chapters:", error));
-    };
+            const verses = verseData.results;
+
+            if (!verses || verses.length === 0) {
+                console.error("No verses available for the selected chapter.");
+                return;
+            }
+
+            const randomVerse = getRandomItem(verses);
+
+            if (!randomVerse || !randomVerse.verse) {
+                console.error("No valid verse selected.");
+                return;
+            }
+
+            setRandomVerse({
+                bookName: randomBook.name,
+                chapterNumber: randomChapter.number,
+                verse: randomVerse.verse,
+                text: randomVerse.text,
+            });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }, [bibleBooks]);
+
 
 
 
@@ -115,11 +115,10 @@ const VerseOfTheDay = ({
         }, 86400000);
 
         return () => clearInterval(intervalId);
-    }, [bibleBooks]);
+    }, [bibleBooks, fetchRandomVerse]);
 
     const bookReference = randomVerse ? `${randomVerse.bookName} ${randomVerse.chapterNumber}:${randomVerse.verse}` : 'Book';
 
-    const audioRef = useRef(null);
 
     const handlePlayAudio = () => {
         if (randomVerse && randomVerse.text) {
@@ -168,16 +167,27 @@ const VerseOfTheDay = ({
                     <div className="action-container">
                         <div className="icon-container">
                             <button className="icon-button" aria-label="Share" onClick={handleShare}>
-                                <img src={share} alt="Share" />
+                                <Image
+                                    src="/images/share.png"
+                                    alt="Logo"
+                                    width={48}
+                                    height={48}
+                                />
+
                             </button>
                             <button className="icon-button" aria-label="Play" onClick={handlePlayAudio}>
-                                <img src={play} alt="Play" />
+                                <Image
+                                    src="/images/audio.png"
+                                    alt="Logo"
+                                    width={48}
+                                    height={48}
+                                />
                             </button>
                         </div>
                     </div>
 
                     <div className='continue-button'>
-                        <Link to="/bible">
+                        <Link href="/bible">
                             <button className="continue-reading-button">
                                 Continue Reading
                             </button>

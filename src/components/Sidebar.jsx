@@ -1,8 +1,7 @@
+"use client";
 import React, { useState } from 'react';
-import facebook from '../assets/images/facebook.png';
-import twitter from '../assets/images/twitter.png';
-import youtube from '../assets/images/youtube.png';
 import './Sidebar.css';
+import Image from 'next/image';
 
 
 const Sidebar = () => {
@@ -12,10 +11,6 @@ const Sidebar = () => {
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
-    }
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
     }
 
     const handleSubscribe = async () => {
@@ -53,10 +48,33 @@ const Sidebar = () => {
             <div className="social-media-links">
                 <h3>Follow Us</h3>
                 <div className="social-media-icons">
-                    <img src={facebook} alt='Facebook' />
-                    <img src={twitter} alt='X' />
-                    <img src={youtube} alt='Youtube' />
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <Image
+                            src="/images/facebook.png"
+                            alt="Facebook"
+                            width={48}
+                            height={48}
+                        />
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <Image
+                            src="/images/twitter.png"
+                            alt="X"
+                            width={48}
+                            height={48}
+                        />
+                    </a>
+
+                    <a href="https://www.youtube.com/@KoinoniaMessage/videos" target="_blank" rel="noopener noreferrer">
+                        <Image
+                            src="/images/youtube.png"
+                            alt="YouTube"
+                            width={48}
+                            height={48}
+                        />
+                    </a>
                 </div>
+
                 <p>Subscribe to our newsletter and recieve a selection of cool articles every month.</p>
                 <form onSubmit={handleSubmit}>
                     <input

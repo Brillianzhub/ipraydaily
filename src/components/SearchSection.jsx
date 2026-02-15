@@ -1,34 +1,19 @@
-import React, { useState } from 'react';
-import { handleSearch } from '../utils/bibleSearchUtils';
+import React from 'react';
 
 import './SearchSection.css';
+import { useBibleData } from '../context/BibleDataContext';
 
-const SearchSection = ({
-    bibleBooks,
-    setSelectedBookName,
-    setSelectedChapterNumber,
-    setSelectedVerse,
-    setVerses
-}) => {
-    const prayerCategories = ["Healing", "Thanksgiving", "Salvation"];
-    const [searchTerm, setSearchTerm] = useState('');
+const SearchSection = () => {
+    const {
+        selectedVersion,
+        setSelectedVersion,
+        handleKeyDown,
+        handleAPISearch,
+        searchTerm,
+        setSearchTerm,
+    } = useBibleData();
 
-    const handleSearchClick = () => {
-        handleSearch({
-            searchTerm,
-            bibleBooks,
-            setSelectedBookName,
-            setSelectedChapterNumber,
-            setVerses,
-            setSelectedVerse
-        });
-    };
 
-    function handleKeyDown(event) {
-        if (event.key === 'Enter') {
-            handleSearchClick();
-        }
-    }
 
     return (
         <div className="search-div">
@@ -42,14 +27,18 @@ const SearchSection = ({
                     onKeyDown={handleKeyDown}
                 />
                 <div className="dropdown-row">
-                    <select className="dropdown">
-                        <option value="" disabled>Select Prayer Category</option>
-                        {prayerCategories.map((category, index) => (
-                            <option key={index} value={category}>{category}</option>
-                        ))}
+                    <select
+                        className="dropdown"
+                        onChange={(e) => setSelectedVersion(e.target.value)}
+                        value={selectedVersion}
+                    >
+                        <option value="KJV">King James Version (KJV)</option>
+                        <option value="AMP">Amplified Version (AMP)</option>
+                        <option value="NIV">New International Version (NIV)</option>
+                        <option value="ASV">American Standard Version (ASV)</option>
                     </select>
                 </div>
-                <button className="search-btn" onClick={handleSearchClick}>Search</button>
+                <button className="search-btn" onClick={handleAPISearch}>Search</button>
             </div>
         </div>
     );

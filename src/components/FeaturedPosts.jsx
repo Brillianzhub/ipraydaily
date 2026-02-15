@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import './FeaturedPosts.css';
+import Image from 'next/image';
 
 const FeaturedPosts = () => {
     const [featuredPosts, setFeaturedPosts] = useState([]);
@@ -10,7 +12,7 @@ const FeaturedPosts = () => {
             try {
                 const response = await fetch('https://www.brillianzhub.com/blog');
                 const data = await response.json();
-                setFeaturedPosts(data.slice(0, 3))
+                setFeaturedPosts(data.results.slice(0, 3))
             } catch (error) {
                 console.log("Failed to fetch data", error)
             }
@@ -41,23 +43,23 @@ const FeaturedPosts = () => {
             <div className='featured-posts'>
                 {featuredPosts.map((post, index) => (
                     <div className='featured-posts-list' key={index} >
-                        <img src={post.image} alt='Image' />
+                        <Image
+                            src={post.image}
+                            alt='Image'
+                            width={500}
+                            height={300}
+                        />
                         <h3>{post.title}</h3>
                         <p>{truncateText(post.description, 50)}</p>
                         <div className='blog-date'>
                             <p>{formatDate(post.created)} | {post.read_time} mins read</p>
-                            <Link to={`/koinonia-messages/${post.slug}`}>
+                            <Link href={`/koinonia-messages/${post.slug}`}>
                                 <h3>View Message</h3>
                             </Link>
                         </div>
                     </div>
                 ))}
             </div>
-            {/* <div className="complete-list">
-                <Link to={`/koinonia-messages`}>
-                    <h3>View All Messages</h3>
-                </Link>
-            </div> */}
         </div>
     )
 }

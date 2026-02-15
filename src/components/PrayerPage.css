@@ -11,9 +11,7 @@
 
 .prayer-container {
     width: 100%;
-    /* max-width: 800px; */
     margin: 0 auto;
-    /* padding: 20px; */
     text-align: center;
 }
 
@@ -63,12 +61,12 @@
     line-height: 1.5;
     color: #555;
     margin: 5px 0;
-    font-style: italic;
 }
 
-.prayer-item p span {
+#prayer-verse {
     font-weight: bold;
     color: #F7910B;
+    font-style: italic;
 }
 
 @media (max-width: 768px) {

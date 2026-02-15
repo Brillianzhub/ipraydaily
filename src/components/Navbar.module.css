@@ -1,0 +1,124 @@
+/* Navbar.module.css */
+
+/* Navbar Styles */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.navbar {
+    background-color: #0C4B6E;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.navbarLogo img {
+    max-height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.navbarLinks {
+    display: flex;
+    align-items: center;
+    z-index: 99;
+}
+
+.navbarLinks ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbarLinks ul li {
+    margin-left: 1.5rem;
+}
+
+.navbarLinks ul li a {
+    text-decoration: none;
+    color: #F7910B;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.navbarLinks ul li a:hover {
+    color: white;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .navbar {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .navbarLinks {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+        background-color: #0C4B6E;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 99;
+    }
+
+    .navbarLinksActive {
+        display: flex;
+    }
+
+    .navbarLinks ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbarLinks ul li {
+        margin: 1rem 0;
+    }
+
+    .navbarLinks ul li a {
+        font-size: 1.2rem;
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .navbarToggle {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        z-index: 101;
+    }
+
+    .navbarToggle img {
+        height: 30px;
+        width: 30px;
+    }
+
+    .navbarLinks {
+        transition: max-height 0.3s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .navbarLinksActive {
+        max-height: 300px;
+    }
+}
+
+/* Hide toggle on larger screens */
+@media (min-width: 768px) {
+    .navbarToggle {
+        display: none;
+    }
+}

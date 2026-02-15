@@ -1,0 +1,92 @@
+{
+    "plans": {
+        "30mins": [
+            {
+                "activity": "Praise & Worship",
+                "duration": 5
+            },
+            {
+                "activity": "Opening Prayer",
+                "duration": 3
+            },
+            {
+                "activity": "Bible Study",
+                "duration": 15
+            },
+            {
+                "activity": "Prayers",
+                "duration": 5
+            },
+            {
+                "activity": "Closing",
+                "duration": 2
+            }
+        ],
+        "1hour": [
+            {
+                "activity": "Praise & Worship",
+                "duration": 10
+            },
+            {
+                "activity": "Opening Prayer",
+                "duration": 5
+            },
+            {
+                "activity": "Bible Study",
+                "duration": 30
+            },
+            {
+                "activity": "Prayers",
+                "duration": 10
+            },
+            {
+                "activity": "Closing",
+                "duration": 5
+            }
+        ],
+        "1.5hour": [
+            {
+                "activity": "Praise & Worship",
+                "duration": 15
+            },
+            {
+                "activity": "Opening Prayer",
+                "duration": 5
+            },
+            {
+                "activity": "Bible Study",
+                "duration": 45
+            },
+            {
+                "activity": "Prayers",
+                "duration": 15
+            },
+            {
+                "activity": "Closing",
+                "duration": 10
+            }
+        ],
+        "2hour": [
+            {
+                "activity": "Praise & Worship",
+                "duration": 20
+            },
+            {
+                "activity": "Opening Prayer",
+                "duration": 10
+            },
+            {
+                "activity": "Bible Study",
+                "duration": 60
+            },
+            {
+                "activity": "Prayers",
+                "duration": 20
+            },
+            {
+                "activity": "Closing",
+                "duration": 10
+            }
+        ]
+    }
+}

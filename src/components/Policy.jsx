@@ -1,16 +1,15 @@
 import React from 'react';
-import '../pages/PrivacyPolicy/PrivacyPolicy.css';
-import contact from '../assets/images/contact.png';
-
+import '../components/PrivacyPolicy.css';
+import Image from 'next/image';
 
 const PrivacyPolicy = () => {
     return (
         <div className="privacy-policy">
             <h1>IPray Daily Privacy Policy</h1>
             <p><strong>Effective Date:</strong> 01.07.2024</p>
-            <p>IPray Daily ("we," "us," or "our") is committed to protecting the privacy of our users ("you" or "your").
+            <p>IPray Daily (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting the privacy of our users (&quot;you&quot; or &quot;your&quot;).
                 This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our
-                mobile application ("App").</p>
+                mobile application (&quot;App&quot;).</p>
 
             <h2>Information We Collect</h2>
             <p>We collect the following information when you use our App:</p>
@@ -49,7 +48,7 @@ const PrivacyPolicy = () => {
             <p>We implement reasonable security measures to protect your information from unauthorized access, disclosure, alteration, or destruction.
                 However, no internet transmission or electronic storage is 100% secure. As a result, we cannot guarantee the absolute security of your information.</p>
 
-            <h2>Children's Privacy</h2>
+            <h2>Children&apos;s Privacy</h2>
             <p>Our App is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13.
                 If you are a parent or guardian, and you believe your child has provided us with personal information, please contact us.
                 If we learn that we have collected personal information from a child under 13, we will delete that information from our servers.</p>
@@ -60,12 +59,11 @@ const PrivacyPolicy = () => {
 
             <h2>Contact Us</h2>
 
-            <div className='contact-info'>
+            <div className="contact-info">
                 <p>If you have any questions about this Privacy Policy, please contact us at
                     &nbsp;
-                    <a href="mailto:contact.ipraydaily@gmail.com"><img src={contact} alt='Email' /></a>.</p>
+                    <a href="mailto:contact.ipraydaily@gmail.com"><Image src="/images/contact.png" alt="Email" width={48} height={48} /></a>.</p>
             </div>
-
         </div>
     );
 }

@@ -19,7 +19,10 @@
 
 .navbar-logo img {
     max-height: 40px;
+    display: flex;
+    align-items: center;
 }
+
 
 .navbar-links {
     display: flex;
